@@ -7,7 +7,7 @@
     "light": "#07C983",
     "dark": "#15803D"
   },
-  "favicon": "/logo/datacebo-wordmark-horizontal-black-03-22-21.svg",
+  "favicon": "/logo/DataCebo_brandmark_color_July 31 2025.svg",
   "navigation": {
     "tabs": [
       {
@@ -84,8 +84,8 @@
     }
   },
   "logo": {
-    "light": "/logo/DataCebo_brandmark_color_July 31 2025.svg",
-    "dark": "/logo/DataCebo_brandmark_color_July 31 2025.svg"
+    "light": "/logo/datacebo-wordmark-horizontal-black-03-22-21.svg",
+    "dark": "/logo/datacebo-wordmark-horizontal-white-03-22-21.svg"
   },
   "navbar": {
     "links": [
