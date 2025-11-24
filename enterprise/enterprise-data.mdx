@@ -1,0 +1,44 @@
+---
+title: "Data"
+description: "This page highlights the various complexities of data in enterprise settings. "
+---
+
+**"AI pre-condition expectations" ** Most vendors' products expect data to come in a certain format or with certain properties. One of our customers described this with the helpful phrase "AI pre-condition expectations":  
+
+> _In most AI examples we see showcases of a ‘Hello World’ example. In these showcases we use data-sources that are quite in line with AI pre-condition expectations. The most data-sources that we see in our enterprise do not meet the AI pre-condition expectations. In these scenarios data-source knowledge is key so you need commitment from the team who owns the data-source, with risk of endless discussions on how to implement an AI solution._” In most cases, the pre-condition expectation is single-table data that is either numerical or categorical and has no ID columns or other data types. _In reality, no data consumed by enterprise applications actually looks like this._" 
+
+**Enterprise data has a complex web of data, a sprawl of data types, business logic, hidden context **
+
+As we push into the frontier of providing “synthetic data for testing software applications,” deploying our software across many enterprises and applications, we see how complex data can be. Here are the hidden complexities we run into most frequently — luckily, we love a challenge. 
+
+**Multiple tables. **Enterprises routinely have dozens of tables (some may have more than 50) that an application consumes. A synthetic data generator must be able to generate data for all these tables simultaneously while maintaining referential integrity and respecting cardinality and both intertable and intra-table correlations. Our [<u>HSASynthesizer</u>](https://docs.sdv.dev/sdv/multi-table-data/modeling/synthesizers/hsasynthesizer) can model and create synthetic data for 30+ tables on a single machine within minutes while maintaining top performance. 
+
+**Complex data patterns**. Enterprise data stores contain patterns, such as composite keys and [<u>slowly changing dimensions</u>](https://en.wikipedia.org/wiki/Slowly_changing_dimension), polymorphic relationships.  We now address these natively within SDV Enterprise without the need for pre- or postprocessing.
+
+**Many different data types.** Often, specific data types must  be synthesized, such as phone numbers, addresses, and URLs.  Faker-based synthetic data techniques create random data that loses important context — for example, if you're working with a real phone number database where 30% of the numbers are from New York, that proportion should be emulated within the synthetic data). Unlike fakers, we use [<u>contextual anonymization</u>](https://docs.sdv.dev/rdt/resources/contextual-anonymization) to support anonymized, context-preserving synthetic data generation. 
+
+**Embedded business logic.** Particular businesses have their own rules that synthetic data must follow. For example, a bank may require any customer with a credit limit higher than \$50,000 to also have a savings account with the bank. Or for a hotel, a checkout date within a transactions dataset should always occur after the associated check-in date. Or for an online retail dataset, a checkout transaction can only happen after something has been added to cart. UI, systems, and business processes rely on these rules being followed, and so synthetic data must hew to this logic.
+
+**Hidden context.** Over the past few years, we’ve encountered many enterprise datasets that contain relationships beyond simple correlations. Because these are not just PK-FK type relationships, they are also not captured in data schemas. These relationships are often well-understood by application developers, who use their contextual knowledge to process the data effectively — yet this context is rarely stored, or explicitly documented.
+
+For example, in some multi-table datasets, we see patterns where one or more columns from a parent table are **mirrored** in a child table. This is often done to avoid the need for expensive or time-consuming JOIN operations, especially when working with very large datasets or column-oriented (OLAP) databases.
+
+Consider an e-commerce dashboard that needs to frequently analyze order volume and revenue based on a user’s country of origin. In a fully normalized schema, the application would need to repeatedly join the orders and users tables to obtain this information. If such queries are slow or resource-intensive, one common optimization is to **carry over** the country column from the users table into the orders table, eliminating the need for a repeated JOIN and speeding up access for reporting or analysis.We refer to this as the **CarryOverColumns** pattern, in which one or more columns are intentionally duplicated across tables to support performance or usability goals.
+
+If your real data exhibits this pattern, SDV Enterprise can now generate synthetic multi-table datasets that preserve this behavior. This capability is part of our **Constraint Augmented Generation** (CAG) bundle, available in SDV Enterprise.
+
+**Data generation beyond the real. **Very often, users testing software applications want to generate synthetic data that goes beyond what's visible in the real data. Consider an insurance application that provides insurance only to people over 18 — their real data only contains information about people 18 years and older. However, the same company has a lot of software logic that creates responses for people younger than 18. To test this logic, the company needs synthetic data that goes beyond the real data. They may also want to switch this capability on and off for privacy reasons. We address all of these needs through specialized transformers. 
+
+**Flexible formatting requirements **
+
+Many data types can be expressed in various formats. Consider a datetime column: it can be stored with or without leading 0s in months and days ("1/1/21" vs. "01/01/21"), or with hyphens rather than slashes separating the components ("01-01-21" vs "01/01/21"). Or yet another datetime format could be [Jan][1][2021][12:34] 
+
+Or consider address data — in one database, it may be stored as free text in a column, while in another it may be split across three different columns, each storing a different part of the address. 
+
+**Confidential business information (beyond PII) **
+
+In many cases, datasets contain sensitive business information that may not qualify as PII but is still considered confidential—what we refer to as Business Confidential Information (BCI). For example, a bank may have transaction records showing trades with only three counterparties. The identity and limited number of these counterparties are both confidential. With SDV, users can annotate specific columns as BCI, spurring SDV to generate realistic but fake values—such as synthetic bank names—and preserving confidentiality while maintaining data utility.
+
+**Generating synthetic data without real data **
+
+To create synthetic data, we must learn a generative model from real data, even if there is little available. In some scenarios, though, it's difficult to acquire real data, and users want to get started anyway. To overcome this barrier, we created DayZSynthesizer, which can generate data using only metadata, so users can get started more quickly. 

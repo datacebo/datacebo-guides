@@ -29,12 +29,10 @@
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Enteprise",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "enterprise/enterprise-data",
+              "enterprise/platform-needs"
             ]
           },
           {
