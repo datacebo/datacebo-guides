@@ -8,9 +8,7 @@
     "dark": "#15803D"
   },
   "favicon": "/logo/DataCebo_brandmark_color_July 31 2025.svg",
-
-
-  
+ 
   "navigation": {
     "tabs": [
       {
@@ -123,6 +121,7 @@
    ]
   },
   "footer": {
+    "enabled":false,
     "socials": {
       "x": "https://x.com/datacebo?lang=en",
       "github": "https://github.com/datacebo",
