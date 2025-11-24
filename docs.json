@@ -91,6 +91,9 @@
   },
 
   "ui": {
+    "show_sidebar": true,
+    "show_breadcrumbs": true,
+    "show_outline": true,
     "show_next_prev": false
   },
 
