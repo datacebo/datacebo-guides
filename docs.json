@@ -14,18 +14,18 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Core Concepts",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "core-concepts/RDTs",
+              "core-concepts/constraints",
+              "core-concepts/workflows"
             ]
           },
           {
-            "group": "Customization",
+            "group": "SDV Community",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "community/best-practices",
+              "community/using-community"
             ]
           },
           {
