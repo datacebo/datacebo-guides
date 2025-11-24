@@ -8,6 +8,9 @@
     "dark": "#15803D"
   },
   "favicon": "/logo/DataCebo_brandmark_color_July 31 2025.svg",
+
+
+  
   "navigation": {
     "tabs": [
       {
@@ -86,6 +89,11 @@
     "light": "/logo/datacebo-wordmark-horizontal-black-03-22-21.svg",
     "dark": "/logo/datacebo-wordmark-horizontal-white-03-22-21.svg"
   },
+
+  "ui": {
+    "show_next_prev": false
+  },
+
   "navbar": {
     "links": [
       {
