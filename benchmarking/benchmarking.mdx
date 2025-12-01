@@ -1,0 +1,68 @@
+---
+title: "Benchmarking Synthesizers "
+description: "Learn about various considerations when benchmarking synthesizers "
+---
+
+SDGym current supports three different flows. Each flow is designed to accomodate various needs of the users. We also use SDGym for internal benchmarking purposes. In this guide we will describe the three different workflows and various considerations that we factored in designing them and how you can use them. 
+
+<Info>
+  To learn about the API for different workflows you can visit our SDGym documentation available here. 
+</Info>
+
+## Local mode
+
+This is designed to run test run various synthesizers and various datasets. You can specify which synthesizers and which datasets to run by passing the arguments in the code. For example, the code below shows that you can run the synthesizers and the datasets. 
+
+```
+```
+
+When you run in local mode with the specified synthesizers and datasets, the system will execute each synthesizer–dataset combination on your computer sequentially and store the results in the specified folder. 
+
+### Datasets 
+
+In local mode, you can only run evaluations on datasets that have been vetted by our team and published in the public dataset bucket on S3. These are the only datasets supported in this mode. At this time, SDGym does **not** support using datasets from your local machine.\
+If you need to run evaluations on your own datasets, you can use the **Running on AWS** mode described below.
+
+### What is local mode ideal for? 
+
+- **Testing out SDGym. **This mode is ideal for trying out SDGym locally on your own machine and gaining an understanding of how the evaluation results look.
+- **Test your synthesizer. **You can evaluate your synthesizer against the SDV-approved, publicly available datasets as well as the synthesizers included with SDGym. This allows researchers to run experiments on their personal or lab computers and generate results suitable for papers or prototyping.
+- **No cost. **Because everything runs locally, you incur **no AWS cost**. The trade-off is that results may take longer to compute since they depend on your local hardware rather than cloud infrastructure.
+
+## Run on AWS 
+
+In this mode, you can run SDGym on any set of synthesizers and datasets. This option offers the greatest flexibility and supports **industrial-grade benchmarking**. We will expose this functionality incrementally to ensure a smooth and customizable experience.
+
+To run SDGym on AWS, you will need to provide two sets of AWS credentials:
+
+- **Credentials to launch EC2 instances** from your AWS account.
+- **Credentials specifying where the results should be stored**, such as an S3 bucket.
+
+### Basic running of the benchmark
+
+In this mode, you can run SDGym on the datasets and synthesizers already included within SDGym. You use the `benchmark_on_aws` function to run a **job**. A **job** consists of a set of synthesizers and datasets, and it is executed on a single EC2 machine. Below is a code snippet showing how to specify a job and run it on AWS:
+
+```
+```
+
+In this code snippet, the benchmark_on_AWS function will 
+
+1. Launch an EC2 machine. 
+2. Run each combinaiton of synthesizer and dataset sequentially on that machine. 
+3. Store the results on your S3 bucket.
+4. And after execution it will terminate the instance. 
+
+In this basic running you can only run on the synthesizers already avaialble within SDGym and the datasets provided by SDGym. In case you want to parallelize the run on multiple EC2 instances you can group multiple mutually exclusive combinations and run them. Here is a code snippet to do that. 
+
+```
+```
+
+**This is ideal** for you to create a benchmark run of your own and reproduce some of the results published by us. Our team also uses this same methodology to run on AWS. 
+
+### Adding your own datasets 
+
+In addition to the datasets provided in the public bucket by the SDV team, you can also run SDGym on **proprietary datasets**. These can be supplied via a **private S3 bucket**.
+
+This is idea for 
+
+### Adding your own synthesizer 
