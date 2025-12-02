@@ -3,12 +3,12 @@
   "theme": "mint",
   "name": "DataCebo Guides",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#01E0C9",
+    "light": "#03AFF1",
+    "dark": "#959FBD"
   },
   "favicon": "/logo/DataCebo_brandmark_color_July 31 2025.svg",
- 
+
   "navigation": {
     "tabs": [
       {
@@ -32,10 +32,7 @@
           },
           {
             "group": "Enterprise",
-            "pages": [
-              "enterprise/enterprise-data",
-              "enterprise/platform-needs"
-            ]
+            "pages": ["enterprise/enterprise-data", "enterprise/platform-needs"]
           },
           {
             "group": "AI tools",
@@ -52,9 +49,7 @@
         "groups": [
           {
             "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
+            "pages": ["api-reference/introduction"]
           },
           {
             "group": "Endpoint examples",
@@ -110,18 +105,18 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
-    "enabled":false,
+    "enabled": false,
     "socials": {
       "x": "https://x.com/datacebo?lang=en",
       "github": "https://github.com/datacebo",
