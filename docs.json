@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "DataCebo Guides",
   "colors": {
-    "primary": "#01E0C9",
-    "light": "#03AFF1",
-    "dark": "#959FBD"
+    "primary": "#03AFF1",
+    "light": "#0690D1",
+    "dark": "#2EC8FF"
   },
   "favicon": "/logo/DataCebo_brandmark_color_July 31 2025.svg",
 
