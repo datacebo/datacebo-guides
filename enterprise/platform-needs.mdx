@@ -3,13 +3,26 @@ title: "Platform"
 description: "We describe the most common platform requirements for successful synthetic data adoption. "
 ---
 
-**A hosted SaaS service is a non starter** . By design, this product is intended to run on-premises, including in air-gapped environments—a requirement we recognized early on. A SaaS-hosted platform, where enterprises upload their data to train models on our servers, defeats the core purpose of the product. Its very reason for existence is to ensure sensitive enterprise data never leaves organizational boundaries—not when working with third parties, and not even for internal use by developers. As such, any suggestion to upload data externally is a non-starter. 
+### **A hosted SaaS service is a non starter** 
+
+By design, this product is intended to run on-premises, including in air-gapped environments—a requirement we recognized early on. A SaaS-hosted platform, where enterprises upload their data to train models on our servers, defeats the core purpose of the product. Its very reason for existence is to ensure sensitive enterprise data never leaves organizational boundaries—not when working with third parties, and not even for internal use by developers. As such, any suggestion to upload data externally is a non-starter. 
+
+### Enterprise data requierments 
 
 To succeed with wider adoption of synthetic data within an entperise these are the requirements that can act as a guide when evaluating platforms.
 
-- **Scalability:** A synthetic data platform[<u>must scale to 100s of interconnected tables</u>](https://datacebo.com/blog/multi-table-synthesizers/)  in order to be useful for enterprise environments.
-- **Enterprise Data Complexity:** Much of the complexity comes from hidden context not captured in schemas or metadata. [<u>These represent hard constraints</u>](https://datacebo.com/announcements/introducing-cag/) that the platform must recognize and enforce to generate valid data.
-- **Efficient Algorithms:** The platform must enable algorithms that run on CPUs. GPU dependency increases cost and complexity, limiting the number of viable use cases.
+|                            |                                                                                                                                                                                                                                                           |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Scalability                | A synthetic data platform [<u>must scale to 100s of interconnected tables</u>](https://datacebo.com/blog/multi-table-synthesizers/)  in order to be useful for enterprise environments.                                                                   |
+| Enterprise Data Complexity | Much of the complexity comes from hidden context not captured in schemas or metadata. [<u>These represent hard constraints</u>](https://datacebo.com/announcements/introducing-cag/) that the platform must recognize and enforce to generate valid data. |
+|                            |                                                                                                                                                                                                                                                           |
+
+### Computational requirements 
+
+| Non GPU based algorithms | The platform must enable algorithms that run on CPUs. GPU dependency increases cost and complexity, limiting the number of viable use cases. |
+| :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
+
+- **Efficient Algorithms:** 
 - **Robust Evaluation Metrics:** Evaluation should rely only on openly validated, peer-reviewed metrics from academia and industry. We created [**<u><u>SDMetrics </u></u>**](https://docs.sdv.dev/sdmetrics)for this purpose, and it has become widely adopted across both domains.
 - **Data Transformation Toolkit:** Generative models require properly prepared inputs, typically numerical. Because enterprise data spans diverse formats, the platform must include a robust transformation toolkit that supports forward and reverse transforms. Our [**<u>RDT library</u>**](https://docs.sdv.dev/rdt) provides this capability, which is equivalent to feature engineering in predictive AI.
 
