@@ -3,18 +3,21 @@ title: "Project based license"
 description: "How a project based license works and can be the first starting point on your synthetic data journey "
 ---
 
-A project based license enables you to use our software for one well scoped project and achieving a successful implementation. You may have already developed an end to end implementation with SDV Community and are looking to expand and develop the model for larger number of tables. In this page we will give an overview of how it works, what are the key advantages of project based license and a few examples of successful implementations we have seen.
+A **project-based license** allows you to use our software for a single, well-defined project and supports you through achieving a successful implementation. Many teams start by building an end-to-end workflow with SDV Community and then look to scale their model to cover a larger set of tables.
+
+On this page, we provide an overview of how a project-based license works, the key advantages it offers, and examples of successful implementations we’ve seen.
 
 ## How it works?
 
-This project involves building, maintaining, and deploying a generative model using Synthetic Data Vault (SDV) Enterprise for a single data asset. The goal is to enable ongoing synthetic data generation for analytics, development, testing, or privacy-preserving workflows.
+A project involves building, maintaining, and deploying a generative model using Synthetic Data Vault (SDV) Enterprise for a single data asset. The goal is to enable ongoing synthetic data generation for analytics, development, testing, or privacy-preserving or data sharing workflows.
 
 ![Project based license_how it works\_ Nov 24 2025.png](/images/Projectbasedlicense_howitworks_Nov242025.png)
 
 ### Scope: Single Data Asset Modeling
 
-- The project focuses on one data asset, consisting of a collection of interconnected relational tables (e.g., a database schema).
-- The data model is defined via SDV Metadata, which specifies:
+The project focuses on one data asset, consisting of a collection of interconnected relational tables (e.g., a database schema). The data model is defined via SDV Metadata, which specifies:
+
+- 
   - Tables
   - Primary and foreign key relationships
   - Column data types (sdtypes)
@@ -27,29 +30,25 @@ Each retraining operation uses the same SDV metadata (unless an allowed metadata
 
 ### Repetitive Sampling from the Trained Model
 
-- Once the model is trained, you can sample synthetic data any number of times, with no fixed upper limit.
-- Sampling can occur:
-  - At scheduled intervals
-  - On demand
-  - Programmatically within downstream pipelines
-- The synthetic data retains the statistical properties and relationships learned from the original tables, according to the SDV metadata.
+1. Once the model is trained, you can sample synthetic data any number of times, with no fixed upper limit.
+2. Sampling can occur:
+   - At scheduled intervals
+   - On demand
+   - Programmatically within downstream pipelines
 
-  ### Deployment flexibility 
+The synthetic data retains the statistical properties and relationships learned from the original tables, according to the SDV metadata.
 
-  <Note>
-    Technical caveat on this: Right now, a trained SDV model (pkl file) can only be loaded and sampled in an environment with the same Python version. \
-    \
-    For example,  if you trained and saved the synthesizer in an environment with Python 3.11, you cannot later load & sample from it in a different environment with Python 3.10. (Even though SDV Enterprise supports Python 3.10 and Python 3.11)
-  </Note>
-- The trained SDV model can be deployed to any environment where SDV Enterprise is supported, including:
-  - On-premises infrastructure
-  - Cloud platforms
-  - Isolated environments (e.g., VPCs)
-  - Developer workstations
-- Deployment includes the ability to:
-  - Load the trained model
-  - Perform on-demand sampling
-  - Integrate sampling into existing applications or data pipelines
+### Deployment flexibility 
+
+<Note>
+  Technical caveat on this: Right now, a trained SDV model (pkl file) can only be loaded and sampled in an environment with the same Python version. \
+  \
+  For example,  if you trained and saved the synthesizer in an environment with Python 3.11, you cannot later load & sample from it in a different environment with Python 3.10. (Even though SDV Enterprise supports Python 3.10 and Python 3.11)
+</Note>
+
+The trained SDV model can be deployed to any environment where SDV Enterprise is supported, including; on-premises infrastructure or cloud platforms, VPCs or workstations. 
+
+Deployment includes the ability to load the trained model, perform on demand sampling and integrating sampling into existing applications or data pipelines. 
 
 ### Allowed Metadata Updates
 
