@@ -13,28 +13,21 @@ A project involves building, maintaining, and deploying a generative model using
 
 ![Project based license_how it works\_ Nov 24 2025.png](/images/Projectbasedlicense_howitworks_Nov242025.png)
 
-### Scope: Single Data Asset Modeling
+_Steps to get a project specific SDV Enterprise package. _
 
-The project focuses on one data asset, consisting of a collection of interconnected relational tables (e.g., a database schema). The data model is defined via SDV Metadata, which specifies tables, primary and foreign key relationships and column data types (sdtypes). 
+### Get started 
 
-You may retrain the generative model repeatedly, for example:
+The project centers on a single data asset—a collection of interconnected relational tables (e.g., a database schema). The data model is defined using SDV Metadata, which describes the tables, primary and foreign key relationships, and column data types (sdtypes).
 
-- 
-  - When new batches of real data arrive
-  - When metadata parameters are updated
-  - When the model needs quality improvements
+To get started, you can either use SDV Community or request a license key for our AI connectors, which can connect directly to your database, extract the metadata, and register it with DataCebo. After that, you’ll receive a license key to install the SDV Enterprise package for your project in your environment.
 
-Each retraining operation uses the same SDV metadata (unless an allowed metadata update is applied—see Section 4).
+### Training the SDV generative model 
+
+With SDV Enterprise package and the metadata, you can follow the standard steps to train a model. You may retrain the generative model repeatedly for new batches of real data, or when you update certain parameters of the metadata and if you would like to improve the quality of the model. Each retraining operation uses the same SDV metadata (unless an allowed metadata update is applied—see Section 4).
 
 ### Repetitive Sampling from the Trained Model
 
-1. Once the model is trained, you can sample synthetic data any number of times, with no fixed upper limit.
-2. Sampling can occur:
-   - At scheduled intervals
-   - On demand
-   - Programmatically within downstream pipelines
-
-The synthetic data retains the statistical properties and relationships learned from the original tables, according to the SDV metadata.
+Once the model is trained, you can sample synthetic data any number of times, with no fixed upper limit. You can sample at scheduled interval, or on demand or programattically within the downstream pipelines. The synthetic data retains the statistical properties and relationships learned from the original tables, according to the SDV metadata.
 
 ### Deployment flexibility 
 
@@ -52,10 +45,8 @@ Deployment includes the ability to load the trained model, perform on demand sam
 
 During the life of the project, a **predefined, fixed number of metadata updates** are permitted. The allowed updates are restricted to:
 
-1. Updating column “sdtypes”
-   - Example: changing a column from numerical to categorical, or updating datetime formats.
-2. Updating table connections
-   - Example: redefining foreign key relationships or restructuring how tables link together.
+1. Updating column “sdtypes”. Example: changing a column from numerical to categorical, or updating datetime formats.
+2. Updating table connections. Example: redefining foreign key relationships or restructuring how tables link together.
 
 These updates enable controlled evolution of the data model while ensuring stable modeling and sampling across retraining cycles.
 
