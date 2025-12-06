@@ -15,13 +15,11 @@ A project involves building, maintaining, and deploying a generative model using
 
 ### Scope: Single Data Asset Modeling
 
-The project focuses on one data asset, consisting of a collection of interconnected relational tables (e.g., a database schema). The data model is defined via SDV Metadata, which specifies:
+The project focuses on one data asset, consisting of a collection of interconnected relational tables (e.g., a database schema). The data model is defined via SDV Metadata, which specifies tables, primary and foreign key relationships and column data types (sdtypes). 
+
+You may retrain the generative model repeatedly, for example:
 
 - 
-  - Tables
-  - Primary and foreign key relationships
-  - Column data types (sdtypes)
-- You may retrain the generative model repeatedly, for example:
   - When new batches of real data arrive
   - When metadata parameters are updated
   - When the model needs quality improvements
