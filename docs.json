@@ -8,7 +8,6 @@
     "dark": "#0690D1"
   },
   "favicon": "/logo/DataCebo_brandmark_color_July 31 2025.svg",
-
   "navigation": {
     "tabs": [
       {
@@ -32,14 +31,9 @@
           },
           {
             "group": "Enterprise",
-            "pages": ["enterprise/enterprise-data", "enterprise/platform-needs"]
-          },
-          {
-            "group": "AI tools",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "enterprise/enterprise-data",
+              "enterprise/platform-needs"
             ]
           }
         ]
@@ -49,7 +43,9 @@
         "groups": [
           {
             "group": "Licenses",
-            "pages": ["pricing/pricing"]
+            "pages": [
+              "pricing/pricing"
+            ]
           },
           {
             "group": "Pricing",
@@ -79,14 +75,12 @@
     "light": "/logo/datacebo-wordmark-horizontal-black-03-22-21.svg",
     "dark": "/logo/datacebo-wordmark-horizontal-white-03-22-21.svg"
   },
-
   "ui": {
     "show_sidebar": true,
     "show_breadcrumbs": false,
     "show_outline": true,
     "show_next_prev": false
   },
-
   "navbar": {
     "links": [
       {
