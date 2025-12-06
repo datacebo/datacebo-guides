@@ -2,11 +2,13 @@
 title: "Project based license"
 ---
 
-A project based license enables you to use our software for one well scoped project and achieving a successful implementation. You may have already developed an end to end implementation with SDV Community and are looking to expand and develop models for larger databases. In this page we will give an overview of how it works, what are the key advantages of project based license and a few examples of successful implementations we have seen. 
+A project based license enables you to use our software for one well scoped project and achieving a successful implementation. You may have already developed an end to end implementation with SDV Community and are looking to expand and develop models for larger databases. In this page we will give an overview of how it works, what are the key advantages of project based license and a few examples of successful implementations we have seen.
 
-## How it works? 
+## How it works?
 
 This project involves building, maintaining, and deploying a generative model using Synthetic Data Vault (SDV) Enterprise for a single data asset. The goal is to enable ongoing synthetic data generation for analytics, development, testing, or privacy-preserving workflows.
+
+![Project based license_how it works\_ Nov 24 2025.png](/images/Projectbasedlicense_howitworks_Nov242025.png)
 
 ### Scope: Single Data Asset Modeling
 
@@ -31,16 +33,13 @@ Each retraining operation uses the same SDV metadata (unless an allowed metadata
   - Programmatically within downstream pipelines
 - The synthetic data retains the statistical properties and relationships learned from the original tables, according to the SDV metadata.
 
-  ### \
-  Deployment Flexibility
+  ### Deployment flexibility 
 
   <Note>
     Technical caveat on this: Right now, a trained SDV model (pkl file) can only be loaded and sampled in an environment with the same Python version. \
     \
     For example,  if you trained and saved the synthesizer in an environment with Python 3.11, you cannot later load & sample from it in a different environment with Python 3.10. (Even though SDV Enterprise supports Python 3.10 and Python 3.11)
   </Note>
-
-
 - The trained SDV model can be deployed to any environment where SDV Enterprise is supported, including:
   - On-premises infrastructure
   - Cloud platforms
@@ -62,10 +61,10 @@ During the life of the project, a **predefined, fixed number of metadata updates
 
 These updates enable controlled evolution of the data model while ensuring stable modeling and sampling across retraining cycles.
 
-## Key advantages of project based license 
+## Key advantages of project based license
 
 - **Low cost:** Only  per year for a single project.
 - **Full implementation:** You can use it to deliver an end-to-end project, giving you a complete, hands-on experience with the SDV Enterprise product.
 - **Flexible commitment:** There’s no fixed POC end date requiring an upfront decision on a larger investment. You can expand to additional projects as your needs grow.
 - **Enterprise support:** You gain access to our enterprise support channel for direct assistance and faster response times.
-- **Simplified Legal Process: **Additionally, because our project-based license agreement includes confidentiality provisions, there is no need for a separate MNDA.
+- **Simplified Legal Process**: Additionally, because our project-based license agreement includes confidentiality provisions, there is no need for a separate MNDA.
