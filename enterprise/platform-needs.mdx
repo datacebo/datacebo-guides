@@ -11,30 +11,32 @@ By design, this product is intended to run on-premises, including in air-gapped 
 
 To succeed with wider adoption of synthetic data within an entperise these are the requirements that can act as a guide when evaluating platforms.
 
-| Scalability                 | A synthetic data platform [<u>must scale to 100s of interconnected tables</u>](https://datacebo.com/blog/multi-table-synthesizers/)  in order to be useful for enterprise environments.                                                                                                                                                                                       |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Enterprise Data Complexity  | Much of the complexity comes from hidden context not captured in schemas or metadata. [<u>These represent hard constraints</u>](https://datacebo.com/announcements/introducing-cag/) that the platform must recognize and enforce to generate valid data.                                                                                                                     |
-| Data Transformation Toolkit | Generative models require properly prepared inputs, typically numerical. Because enterprise data spans diverse formats, the platform must include a robust transformation toolkit that supports forward and reverse transforms. Our [**<u>RDT library</u>**](https://docs.sdv.dev/rdt) provides this capability, which is equivalent to feature engineering in predictive AI. |
+| Scalability                | A synthetic data platform [<u>must scale to 100s of interconnected tables</u>](https://datacebo.com/blog/multi-table-synthesizers/)  in order to be useful for enterprise environments.                                                                                                                                                                                       |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Enterprise Data Complexity | Much of the complexity comes from hidden context not captured in schemas or metadata. [<u>These represent hard constraints</u>](https://datacebo.com/announcements/introducing-cag/) that the platform must recognize and enforce to generate valid data.                                                                                                                     |
+| Flexible data formats      | Generative models require properly prepared inputs, typically numerical. Because enterprise data spans diverse formats, the platform must include a robust transformation toolkit that supports forward and reverse transforms. Our [**<u>RDT library</u>**](https://docs.sdv.dev/rdt) provides this capability, which is equivalent to feature engineering in predictive AI. |
 
 ### Computational requirements 
 
-| Non GPU based algorithms | The platform must enable algorithms that run on CPUs. GPU dependency increases cost and complexity, limiting the number of viable use cases. |
-| :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
-| Model choice             |                                                                                                                                              |
+| Non GPU based algorithms | The platform must enable algorithms that run on CPUs. GPU dependency increases cost and complexity, limiting the number of viable use cases.                                                                                                                                                                                                   |
+| :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Model choice             | A platform must provide multiple modeling choices for each modality of data. Theses models must allow trade-offs between quality, speed, privacy and transparency.                                                                                                                                                                             |
+|                          | A synthetic data platform should support the sharing and portability of the synthesizer (model) itself, not just the generated data. As a result, privacy-preservation must be evaluated not only on the output data but also on the synthesizer. Without the ability to securely share synthesizers, several important use cases are limited. |
 
-### **Evaluation and Benchmarking Considerations**
+### **Evaluation **
 
 - **ROI vs. Quality:** Evaluation should focus on ROI metrics rather than only on synthetic data quality metrics. Synthetic data quality does not always correlate linearly with ROI. In some cases, higher “quality” does not translate into greater business value for a given use case.
 - **Flexibility for Use Cases:** A powerful synthetic data platform must integrate multiple layers to support diverse use cases, each with distinct quality requirements.
 - **Performance Metrics:** When benchmarking, both the model training time and the time required to generate synthetic data should be considered critical evaluation metrics.
+
+### Benchmarking 
+
 - **Benchmarking Tools:** To enable consistent assessment, we created the **SDGym library**, which provides proper abstractions to evaluate synthetic data along two axes, data quality and performance time.
 - **Robust Evaluation Metrics:** Evaluation should rely only on openly validated, peer-reviewed metrics from academia and industry. We created [**<u>SDMetrics </u>**](https://docs.sdv.dev/sdmetrics)for this purpose, and it has become widely adopted across both domains.
 
-We have assessed our own synthesizers along these two axes, as well as several openly available ones, to ensure transparency and comparability.
+### Privacy 
 
 \_In this graphic, we are showing how different synthetic data generators perform along the time-quality axes. The line represents the pareto front and the ones on the line are good models that have good tradeoffs. Such evaluations are important as users may choose synthesizers based on their need. Some use cases require rapid iteration. \_
-
-A synthetic data platform should support the sharing and portability of the synthesizer (model) itself, not just the generated data. As a result, privacy-preservation must be evaluated not only on the output data but also on the synthesizer. Without the ability to securely share synthesizers, several important use cases are limited.
 
 Our launch of **differentially private synthesizers** demonstrates this capability:
 
