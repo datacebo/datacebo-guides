@@ -40,9 +40,25 @@ Before we categorize different synthetic data generation methods, let us go thro
 
 **Mock data generation**. Methods to generate mock data have existed for a long time. In this one can generate data by writing wrappers around faker or create homegrown scripts or use some tooling provided by the synthetic data vendor - where the vendor has on top of faker has provided you tooling to generate data that is conforms to your formats, creates referentially sound data. To generate this data you don't require any real data and you can generate using metadata alone. The generated data qualifies as type 1 since it has no information, it is completely random. To transform mock data to Type 4, you would require a huge amount of manual effort and it is not typically done. Instead many of our cusomters attempt to use other solutions, instead of attempting to fix the mock data and make it look realistic. 
 
-**Rule based data generation**. Rule based data generation 
+<Note>
+  A synthetic data vendor may provide tooling to generate mock data. The value add with the vendor tooling here is that their tool can produce data that conforms to your formats and if the data is relational it will ensure referential integrity. But essentially the data is still type 1, it has no information content. 
+</Note>
 
-**Using LLMs to generate data** 
+**Rule based data generation**. In this method, one would write specific rules to generate the data. The rules come from the domain knowledge, or knowing some distributions from the real data. One may over time develop a software system that has all the rules that generates this data. Often these rules need to be maintained, updated. The data generated here would be type 2 since many rules are heuristic representation of what may have been seen in the real data. It has some information content since some distributions have been specified. It will conform to the formats and structures. However, to get it to Type 4 would require a lot of manual work. Identifying all the patterns that exist in real data and translating into rules is next to impossible with a human effort. 
+
+**Using LLMs to generate data**. Recently, there has been a surge of interest in creating tabular data using LLMs. In most cases, the usage of LLMs is to not have to code in any programming language to generate the data like the previous two methods or use a user interface, but to be able to directly ask LLMs to generate the data using natural language prompts. This is attractive option if one wants to produce mock data or specify rules to generate data without having to code or without needing any software or tooling. You can use metadata to generate. If you have metadata, it works in three steps 
+
+<Steps>
+  <Step title="Generate data by providing metadata to LLMs">
+    
+  </Step>
+  <Step title="Prompt it with rules to refine the data ">
+    
+  </Step>
+  <Step title="Download the data ">
+    
+  </Step>
+</Steps>
 
 **Building your own foundation model** 
 
