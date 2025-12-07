@@ -70,17 +70,19 @@ Data generated here is either Type 1 or Type 2 as it is heuristically corrected 
 
 <Steps>
   <Step title="Train a generative model by providing metadata and real data ">
-    
+    You use the software system and create a generative model. To create this generative model you provide the software the metadata and a sample of the real data. 
   </Step>
   <Step title="Sample synthetic data from the generative model ">
-    
+    Once you have trained a model you can generate as much synthetic data as you want. The data will have the statistical properties of your real data and emulate its basic structures - referential integrity and data formats. 
   </Step>
   <Step title="Post process and use the data ">
-    
+    In case you have some specific rules that the data must follow, for example column A must have lower values than column B you could examine the generated data and post process and remove invalid rows. 
   </Step>
 </Steps>
 
 Data generated this way will emulate the statistical properties in your real data, it will be rich in information. It will capture all the salient patterns seen in your real data and emulate that in synthetic data (without repeating your real data points). To get it to Type 4, you may have to do some post processing. For some simpler datasets, you would not need to do any post processing and the data is already type 4. 
+
+The amount of manual effort required here is the work required to train the generative model using the software. Different software systems have different level of maturity. Depending upon the maturity your effort maybe minimal. This area is rapidly evolving with our own software system bringing a level of automation to be able to train a generative model on multi table datasets previously unimaginable. 
 
 <Note>
   A synthetic data vendor will provide you a software system to build your own generative model and sample from it. You can assess the vendor from the point of view of how much real data do they need to create the generative model, computational effort needed to create the model, how much pre and post processing they expect you to do when creating the model and sampling the data. However, at this level you are creating synthetic data that is at Type 3 and possibly at Type 4 depending upon the complexity in your original data. 
@@ -95,5 +97,5 @@ Data generated this way will emulate the statistical properties in your real dat
 | Mock data generation                            | Type 1                 | Very high            | No               |
 | Rule based data generation                      | Type 2                 | Very high            | No               |
 | Using LLMs to generate data                     | Type 1 / Type 2        | High                 | Yes              |
-| Building your own foundation model              | Type 3                 | Low                  | Yes              |
-| Building constraints augmented foundation model | Type 4                 | Very Low             | Yes              |
+| Building your own generative model              | Type 3                 | Low                  | Yes              |
+| Building constraints augmented generative model | Type 4                 | Very Low             | Yes              |
