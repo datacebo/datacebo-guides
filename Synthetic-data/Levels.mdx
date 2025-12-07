@@ -92,10 +92,10 @@ The amount of manual effort required here is the work required to train the gene
 
 ### Summary 
 
-| Method                                          | Type of data generated | Manual effort needed | Real data needed |
-| ----------------------------------------------- | ---------------------- | -------------------- | ---------------- |
-| Mock data generation                            | Type 1                 | Very high            | No               |
-| Rule based data generation                      | Type 2                 | Very high            | No               |
-| Using LLMs to generate data                     | Type 1 / Type 2        | High                 | Yes              |
-| Building your own generative model              | Type 3                 | Low                  | Yes              |
-| Building constraints augmented generative model | Type 4                 | Very Low             | Yes              |
+| Method                                          | Type of data generated                                                   | Manual effort needed | Real data needed |
+| ----------------------------------------------- | ------------------------------------------------------------------------ | -------------------- | ---------------- |
+| Mock data generation                            | Type 1: No information content data                                      | Very high            | No               |
+| Rule based data generation                      | Type 2: Heuristically corrected data                                     | Very high            | No               |
+| Using LLMs to generate data                     | Type 1 / Type 2: No information content and some hueristically corrected | Very High            | Yes              |
+| Building your own generative model              | Type 3: Information rich data                                            | Low                  | Yes              |
+| Building constraints augmented generative model | Type 4: Information rich coformative data.                               | Very Low             | Yes              |
