@@ -46,19 +46,23 @@ Before we categorize different synthetic data generation methods, let us go thro
 
 **Rule based data generation**. In this method, one would write specific rules to generate the data. The rules come from the domain knowledge, or knowing some distributions from the real data. One may over time develop a software system that has all the rules that generates this data. Often these rules need to be maintained, updated. The data generated here would be type 2 since many rules are heuristic representation of what may have been seen in the real data. It has some information content since some distributions have been specified. It will conform to the formats and structures. However, to get it to Type 4 would require a lot of manual work. Identifying all the patterns that exist in real data and translating into rules is next to impossible with a human effort. 
 
-**Using LLMs to generate data**. Recently, there has been a surge of interest in creating tabular data using LLMs. In most cases, the usage of LLMs is to not have to code in any programming language to generate the data like the previous two methods or use a user interface, but to be able to directly ask LLMs to generate the data using natural language prompts. This is attractive option if one wants to produce mock data or specify rules to generate data without having to code or without needing any software or tooling. You can use metadata to generate. If you have metadata, it works in three steps 
+**Using LLMs to generate data**. Recently, there has been a surge of interest in creating tabular data using LLMs. In most cases, the usage of LLMs is to not have to code in any programming language to generate the data like the previous two methods or use a user interface, but to be able to directly ask LLMs to generate the data using natural language prompts. This is attractive option if one wants to produce mock data or specify rules to generate data without having to code or without needing any software or tooling. You can use metadata to generate. If you have metadata, it works in three steps: 
 
 <Steps>
   <Step title="Generate data by providing metadata to LLMs">
-    
+    As a first step you provide the metadata to the LLM and ask it to generate the data. You can also ask it to provide the code that you can use in the future to generate the data. If the data is satisfactory you can simply download the data and use it. The data generally created by LLMs is Type 1 or if it makes some approximations for distributions of certain columns - say age,  it will be Type 2. 
   </Step>
   <Step title="Prompt it with rules to refine the data ">
-    
+    After your initial dataset, you can look at the data and provide it additional rules. These additional rules can be provided as prompts. For example, you can say, make sure 80% of my account types are premium and 20% are standard. You can provide a number of rules like this. You may glean information like this from your real data and provide this to the LLMs. 
   </Step>
   <Step title="Download the data ">
-    
+    Once you are fully satisfied with the data you can download this data. 
   </Step>
 </Steps>
+
+<Note>
+  A synthetic data vendor may provide tooling to enable you to do these three steps by providing an interface to an LLM. The tool may ease your interaction with the LLM, may provide some guardrails to make sure an LLM reliably follows your instructions, may provide ability to specify rules via simple config files instead of prompts. However, despite all that you are still generating data that is Type 2 and it would require a huge amount of manual effort to identify all the rules from your real data and provide it to the tool. 
+</Note>
 
 **Building your own foundation model** 
 
