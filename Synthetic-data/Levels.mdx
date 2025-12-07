@@ -36,6 +36,18 @@ Synthetic data for relational and tabular datasets has come a long way. Technica
 
 Before we categorize different synthetic data generation methods, let us go through different methods of generating synthetic data and the workflows that they entail. For each method, we will provide what type of synthetic data it produces based on our type classification above and also describe methods and techniques used to bring them to type 4 at which point the synthetic data becomes usable synthetic data. 
 
+### Methods 
+
+**Mock data generation**. Methods to generate mock data have existed for a long time. In this one can generate data by writing wrappers around faker or create homegrown scripts or use some tooling provided by the synthetic data vendor - where the vendor has on top of faker has provided you tooling to generate data that is conforms to your formats, creates referentially sound data. To generate this data you don't require any real data and you can generate using metadata alone. The generated data qualifies as type 1 since it has no information, it is completely random. To transform mock data to Type 4, you would require a huge amount of manual effort and it is not typically done. Instead many of our cusomters attempt to use other solutions, instead of attempting to fix the mock data and make it look realistic. 
+
+**Rule based data generation**. Rule based data generation 
+
+**Using LLMs to generate data** 
+
+**Building your own foundation model** 
+
+**Building constraints augmented foundation model** 
+
 | Method                                          | Type of data generated | Manual effort needed | Real data needed |
 | ----------------------------------------------- | ---------------------- | -------------------- | ---------------- |
 | Mock data generation                            | Type 1                 | Very high            | No               |
