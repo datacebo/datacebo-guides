@@ -1,5 +1,5 @@
 ---
-title: "What is synthetic data ? "
+title: "What is "AI model generated" synthetic data ? "
 description: "This page provides the background on synthetic data and how it evolved over decades "
 ---
 
@@ -19,7 +19,7 @@ The third type of data that can be synthesized, and the most common and importan
 
 There's one big difference between image or language data and tabular data: Image data and language data are easy to assess. Anyone can look at a collection of this type of data and determine whether or not it looks real, is reasonable, and makes sense. However, it's much harder for an average person to judge tabular data. You have to know the domain very well, and know things like column names, in order to determine whether synthetic tabular data is realistic. That's one of the challenges inherent in assessing synthetic tabular data, which we'll elaborate on later.
 
-## How is synthetic data useful? 
+## How is synthetic data useful?
 
 The first advantage of synthetic data is that it can stand in for real data, helping to mitigate data access issues due to security and privacy concerns. This continues to be one of the biggest reasons to use synthetic data. If you create a model and sample data with all the statistical properties of real data, you can use this synthetic data in place of the real data. You can give it to team members or third parties without worrying about security or privacy, allowing you to scale up your productivity. In 2016, a team from MIT published a peer-reviewed study showing that analysis performed by data scientists on synthetic data achieved the same results as analysis performed by data scientists on the equivalent real data.
 
@@ -40,7 +40,7 @@ Synthetic data generation has been happening for longer than you may think. The 
 
 One important statistical technique is called _copulas_. Although it's an older technique, from 1959 or even earlier, it's very effective — in fact, many of the latest techniques in the machine learning community struggle to beat it. Below you can see two data sets, represented as 3D graphs, with each point standing in for a data point. On the left side is real data, and on the right side is synthetic data. Copulas attempt to capture the distribution of each one of the columns, as well as the correlations between multiple variables. This is done by learning a univariate distribution, and then a multivariate distribution. Once you've built the copulas model, it captures all those properties, and you can sample data from the model. Below on the right is synthetic data that has been sampled, and you can see that the shape of the real data (on the left) is preserved. Copulas is not only one of the easiest techniques to use — it's also one of the most powerful techniques yet found, even after all these years. For tabular data specifically, no other model has been able to beat copulas in terms of performance, accuracy and fidelity. 
 
-### **Long Short-Term Memory Recurrent Neural Networks.** 
+### **Long Short-Term Memory Recurrent Neural Networks.**
 
 Another synthetic data generation technique is called _long short-term memory recurrent neural networks_. This technique was developed in order to learn from time series or sequential data. In sequential data, any one time point is dependent on the previous time point. Say you have a doctor's visit, and then after the visit you go to the pharmacy to get some medicine – you couldn't possibly do these in reverse, because you wouldn't know what medicine you need. There are sequential aspects to the data and how it's generated. 
 
@@ -48,13 +48,13 @@ Recurrent neural networks are popularly used to model this kind of sequential da
 
 Sequential models are very good for sequential data. If you have a sequence of events, and you think that the next event is going to depend on the previous event, this is the kind of generative model you want to use.
 
-### **Generative adversarial networks brought the breakthrough.** 
+### **Generative adversarial networks brought the breakthrough.**
 
 The biggest breakthrough in synthetic data in the last decade came from _generative adversarial networks_ or GANs. GANs led to synthetic image generation, as described earlier. GANs involves two neural networks — standard AI techniques. You ask one neural network, called a generator, to generate realistic-looking data. And then you ask the other neural network, called the discriminator, to detect whether a particular data point is _real_ or _synthetic_. Both networks compete with each other (thus _adversarial_). As a result, both networks eventually achieve an equilibrium, where the generator gets so good at producing synthetic images that the discriminator is not able to discriminate. All of this is done in software. 
 
 This innovation occurred around 2014 or 2015. It spurred a new wave of synthetic data generation, allowing people to create high-resolution images that were hard to tell apart from real photos. A team at MIT has adapted GANs to work for tabular data, introducing a method called CTGAN, which is now widely used to generate tabular synthetic data. 
 
-### **Generative pretrained transformers.** 
+### **Generative pretrained transformers.**
 
 Last but not least are generative pretrained transformers, which have revolutionized synthetic language data and continue to power ChatGPT and other language generators. So there's a new technique called attention-based (?), and they created that. The most interesting thing about this technique is that it allows models to learn from a large corpus of language. It takes in huge amounts of this language data, and is able to learn a pre-trained model. That's why ChatGPT is able to do what it does — because so much language data from around the world is available on the Internet. 
 
