@@ -36,7 +36,7 @@ Synthetic data for relational and tabular datasets has come a long way. Technica
 
 Before we categorize different synthetic data generation methods, let us go through different methods of generating synthetic data and the workflows that they entail. For each method, we will provide what type of synthetic data it produces based on our type classification above and also describe methods and techniques used to bring them to type 4 at which point the synthetic data becomes usable synthetic data. 
 
-### Methods 
+### Methods of synthetic data generation 
 
 **Mock data generation**. Methods to generate mock data have existed for a long time. In this one can generate data by writing wrappers around faker or create homegrown scripts or use some tooling provided by the synthetic data vendor - where the vendor has on top of faker has provided you tooling to generate data that is conforms to your formats, creates referentially sound data. To generate this data you don't require any real data and you can generate using metadata alone. The generated data qualifies as type 1 since it has no information, it is completely random. To transform mock data to Type 4, you would require a huge amount of manual effort and it is not typically done. Instead many of our cusomters attempt to use other solutions, instead of attempting to fix the mock data and make it look realistic. 
 
@@ -66,9 +66,23 @@ Data generated here is either Type 1 or Type 2 as it is heuristically corrected 
   A synthetic data vendor may provide tooling to enable you to do these three steps by providing an interface to an LLM. The tool may ease your interaction with the LLM, may provide some guardrails to make sure an LLM reliably follows your instructions, may provide ability to specify rules via simple config files instead of prompts. However, despite all that you are still generating data that is Type 2 and it would require a huge amount of manual effort to identify all the rules from your real data and provide it to the tool. 
 </Note>
 
-**Building your own foundation model** 
+**Building your own foundation model**. An LLM is a foundational model trained on the world's corpus of data. Similarly, you can train a foundation model on your own specific data if you have access to training software. In this case with a software that can train a generative model you can do the following: 
+
+<Steps>
+  <Step title="Train a generative model by providing metadata and real data ">
+    
+  </Step>
+  <Step title="Sample synthetic data from the generative model ">
+    
+  </Step>
+  <Step title="Post process and use the data ">
+    
+  </Step>
+</Steps>
 
 **Building constraints augmented foundation model** 
+
+### Summary 
 
 | Method                                          | Type of data generated | Manual effort needed | Real data needed |
 | ----------------------------------------------- | ---------------------- | -------------------- | ---------------- |
