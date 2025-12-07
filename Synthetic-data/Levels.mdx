@@ -56,9 +56,11 @@ Before we categorize different synthetic data generation methods, let us go thro
     After your initial dataset, you can look at the data and provide it additional rules. These additional rules can be provided as prompts. For example, you can say, make sure 80% of my account types are premium and 20% are standard. You can provide a number of rules like this. You may glean information like this from your real data and provide this to the LLMs. 
   </Step>
   <Step title="Download the data ">
-    Once you are fully satisfied with the data you can download this data. 
+    Once you are fully satisfied with the data you can download this data.
   </Step>
 </Steps>
+
+Data generated here is either Type 1 or Type 2 as it is heuristically corrected via rules and prompts. To generate data that is Type 4 and usable for downstream applications, one would need a lot of manual effort to create rules for different columns. Even so, humans can specify distributions for some columns, but may not be able to specify correlations between the columns. 
 
 <Note>
   A synthetic data vendor may provide tooling to enable you to do these three steps by providing an interface to an LLM. The tool may ease your interaction with the LLM, may provide some guardrails to make sure an LLM reliably follows your instructions, may provide ability to specify rules via simple config files instead of prompts. However, despite all that you are still generating data that is Type 2 and it would require a huge amount of manual effort to identify all the rules from your real data and provide it to the tool. 
