@@ -66,7 +66,7 @@ Data generated here is either Type 1 or Type 2 as it is heuristically corrected 
   A synthetic data vendor may provide tooling to enable you to do these three steps by providing an interface to an LLM. The tool may ease your interaction with the LLM, may provide some guardrails to make sure an LLM reliably follows your instructions, may provide ability to specify rules via simple config files instead of prompts. However, despite all that you are still generating data that is Type 2 and it would require a huge amount of manual effort to identify all the rules from your real data and provide it to the tool. 
 </Note>
 
-**Building your own foundation model**. An LLM is a foundational model trained on the world's corpus of data. Similarly, you can train a foundation model on your own specific data if you have access to training software. In this case with a software that can train a generative model you can do the following: 
+**Building your own generative model**. An LLM is a generative model trained on the world's corpus of data. Similarly, you can train a generative model on your own specific data if you have access to training software. In this case with a software that can train a generative model you can do the following: 
 
 <Steps>
   <Step title="Train a generative model by providing metadata and real data ">
@@ -79,6 +79,12 @@ Data generated here is either Type 1 or Type 2 as it is heuristically corrected 
     
   </Step>
 </Steps>
+
+Data generated this way will emulate the statistical properties in your real data, it will be rich in information. It will capture all the salient patterns seen in your real data and emulate that in synthetic data (without repeating your real data points). To get it to Type 4, you may have to do some post processing. 
+
+<Note>
+  A synthetic data vendor will provide you a software system to build your own generative model and sample from it. You can assess the vendor from the point of view of how much real data do they need to create the generative model, computational effort needed to create the model, how much pre and post processing they expect you to do when creating the model and sampling the data. However, at this level you are creating synthetic data that is at Type 3 and possibly at Type 4 depending upon the complexity in your original data. 
+</Note>
 
 **Building constraints augmented foundation model** 
 
