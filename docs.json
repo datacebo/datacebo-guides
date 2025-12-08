@@ -15,9 +15,8 @@
         "groups": [
           { 
             "group":"",
-            "pages": [
-              "index"
-            ]
+            "pages":"index"
+            
           },
           {
             "group": "Synthetic data",
