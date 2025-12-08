@@ -14,8 +14,7 @@
         "tab": "Guides",        
         "groups": [
           
-          {
-            "group":"", 
+          { 
             "pages": [
               "index"
             ]
