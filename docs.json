@@ -21,6 +21,13 @@
             ]
           },
           {
+            "group": "Enterprise",
+            "pages": [
+              "enterprise/enterprise-data",
+              "enterprise/platform-needs"
+            ]
+          },
+          {
             "group": "Core Concepts",
             "pages": [
               "core-concepts/RDTs",
@@ -34,13 +41,6 @@
               "community/best-practices",
               "community/using-community",
               "community/using-HMA"
-            ]
-          },
-          {
-            "group": "Enterprise",
-            "pages": [
-              "enterprise/enterprise-data",
-              "enterprise/platform-needs"
             ]
           }
         ]
