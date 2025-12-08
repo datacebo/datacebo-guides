@@ -42,11 +42,15 @@ Similarly, you can use the model to create only representative data points — m
 
 ## **The background of synthetic data generation, and how methods have evolved over the years… and even the decades.** 
 
-Synthetic data generation has been happening for longer than you may think. The first methods were rule-based — in other words, engineers would write specific rules for how to generate the data. For instance, in the healthcare domain, where people deal with a lot of patient data, there is a rule-based tool called Synthea, by MITRE. Then there are statistical techniques, some of which date back to the 1950s. More recently, data scientists have used neural networks for this purpose. And we expect many more tools in the future — the number of techniques that are being produced are growing every day, and there are more coming out as we speak.
+Synthetic data generation has been happening for longer than you may think. The first methods were rule-based — in other words, engineers would write specific rules for how to generate the data. For instance, in the healthcare domain, where people deal with a lot of patient data, there is a rule-based tool called Synthea, by MITRE. Then there are statistical techniques, some of which date back to the 1950s. More recently, AI folks have used neural networks for this purpose. And we expect many more tools in the future — the number of techniques that are being produced are growing every day, and there are more coming out as we speak.
+
+![Variiousways Jp](/images/Variiousways.jpg)
 
 ### Copulas 
 
 One important statistical technique is called _copulas_. Although it's an older technique, from 1959 or even earlier, it's very effective — in fact, many of the latest techniques in the machine learning community struggle to beat it. Below you can see two data sets, represented as 3D graphs, with each point standing in for a data point. On the left side is real data, and on the right side is synthetic data. Copulas attempt to capture the distribution of each one of the columns, as well as the correlations between multiple variables. This is done by learning a univariate distribution, and then a multivariate distribution. Once you've built the copulas model, it captures all those properties, and you can sample data from the model. Below on the right is synthetic data that has been sampled, and you can see that the shape of the real data (on the left) is preserved. Copulas is not only one of the easiest techniques to use — it's also one of the most powerful techniques yet found, even after all these years. For tabular data specifically, no other model has been able to beat copulas in terms of performance, accuracy and fidelity. 
+
+![Copulas Pn](/images/copulas.png)
 
 ### **Long Short-Term Memory Recurrent Neural Networks.**
 
@@ -54,11 +58,15 @@ Another synthetic data generation technique is called _long short-term memory re
 
 Recurrent neural networks are popularly used to model this kind of sequential data, where one data point depends on preceding ones. Recurrent neural networks assume that there is a hidden state that determines the flow of information or factual data creation. Even if we don't know that state, it's there, determining how things are generated. With recurrent neural networks, you learn a model based on this assumption, and you in put data into the model representing that state. Then you get the output, and you feed it back to the next step and the next state. By continuing on like that, you generate the data in sequence. 
 
+![LSTM Pn](/images/LSTM.png)
+
 Sequential models are very good for sequential data. If you have a sequence of events, and you think that the next event is going to depend on the previous event, this is the kind of generative model you want to use.
 
 ### **Generative adversarial networks brought the breakthrough.**
 
 The biggest breakthrough in synthetic data in the last decade came from _generative adversarial networks_ or GANs. GANs led to synthetic image generation, as described earlier. GANs involves two neural networks — standard AI techniques. You ask one neural network, called a generator, to generate realistic-looking data. And then you ask the other neural network, called the discriminator, to detect whether a particular data point is _real_ or _synthetic_. Both networks compete with each other (thus _adversarial_). As a result, both networks eventually achieve an equilibrium, where the generator gets so good at producing synthetic images that the discriminator is not able to discriminate. All of this is done in software. 
+
+![GA Ns Pn](/images/GANs.png)
 
 This innovation occurred around 2014 or 2015. It spurred a new wave of synthetic data generation, allowing people to create high-resolution images that were hard to tell apart from real photos. A team at MIT has adapted GANs to work for tabular data, introducing a method called CTGAN, which is now widely used to generate tabular synthetic data. 
 
