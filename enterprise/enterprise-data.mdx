@@ -1,5 +1,5 @@
 ---
-title: "Enterprise Data"
+title: "Data"
 description: "This page highlights the various complexities of data in enterprise settings. "
 ---
 
@@ -31,7 +31,7 @@ For example, in some multi-table datasets, we see patterns where one or more col
 
 If your real data exhibits this pattern, SDV Enterprise can now generate synthetic multi-table datasets that preserve this behavior. This capability is part of our **Constraint Augmented Generation** (CAG) bundle, available in SDV Enterprise.
 
-**Data generation beyond the real. **Very often, users testing software applications want to generate synthetic data that goes beyond what's visible in the real data. 
+\*\*Data generation beyond the real. \*\*Very often, users testing software applications want to generate synthetic data that goes beyond what's visible in the real data.
 
 <Note>
   Consider an insurance application that provides insurance only to people over 18 — their real data only contains information about people 18 years and older. However, the same company has a lot of software logic that creates responses for people younger than 18. To test this logic, the company needs synthetic data that goes beyond the real data. They may also want to switch this capability on and off for privacy reasons. We address all of these needs through specialized transformers. 
@@ -43,4 +43,4 @@ Or consider address data — in one database, it may be stored as free text in a
 
 **Confidential business information (beyond PII).** In many cases, datasets contain sensitive business information that may not qualify as PII but is still considered confidential—what we refer to as Business Confidential Information (BCI). For example, a bank may have transaction records showing trades with only three counterparties. The identity and limited number of these counterparties are both confidential. With SDV, users can annotate specific columns as BCI, spurring SDV to generate realistic but fake values—such as synthetic bank names—and preserving confidentiality while maintaining data utility.
 
-**Generating synthetic data without real data. **To create synthetic data, we must learn a generative model from real data, even if there is little available. In some scenarios, though, it's difficult to acquire real data, and users want to get started anyway. To overcome this barrier, we created DayZSynthesizer, which can generate data using only metadata, so users can get started more quickly. 
+\*\*Generating synthetic data without real data. \*\*To create synthetic data, we must learn a generative model from real data, even if there is little available. In some scenarios, though, it's difficult to acquire real data, and users want to get started anyway. To overcome this barrier, we created DayZSynthesizer, which can generate data using only metadata, so users can get started more quickly. 
