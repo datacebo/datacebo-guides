@@ -18,9 +18,20 @@ To succeed with wider adoption of synthetic data within an entperise these are t
 
 ### Model flexibility
 
+A platform must provide ability to model data of various types (multi table, sequential and single table), but it must also provide multiple models that are good along different axes. Different use cases require different levels of speed, quality, privacy and transparency. Thus for each modality a platform must provide a prularity o models. Here are few examples why that is needed. 
+
+**Creating synthetic data for clinical trials.**\
+Imagine you have data from only a small number of clinical trials and need to augment it with additional synthetic samples. In this context, transparency is critical. Models built using classical statistical techniques often provide greater explainability and traceability than complex generative methods, making them better suited for regulated environments where auditability is essential.
+
+**Creating synthetic data for consumer surveys.**\
+Consumer survey datasets are often extremely limited in size. With such scarcity, GAN-based approaches are prone to mode collapse and may fail to generate meaningful variation. Because collecting more survey data defeats the very purpose—deriving insights with fewer samples and supplementing them synthetically—you need an approach designed to operate reliably under severe data constraints.
+
+**Creating synthetic data when real data consists of only hundreds of samples.**\
+In some scenarios, each data point is expensive to obtain—for example, when every observation requires an in-person session in a controlled laboratory environment. You may end up with only a few hundred records across many dimensions. This high-dimensional, low-sample-size problem requires a specialized synthesizer that can model complex relationships without overfitting or collapsing.
+
 | Model plurality    | A platform must provide multiple modeling choices for each modality of data. Theses models must allow trade-offs between quality, speed, privacy and transparency. |
 | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Specialized models |                                                                                                                                                                    |
+| Specialized models | A platform must provide ability to train models that can train from as little data possible and also enable training models for highly segmented data.             |
 
 ### Computational requirements
 
@@ -29,7 +40,7 @@ To succeed with wider adoption of synthetic data within an entperise these are t
 |                          |                                                                                                                                              |
 |                          |                                                                                                                                              |
 
-### Evaluation 
+### Evaluation
 
 - **ROI vs. Quality:** Evaluation should focus on ROI metrics rather than only on synthetic data quality metrics. Synthetic data quality does not always correlate linearly with ROI. In some cases, higher “quality” does not translate into greater business value for a given use case.
 - **Flexibility for Use Cases:** A powerful synthetic data platform must integrate multiple layers to support diverse use cases, each with distinct quality requirements.
