@@ -18,7 +18,7 @@ To succeed with wider adoption of synthetic data within an entperise these are t
 
 ### Model flexibility
 
-A platform must provide ability to model data of various types (multi table, sequential and single table), but it must also provide multiple models that are good along different axes. Different use cases require different levels of speed, quality, privacy and transparency. Thus for each modality a platform must provide a prularity o models. Here are few examples why that is needed. 
+A platform must be able to model data across multiple modalities—multi-table, sequential, and single-table—but it must also offer a range of models that excel along different performance axes. Use cases vary widely in their requirements for speed, quality, privacy, and transparency, and no single model can optimize for all of these simultaneously. For each data modality, a platform therefore needs a plurality of modeling approaches. The following examples illustrate why this diversity is essential.
 
 **Creating synthetic data for clinical trials.**\
 Imagine you have data from only a small number of clinical trials and need to augment it with additional synthetic samples. In this context, transparency is critical. Models built using classical statistical techniques often provide greater explainability and traceability than complex generative methods, making them better suited for regulated environments where auditability is essential.
@@ -30,7 +30,7 @@ Consumer survey datasets are often extremely limited in size. With such scarcity
 In some scenarios, each data point is expensive to obtain—for example, when every observation requires an in-person session in a controlled laboratory environment. You may end up with only a few hundred records across many dimensions. This high-dimensional, low-sample-size problem requires a specialized synthesizer that can model complex relationships without overfitting or collapsing.
 
 <Note>
-  Different use cases demand different levels of quality, transparency, speed and privacy, and present extremen data constraints. No single model can be good along all axes. Thus a platform must delibrately address these by providing specialized modeling techniques that can help a variety of use cases. 
+  Different use cases demand varying levels of quality, transparency, speed, and privacy, and many involve extreme data constraints. No single model can excel across all these dimensions. A robust platform must therefore address them deliberately—offering specialized modeling techniques tailored to the specific requirements of each use case.
 </Note>
 
 | Model plurality    | A platform must provide multiple modeling choices for each modality of data. Theses models must allow trade-offs between quality, speed, privacy and transparency. |
