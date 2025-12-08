@@ -29,6 +29,10 @@ Consumer survey datasets are often extremely limited in size. With such scarcity
 **Creating synthetic data when real data consists of only hundreds of samples.**\
 In some scenarios, each data point is expensive to obtain—for example, when every observation requires an in-person session in a controlled laboratory environment. You may end up with only a few hundred records across many dimensions. This high-dimensional, low-sample-size problem requires a specialized synthesizer that can model complex relationships without overfitting or collapsing.
 
+<Note>
+  Different use cases demand different levels of quality, transparency, speed and privacy, and present extremen data constraints. No single model can be good along all axes. Thus a platform must delibrately address these by providing specialized modeling techniques that can help a variety of use cases. 
+</Note>
+
 | Model plurality    | A platform must provide multiple modeling choices for each modality of data. Theses models must allow trade-offs between quality, speed, privacy and transparency. |
 | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Specialized models | A platform must provide ability to train models that can train from as little data possible and also enable training models for highly segmented data.             |
