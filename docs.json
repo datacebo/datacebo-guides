@@ -11,8 +11,15 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Guides",        
         "groups": [
+          
+          {
+            "group":"", 
+            "pages": [
+              "index"
+            ]
+          },
           {
             "group": "Synthetic data",
             "pages": [
