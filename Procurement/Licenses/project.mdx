@@ -13,15 +13,15 @@ A project involves building, maintaining, and deploying a generative model using
 
 ![Project based license_how it works\_ Nov 24 2025.png](/images/Projectbasedlicense_howitworks_Nov242025.png)
 
-_Steps to get a project specific SDV Enterprise package. _
+\_Steps to get a project specific SDV Enterprise package. \_
 
-### Get started 
+### Get started
 
 The project centers on a single data asset—a collection of interconnected relational tables (e.g., a database schema). The data model is defined using SDV Metadata, which describes the tables, primary and foreign key relationships, and column data types (sdtypes).
 
 To get started, you can either use SDV Community or request a license key for our AI connectors, which can connect directly to your database, extract the metadata, and register it with DataCebo. After that, you’ll receive a license key to install the SDV Enterprise package for your project in your environment.
 
-### Training the SDV generative model 
+### Training the SDV generative model
 
 With SDV Enterprise package and the metadata, you can follow the standard steps to train a model. You may retrain the generative model repeatedly for new batches of real data, or when you update certain parameters of the metadata and if you would like to improve the quality of the model. Each retraining operation uses the same SDV metadata (unless an allowed metadata update is applied—see Section 4).
 
@@ -29,7 +29,7 @@ With SDV Enterprise package and the metadata, you can follow the standard steps 
 
 Once the model is trained, you can sample synthetic data any number of times, with no fixed upper limit. You can sample at scheduled interval, or on demand or programattically within the downstream pipelines. The synthetic data retains the statistical properties and relationships learned from the original tables, according to the SDV metadata.
 
-### Deployment flexibility 
+### Deployment flexibility
 
 <Note>
   Technical caveat on this: Right now, a trained SDV model (pkl file) can only be loaded and sampled in an environment with the same Python version. \
@@ -37,9 +37,9 @@ Once the model is trained, you can sample synthetic data any number of times, wi
   For example,  if you trained and saved the synthesizer in an environment with Python 3.11, you cannot later load & sample from it in a different environment with Python 3.10. (Even though SDV Enterprise supports Python 3.10 and Python 3.11)
 </Note>
 
-The trained SDV model can be deployed to any environment where SDV Enterprise is supported, including; on-premises infrastructure or cloud platforms, VPCs or workstations. 
+The trained SDV model can be deployed to any environment where SDV Enterprise is supported, including; on-premises infrastructure or cloud platforms, VPCs or workstations.
 
-Deployment includes the ability to load the trained model, perform on demand sampling and integrating sampling into existing applications or data pipelines. 
+Deployment includes the ability to load the trained model, perform on demand sampling and integrating sampling into existing applications or data pipelines.
 
 ### Allowed Metadata Updates
 
@@ -57,3 +57,13 @@ These updates enable controlled evolution of the data model while ensuring stabl
 - **Flexible commitment:** There’s no fixed POC end date requiring an upfront decision on a larger investment. You can expand to additional projects as your needs grow.
 - **Enterprise support:** You gain access to our enterprise support channel for direct assistance and faster response times.
 - **Simplified Legal Process**: Additionally, because our project-based license agreement includes confidentiality provisions, there is no need for a separate MNDA.
+
+## Examples of projects
+
+**Reducing ETL Rework Through Production-Scale Synthetic Data.** An enterprise team relies on an offshore group to build SQL-based ETL pipelines that feed dashboards and reports. Because the offshore team does not have access to production-scale data—with its full volume and variety—their ETL scripts often fail or perform poorly when tested onshore. This leads to repeated bug reports, rework, and delays.
+
+To solve this, the enterprise team created a synthetic dataset of over 100 million records for one database and shared it with the offshore team. With realistic test data, the offshore team was able to debug and tune their pipelines upfront, reducing JIRA tickets by 20%.
+
+**Operationalizing Synthetic Data for Scalable Performance Testing Across Modules.** An insurance-focused ISV supports many clients using a shared product built on a universal data model with 1,000+ tables. Because each client uses different modules and the vendor releases updates frequently, performance issues often appear when clients load their own large datasets after a new release. The ISV cannot replicate client-level data volume in their test environments, making it hard to detect throughput problems before deployment.
+
+To evaluate whether synthetic data can help, the team selected one client using a specific module that touches 50 tables. They built an SDV model using a small sample dataset, generated high-volume synthetic data, and tested the next software release with this realistic load. After optimizing the software based on these tests, the release met performance expectations.
