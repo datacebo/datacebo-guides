@@ -7,12 +7,6 @@ A **project-based license** allows you to use our software for a single, well-de
 
 On this page, we provide an overview of why and how a project-based license works, the key advantages it offers, and examples of successful implementations we’ve seen.
 
-## Why project based license works?
-
-With broad usage of SDV Community and several enterprise customers we saw that customers adopting synthetic data naturally fall into adopting it for a project first. We like this approach since providing value on a single project is usually the best way to think about wider adoption. Below we present a few examples of projects where in each case we see that the there could be multiple projects for the same use case, but customers usually started with one, proved value for the synthetic data and then expanded to multiple projects within the same use case. 
-
-Projects also naturally define the boundaries of the dataset that one would use. So a project usually has a well defined database (could be a subset of the larger database), where a set of data tables are modeled together. So in essence a project is equivalent to a database or a data asset (a set of interconnected tables) and it can be characterized using a data model and SDV metadata. 
-
 ### Examples of projects
 
 **Reducing ETL Rework Through Production-Scale Synthetic Data.** An enterprise team relies on an offshore group to build SQL-based ETL pipelines that feed dashboards and reports. Because the offshore team does not have access to production-scale data—with its full volume and variety—their ETL scripts often fail or perform poorly when tested onshore. This leads to repeated bug reports, rework, and delays.
@@ -22,6 +16,14 @@ To solve this, the enterprise team created a synthetic dataset of over 100 milli
 **Operationalizing Synthetic Data for Scalable Performance Testing Across Modules.** An insurance-focused ISV supports many clients using a shared product built on a universal data model with 1,000+ tables. Because each client uses different modules and the vendor releases updates frequently, performance issues often appear when clients load their own large datasets after a new release. The ISV cannot replicate client-level data volume in their test environments, making it hard to detect throughput problems before deployment.
 
 To evaluate whether synthetic data can help, the team selected one client using a specific module that touches 50 tables. They built an SDV model using a small sample dataset, generated high-volume synthetic data, and tested the next software release with this realistic load. After optimizing the software based on these tests, the release met performance expectations.
+
+## Why project based license works?
+
+With broad usage of SDV Community and several enterprise customers we saw that customers adopting synthetic data naturally fall into adopting it for a project first. We like this approach since providing value on a single project is usually the best way to think about wider adoption. Below we present a few examples of projects where in each case we see that the there could be multiple projects for the same use case, but customers usually started with one, proved value for the synthetic data and then expanded to multiple projects within the same use case. 
+
+Projects also naturally define the boundaries of the dataset that one would use. So a project usually has a well defined database (could be a subset of the larger database), where a set of data tables are modeled together. So in essence a project is equivalent to a database or a data asset (a set of interconnected tables) and it can be characterized using a data model and SDV metadata. 
+
+### 
 
 ## Key advantages of project based license
 
