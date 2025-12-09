@@ -34,7 +34,18 @@ Finally you could try to enhance your SaaS software using DataCebo (or SDV) soft
 
 To solve this, the enterprise team created a synthetic dataset of over 100 million records for one database and shared it with the offshore team. With realistic test data, the offshore team was able to debug and tune their pipelines upfront, reducing JIRA tickets by 20%.
 
-Given this success, the enterprise team now wants to expand synthetic data generation to additional databases to improve productivity across multiple offshore teams.
+<Check>
+  Given this success, the enterprise team now wants to expand synthetic data generation to additional databases to improve productivity across multiple offshore teams.
+</Check>
+
+**Operationalizing Synthetic Data for Scalable Performance Testing Across Modules.** An insurance-focused ISV supports many clients using a shared product built on a universal data model with 1,000+ tables. Because each client uses different modules and the vendor releases updates frequently, performance issues often appear when clients load their own large datasets after a new release. The ISV cannot replicate client-level data volume in their test environments, making it hard to detect throughput problems before deployment.
+
+To evaluate whether synthetic data can help, the team selected one client using a specific module that touches 50 tables. They built an SDV model using a small sample dataset, generated high-volume synthetic data, and tested the next software release with this realistic load. After optimizing the software based on these tests, the release met performance expectations.
+
+<Check>
+  Following this success, the ISV now wants to generate synthetic data for multiple clients for the same module, and eventually for multiple modules. Each module-and-client combination becomes its own project, so the team aims to operationalize SDV to support many projects efficiently.
+</Check>
+
 
 Enhancing your SaaS offering: \*\*Integrating the DataCebo Software into a Software as a Service application to enhance your offering, as long as it is hosted in your environment and the Software as a Service does not compete with the DataCebo Software.
 
