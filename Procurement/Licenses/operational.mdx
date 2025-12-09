@@ -28,9 +28,13 @@ Operational use usually means that you are using SDV Software across more projec
 
 Finally you could try to enhance your SaaS software using DataCebo (or SDV) software; which is not possible in a project based license. 
 
-### Examples
+### Examples of expanding from one project to multiple projects 
 
-An enterprise team has an offshore team that writes data ETL pipelines for a data model. These ETL pipelines produce the necessary output for dashboards and various reports. The data is in microsoft SQL. The offshore team does not have access to the volumne and variety of data that they have in production to test their ETL pipelines. As a result, when the offshore team sends the ETL scripts or SQL queries, the onshore team usually runs in bugs or performance issues. They raise tickets and the offshore team reworks the scripts. This back and forth is time consuming and usually results in delays in generating reports and simply lack of productivity. As their first project, they picked one database , build a model and created 100 million+ synthetic data points used to created synthetic data for a mysql database. They share this data with their offshore team. Offshore team now uses this data to test and debuge their ETL pipelines and queries. It reduced the back and forth by 20% (as measured by the number of JIRA tickets). Now the enterprise team wants to expand this to another database over which analytical or ETL pipelines are being written. Or given the results from the first project, they may want to do this for several databases. 
+**Reducing ETL Rework Through Production-Scale Synthetic Data.** An enterprise team relies on an offshore group to build SQL-based ETL pipelines that feed dashboards and reports. Because the offshore team does not have access to production-scale data—with its full volume and variety—their ETL scripts often fail or perform poorly when tested onshore. This leads to repeated bug reports, rework, and delays.
+
+To solve this, the enterprise team created a synthetic dataset of over 100 million records for one database and shared it with the offshore team. With realistic test data, the offshore team was able to debug and tune their pipelines upfront, reducing JIRA tickets by 20%.
+
+Given this success, the enterprise team now wants to expand synthetic data generation to additional databases to improve productivity across multiple offshore teams.
 
 Enhancing your SaaS offering: \*\*Integrating the DataCebo Software into a Software as a Service application to enhance your offering, as long as it is hosted in your environment and the Software as a Service does not compete with the DataCebo Software.
 
