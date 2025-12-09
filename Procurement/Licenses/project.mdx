@@ -7,13 +7,25 @@ A **project-based license** allows you to use our software for a single, well-de
 
 On this page, we provide an overview of how a project-based license works, the key advantages it offers, and examples of successful implementations we’ve seen.
 
+## Why project based license works? 
+
+### Examples of projects
+
+**Reducing ETL Rework Through Production-Scale Synthetic Data.** An enterprise team relies on an offshore group to build SQL-based ETL pipelines that feed dashboards and reports. Because the offshore team does not have access to production-scale data—with its full volume and variety—their ETL scripts often fail or perform poorly when tested onshore. This leads to repeated bug reports, rework, and delays.
+
+To solve this, the enterprise team created a synthetic dataset of over 100 million records for one database and shared it with the offshore team. With realistic test data, the offshore team was able to debug and tune their pipelines upfront, reducing JIRA tickets by 20%.
+
+**Operationalizing Synthetic Data for Scalable Performance Testing Across Modules.** An insurance-focused ISV supports many clients using a shared product built on a universal data model with 1,000+ tables. Because each client uses different modules and the vendor releases updates frequently, performance issues often appear when clients load their own large datasets after a new release. The ISV cannot replicate client-level data volume in their test environments, making it hard to detect throughput problems before deployment.
+
+To evaluate whether synthetic data can help, the team selected one client using a specific module that touches 50 tables. They built an SDV model using a small sample dataset, generated high-volume synthetic data, and tested the next software release with this realistic load. After optimizing the software based on these tests, the release met performance expectations.
+
 ## How it works?
 
 A project involves building, maintaining, and deploying a generative model using Synthetic Data Vault (SDV) Enterprise for a single data asset. The goal is to enable ongoing synthetic data generation for analytics, development, testing, or privacy-preserving or data sharing workflows.
 
 ![Project based license_how it works\_ Nov 24 2025.png](/images/Projectbasedlicense_howitworks_Nov242025.png)
 
-\_Steps to get a project specific SDV Enterprise package. \_
+_Steps to get a project specific SDV Enterprise package. _
 
 ### Get started
 
@@ -59,12 +71,4 @@ These updates enable controlled evolution of the data model while ensuring stabl
 | **Enterprise support**       | You gain access to our enterprise support channel for direct assistance and faster response times.                                            |
 | **Simplified Legal Process** | Additionally, because our project-based license agreement includes confidentiality provisions, there is no need for a separate MNDA.          |
 
-## Examples of projects
-
-**Reducing ETL Rework Through Production-Scale Synthetic Data.** An enterprise team relies on an offshore group to build SQL-based ETL pipelines that feed dashboards and reports. Because the offshore team does not have access to production-scale data—with its full volume and variety—their ETL scripts often fail or perform poorly when tested onshore. This leads to repeated bug reports, rework, and delays.
-
-To solve this, the enterprise team created a synthetic dataset of over 100 million records for one database and shared it with the offshore team. With realistic test data, the offshore team was able to debug and tune their pipelines upfront, reducing JIRA tickets by 20%.
-
-**Operationalizing Synthetic Data for Scalable Performance Testing Across Modules.** An insurance-focused ISV supports many clients using a shared product built on a universal data model with 1,000+ tables. Because each client uses different modules and the vendor releases updates frequently, performance issues often appear when clients load their own large datasets after a new release. The ISV cannot replicate client-level data volume in their test environments, making it hard to detect throughput problems before deployment.
-
-To evaluate whether synthetic data can help, the team selected one client using a specific module that touches 50 tables. They built an SDV model using a small sample dataset, generated high-volume synthetic data, and tested the next software release with this realistic load. After optimizing the software based on these tests, the release met performance expectations.
+## 
