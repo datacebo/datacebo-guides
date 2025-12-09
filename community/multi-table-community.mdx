@@ -3,28 +3,28 @@ title: "Multi table synthesis "
 description: "Understanding the full scope of multi table synthesis "
 ---
 
-Multi table synthetic data generation is complex especially when trying to do for enterprise-grade datasets. This guide talks through the various challenges we have seen and how SDV addresses them. When entering a discussion about multitable synthesis it is important to keep these in mind. 
+Multi table synthetic data generation is complex especially when trying to do for enterprise-grade datasets. This guide talks through the various challenges we have seen and how SDV addresses them. When entering a discussion about multitable synthesis it is important to keep these in mind.
 
-## Various complexity axes 
+## Various complexity axes
 
-When evaluating multi table synthetic data generators, we found there is not a full understanding the complexity of data one would encounter when one takes a synthetic data generation platform across enterprises. We have repeatedly seen many enterprises being promised a solution that will model and generate multi table synthetic data, do well on demos or POCs (probably why their license was acquired) but when taken to real enterprise  use cases they fail. 
+When evaluating multi table synthetic data generators, we found there is not a full understanding the complexity of data one would encounter when one takes a synthetic data generation platform across enterprises. We have repeatedly seen many enterprises being promised a solution that will model and generate multi table synthetic data, do well on demos or POCs (probably why their license was acquired) but when taken to real enterprise  use cases they fail.
 
-### Basics - Referential Integrity and Cardinality 
+### Basics - Referential Integrity and Cardinality
 
-This is a basic requirement that any multi table synthesis have referential intergity. Simply put, in every pair of parent-child, there should not be a child without a parent. For example, if you have a customers table and a transactions table and customerID that connects them. If you have a transaction with a customerID = abs4325 you must have an entry in the customers table with that customerID. It is still surprising to see solutions that will not satisfy this simple requirement. 
+This is a basic requirement that any multi table synthesis have referential intergity. Simply put, in every pair of parent-child, there should not be a child without a parent. For example, if you have a customers table and a transactions table and customerID that connects them. If you have a transaction with a customerID = abs4325 you must have an entry in the customers table with that customerID. It is still surprising to see solutions that will not satisfy this simple requirement.
 
-Cardinality is a requirement where if your real data has a certain number minimum children for a parent that number should be preserved. 
+Cardinality is a requirement where if your real data has a certain number minimum children for a parent that number should be preserved.
 
-### Scalability 
+### Scalability
 
-Once that 
+Once that
 
-### Inter-table trends 
+### Inter-table trends
 
-### Inter table constraints 
+### Inter table constraints
 
-## Targeted sampling  
+## Targeted sampling
 
-## Use of GPU based approaches 
+## Use of GPU based approaches
 
 ## Benchmarking
