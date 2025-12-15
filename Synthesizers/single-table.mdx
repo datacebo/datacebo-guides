@@ -28,3 +28,11 @@ Use this [<u>synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modelin
 If you don't have enough data to accurately train a synthesizer, this [<u>synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/bootstrapsynthesizer) is helpful. It bootstraps your data with more examples, and then runs it through SDV's algorithms.
 
 The [<u>DPGCSynthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/dpgcsynthesizer) creates synthetic data that is differentially private. It is based on the classical statistical methods from the Gaussian Copula synthesizer with added privacy guarantees.
+
+### Quick cheat sheet for different synthesizers 
+
+| Synthesizer    | Speed     | Quality | Transparency | Privacy | Training data needs |
+| -------------- | --------- | ------- | ------------ | ------- | ------------------- |
+| CTGAN          | Medium    | High    | Low          | Medium  | High                |
+| GaussianCopula | Very High | Medium  | High         | Medium  | Low                 |
+| TVAE           |           |         |              |         |                     |
