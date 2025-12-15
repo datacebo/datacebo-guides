@@ -3,12 +3,22 @@ title: "Single table "
 description: "Various single table synthesizers and their utility"
 ---
 
-## SDV Community 
+## SDV Community
 
-**CTGAN Synthesizer **The [<u>CTGAN Synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/ctgansynthesizer) uses GAN-based, deep learning methods to train a model and generate synthetic data. It is our most popular and most used synthesizer.
+**CTGAN Synthesizer ** The [<u>CTGAN Synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/ctgansynthesizer) uses GAN-based, deep learning methods to train a model and generate synthetic data. It is our most popular and most used synthesizer.
 
 The [<u>TVAE Synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/tvaesynthesizer) uses a variational autoencoder (VAE)-based, neural network techniques to train a model and generate synthetic data. If data quality is your highest priority you should use this synthesizer.
 
-The[<u>Gaussian Copula Synthesize</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/gaussiancopulasynthesizer) r uses classic, statistical methods to train a model and generate synthetic data. It achieves a perfect balance between speed and quality. It allows you to conditionally sample to created targeted data for your business use cases.
+The [<u>Gaussian Copula Synthesize</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/gaussiancopulasynthesizer) r uses classic, statistical methods to train a model and generate synthetic data. It achieves a perfect balance between speed and quality. It allows you to conditionally sample to created targeted data for your business use cases.
 
 The [<u>Copula GAN Synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/copulagansynthesizer) uses a mix of classic, statistical methods and GAN-based deep learning methods to train a model and generate synthetic data.
+
+## SDV Enterprise 
+
+This [<u>synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/xgcsynthesizer) is an enhanced version of the publicly-available GaussianCopula synthesizer, capable of modeling complex distributions with higher accuracy.
+
+Use this [<u>synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/segmentsynthesizer) if your data is highly segmented – for example, if you have a customer type with distinct purchasing patterns (like high earners). This synthesizer models each segment individually.
+
+If you don't have enough data to accurately train a synthesizer, this [<u>synthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/bootstrapsynthesizer) is helpful. It bootstraps your data with more examples, and then runs it through SDV's algorithms.
+
+The [<u>DPGCSynthesizer</u>](https://docs.sdv.dev/sdv/single-table-data/modeling/synthesizers/dpgcsynthesizer) creates synthetic data that is differentially private. It is based on the classical statistical methods from the Gaussian Copula synthesizer with added privacy guarantees.
