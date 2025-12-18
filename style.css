@@ -1,3 +1,14 @@
 #pagination {
   display: none;
 }
+
+#sidebar {
+  left: 0;
+}
+
+.nav-tabs {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -49vw;
+}
