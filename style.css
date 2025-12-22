@@ -6,6 +6,21 @@
   left: 0;
 }
 
+#content-area #header .eyebrow {
+  display: none;
+}
+
+#page-context-menu #page-context-menu-button {
+  > * {
+    font-size: 12px;
+    line-height: 12px;
+  }
+} 
+
+#table-of-contents > button {
+  display: none;
+}
+
 .nav-tabs {
   position: relative;
   left: 50%;
