@@ -2,6 +2,10 @@
   display: none;
 }
 
+#topbar-cta-button {
+  display: none;
+}
+
 #sidebar {
   left: 0;
 }
@@ -11,9 +15,17 @@
 }
 
 #page-context-menu #page-context-menu-button {
+  border-right-width: 1px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+
   > * {
     font-size: 12px;
     line-height: 12px;
+  }
+
+  + button {
+    display: none;
   }
 } 
 
