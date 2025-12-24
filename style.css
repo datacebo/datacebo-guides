@@ -15,6 +15,7 @@
 }
 
 #page-context-menu #page-context-menu-button {
+  padding: 2px 6px;
   border-right-width: 1px;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -38,6 +39,10 @@
   left: 50%;
   width: 100vw;
   margin-left: -49vw;
+}
+
+.navbar-link {
+  display: none;
 }
 
 .nav-logo {
