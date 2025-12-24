@@ -34,6 +34,16 @@
   display: none;
 }
 
+#content-container {
+  > div {
+    padding-top: 10rem;
+
+    @media (min-width: 1024px) {
+      padding-top: 0;
+    }
+  }
+}
+
 .nav-tabs {
   position: relative;
   left: 50%;
