@@ -10,6 +10,12 @@
   left: 0;
 }
 
+#content {
+  span {
+    line-height: 1.6em !important;
+  }
+}
+
 #content-area #header .eyebrow {
   display: none;
 }
@@ -31,6 +37,10 @@
 } 
 
 #table-of-contents > button {
+  display: none;
+}
+
+#table-of-contents-content li:not([data-depth="0"]) {
   display: none;
 }
 
