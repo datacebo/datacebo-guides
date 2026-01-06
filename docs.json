@@ -79,8 +79,8 @@
     }
   },
   "logo": {
-    "light": "/logo/datacebo-wordmark-horizontal-black-03-22-21.svg",
-    "dark": "/logo/datacebo-wordmark-horizontal-white-03-22-21.svg"
+    "light": "/logo/datacebo-horizontal-logo-black.svg",
+    "dark": "/logo/datacebo-horizontal-logo-white.svg"
   },
   "ui": {
     "show_sidebar": true,
