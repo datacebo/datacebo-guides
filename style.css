@@ -55,10 +55,9 @@
 }
 
 .nav-tabs {
-  position: relative;
-  left: 50%;
   width: 100vw;
-  margin-left: -49vw;
+  margin-inline: calc(50% - 50vw);
+  padding-left: 16px;
 }
 
 .navbar-link {
