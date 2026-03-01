@@ -9,11 +9,24 @@
   },
   "favicon": "/logo/DataCebo_brandmark_color_July 31 2025.svg",
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Documentation",
+          "icon": "book-open-cover",
+          "href": "https://docs.sdv.dev/sdv/"
+        },
+        {
+          "anchor": "Blog",
+          "icon": "newspaper",
+          "href": "https://datacebo.com/blog/"
+        }
+      ]
+    },
     "tabs": [
       {
-        "tab": "Guides",        
+        "tab": "Guides",
         "groups": [
-         
           {
             "group": "Synthetic data",
             "pages": [
@@ -50,33 +63,15 @@
         "groups": [
           {
             "group": "Licenses",
-            "pages": [
-              "pricing/pricing"
-            ]
+            "pages": []
           },
           {
             "group": "Pricing",
-            "pages": [
-              "pricing/pricing"
-            ]
+            "pages": []
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://docs.sdv.dev/sdv/",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://datacebo.com/blog/",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/datacebo-horizontal-logo-black.svg",
