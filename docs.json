@@ -26,7 +26,7 @@
     "tabs": [
       {
         "tab": "SDV",
-        "groups": [
+        "pages": [
           {
             "group": "Synthetic data",
             "pages": [
@@ -44,6 +44,12 @@
             "group": "Core Concepts",
             "pages": [
               "core-concepts/constraints"
+            ]
+          },
+          {
+            "group": "Evaluation",
+            "pages": [
+              "benchmarking"
             ]
           }
         ]
