@@ -44,8 +44,7 @@
             "group": "Core Concepts",
             "pages": [
               "core-concepts/RDTs",
-              "core-concepts/constraints",
-              "core-concepts/workflows"
+              "core-concepts/constraints"
             ]
           },
           {
