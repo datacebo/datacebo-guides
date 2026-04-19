@@ -1,4 +1,57 @@
 ---
-title: 'Benchmarking'
+title: "Benchmarking"
 ---
 
+As synthetic data becomes critical for enterprises—enabling improved data access, availability, and more reliable AI agents—the importance of robust synthetic data generation technologies has grown in parallel.
+
+However, in examining existing benchmarking efforts, we identified several foundational limitations.
+
+1. First, most benchmarks are run at a single point in time rather than as continuously operating systems. As a result, their findings quickly become outdated. This is particularly problematic in a landscape where AI software and underlying dependencies evolve rapidly.
+2. Second, the majority of evaluations focus narrowly on data quality, often overlooking other critical dimensions such as performance (compute time), maintainability, coverage, reliability, and stability. In practice, enterprise adoption depends heavily on these latter attributes—yet many synthetic data generators fall short along these axes.
+3. Finally, the datasets used in many benchmarks are not representative of real-world enterprise complexity. They tend to be academic in nature, reflecting their origins, and fail to capture the structural, relational, and operational challenges present in production environments.
+
+## SDGym - An open, transparent, benchmarking system
+
+## Principles we follow to assess enterprise readiness for synthetic data generators 
+
+To address these, we adopted several principles in our benchmarking run and we would like to share these in this doc. And also share our commentary that is about our recent run. 
+
+**Reliability Principle**
+
+We run our benchmarking system on a continuous monthly cadence to ensure that all evaluated synthesizers remain dependable over time. This allows us to incorporate new datasets and assess models against increasingly comprehensive benchmark suites. More importantly, by continuously testing publicly available generators, we verify that they are actively maintained, stable, and compatible with evolving dependencies. Without this ongoing validation, neither the software nor the synthetic data it produces can be considered reliable.
+
+**Operational Readiness Principle**
+
+To be enterprise-ready, a synthetic data generator must produce results reliably and within a bounded time. To enforce this, our benchmark applies a fixed timeout for each dataset–synthesizer combination (typically five days).
+
+If a synthesizer fails to complete or produce results within this window, its output for that dataset defaults to a uniform synthesizer baseline (for both single-table and multi-table settings). This reflects a core enterprise requirement: a system must always produce a usable output—even if it is a minimal fallback—rather than fail silently or indefinitely.
+
+**Pareto Principle**\
+We evaluate synthetic data generators across two competing objectives: quality and performance. Quality is defined as the average data quality across datasets, while performance is measured as the log₁₀ of aggregate runtime.
+
+These dimensions define a Pareto frontier. A generator lies on the frontier only if no other generator outperforms it on both axes simultaneously. This ensures that models are evaluated based on their trade-offs between quality and efficiency, rather than a single metric.
+
+This plot shows the results from a run. On x-axes is the log10 of the total time taken by a synthetic data generator across all datasets in the single table benchmark. Y-axes is the average quality of synthetic data achieved across datasets. 
+
+**1960s Exclusion Principle**\
+ A synthesizer is considered a _winner_ for a dataset only if it satisfies two conditions. First, it must lie on the Pareto frontier—meaning no other synthesizer is both higher quality and faster. Second, it must match or exceed the quality of a reliable baseline: the Gaussian Copula synthesizer. Because Gaussian copula models are based on a well-established generative technique introduced in the 1960s, any synthesizer that fails to outperform this baseline is excluded. This ensures that winners are not only Pareto-optimal, but also meaningfully better than a proven, computationally efficient standard
+
+**Lower Bound Principle**
+
+Benchmark datasets do not fully capture the complexity of real-world enterprise data. Publicly available datasets are often curated and simplified, and while we continuously expand coverage, success on these datasets does not guarantee real-world performance. However, failure on these datasets—or absence from the Pareto frontier—provides a strong and actionable signal. It establishes a lower bound: synthesizers that cannot meet this bar can be confidently excluded from enterprise consideration.
+
+## Commentary on our latest benchmark run 
+
+**Single table benchmarking run. In our latest run:**
+
+The latest release of RealTabFormer is not compatible with the current version of PyTorch, resulting in failures across multiple datasets. With those failures the results default to the uniform synthesizer. 
+
+Gaussian Copula and XGC exhibit nearly identical performance, as XGC is evaluated under default settings that effectively replicate the Gaussian Copula configuration.
+
+In terms of overall performance, TVAE achieves the highest data quality, while Gaussian Copula offers the most favorable trade-off between quality and computational efficiency.
+
+**Multi table benchmarking run. In our latest run: **
+
+**HSA** performs slightly better than the Independent synthesizer. While both preserve referential integrity, HSA achieves higher data quality. However, our current multi-table datasets do not yet capture inter-table trends at a level sufficient to fully evaluate HSA’s capabilities.
+
+**HMA** experiences timeouts on several datasets. In these cases, its results default to the multitable uniform baseline. If these datasets were excluded, HMA would likely appear on the Pareto frontier. However, under our Operational Readiness Principle, we enforce strict timeouts and fallback mechanisms, ensuring that such failures are reflected in the evaluation.
