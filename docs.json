@@ -59,6 +59,7 @@
       },
       {
         "tab": "Licensing",
+        "hidden": true,
         "groups": [
           {
             "group": "Licenses",
