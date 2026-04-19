@@ -13,7 +13,7 @@
       "anchors": [
         {
           "anchor": "Documentation",
-          "icon": "book-open-cover",
+          "icon": "book-open",
           "href": "https://docs.sdv.dev/sdv/"
         },
         {
