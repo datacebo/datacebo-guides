@@ -15,7 +15,16 @@ Tabular data inside enterprises is rarely as clean or structured as AI modeling 
 
 As we push into the frontier of providing “synthetic data for testing software applications,” deploying our software across many enterprises and applications, we see how complex data can be. Here are the hidden complexities we run into most frequently — luckily, we love a challenge. 
 
-**Multiple tables.** Enterprises routinely have dozens of tables (some may have more than 50) that an application consumes. A synthetic data generator must be able to generate data for all these tables simultaneously while maintaining referential integrity and respecting cardinality and both intertable and intra-table correlations. Our [<u>HSASynthesizer</u>](https://docs.sdv.dev/sdv/multi-table-data/modeling/synthesizers/hsasynthesizer) can model and create synthetic data for 30+ tables on a single machine within minutes while maintaining top performance. 
+**Multiple tables.** Enterprises routinely have dozens of tables (some may have more than 50) that an application consumes. A synthetic data generator must be able to generate data for all these tables simultaneously while maintaining referential integrity and respecting cardinality and both intertable and intra-table correlations. Our [<u>HSASynthesizer</u>](https://docs.sdv.dev/sdv/multi-table-data/modeling/synthesizers/hsasynthesizer) can model and create synthetic data for 30\+ tables on a single machine within minutes while maintaining top performance. 
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/rjImzGUYKQ8"
+  title="YouTube video"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+/>
 
 **Complex data patterns**. Enterprise data stores contain patterns, such as composite keys and [<u>slowly changing dimensions</u>](https://en.wikipedia.org/wiki/Slowly_changing_dimension), polymorphic relationships.  We now address these natively within SDV Enterprise without the need for pre- or postprocessing.
 
@@ -39,7 +48,7 @@ If your real data exhibits this pattern, SDV Enterprise can now generate synthet
   Consider an insurance application that provides insurance only to people over 18 — their real data only contains information about people 18 years and older. However, the same company has a lot of software logic that creates responses for people younger than 18. To test this logic, the company needs synthetic data that goes beyond the real data. They may also want to switch this capability on and off for privacy reasons. We address all of these needs through specialized transformers. 
 </Note>
 
-**Flexible formatting requirements**. Many data types can be expressed in various formats. Consider a datetime column: it can be stored with or without leading 0s in months and days ("1/1/21" vs. "01/01/21"), or with hyphens rather than slashes separating the components ("01-01-21" vs "01/01/21"). Or yet another datetime format could be [Jan][1][2021][12:34] 
+**Flexible formatting requirements**. Many data types can be expressed in various formats. Consider a datetime column: it can be stored with or without leading 0s in months and days ("1/1/21" vs. "01/01/21"), or with hyphens rather than slashes separating the components ("01-01-21" vs "01/01/21"). Or yet another datetime format could be \[Jan\]\[1\]\[2021\]\[12:34\] 
 
 Or consider address data — in one database, it may be stored as free text in a column, while in another it may be split across three different columns, each storing a different part of the address. 
 
