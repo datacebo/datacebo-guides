@@ -7,19 +7,19 @@ description: "We describe the most common platform requirements for successful s
 
 By design, this product is intended to run on-premises, including in air-gapped environments. A SaaS-hosted platform, where enterprises upload their data to train models on our servers, defeats the core purpose of the product. Its very reason for existence is to ensure sensitive enterprise data never leaves organizational boundaries—not when working with third parties, and not even for internal use by developers. As such, any suggestion to upload data externally is a non-starter. 
 
-### Enterprise data requierments
+### Enterprise data requirements
 
 To succeed with wider adoption of synthetic data within an entperise these are the requirements that can act as a guide when evaluating platforms.
 
-| Data complexity                  | Requirement                                                                                                                                                                                                                                                                                     | Fall back commonly used                                                  |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| Address the sprawl of data types | Be able to model and synthesize data across a wide range of types—not only traditional statistical variables like numerical and categorical fields, but also complex real-world data such as phone numbers, addresses, vehicle identification numbers (VINs), GPS coordinates, and many others. | Using faker to generate data for certain data types.                     |
-| Be able to scale to many tables  | A synthetic data platform [<u>must be able to model 100s of interconnected tables</u>](https://datacebo.com/blog/multi-table-synthesizers/)  in order to be useful for enterprise environments.                                                                                                 | Model table by table and connect them to maintain referential integirty. |
-| Address hidden context           | Much of the complexity comes from hidden context not captured in schemas or metadata. [<u>These represent hard constraints</u>](https://datacebo.com/announcements/introducing-cag/) that the platform must recognize and enforce to generate valid data.                                       | Pre and post processing scripts                                          |
-| Generate flexible formats        | Be able to model and generate data with flexible formats. For example, if the address is split across multiple columns or if a datetime format is very unique.                                                                                                                                  | Pre and post processing scripts                                          |
+| Data complexity | Requirement | Fall back commonly used |
+| --- | --- | --- |
+| Address the sprawl of data types | Be able to model and synthesize data across a wide range of types—not only traditional statistical variables like numerical and categorical fields, but also complex real-world data such as phone numbers, addresses, vehicle identification numbers (VINs), GPS coordinates, and many others. | Using faker to generate data for certain data types. |
+| Be able to scale to many tables | A synthetic data platform [<u>must be able to model 100s of interconnected tables</u>](https://datacebo.com/blog/multi-table-synthesizers/)  in order to be useful for enterprise environments. | Model table by table and connect them to maintain referential integirty. |
+| Address hidden context | Much of the complexity comes from hidden context not captured in schemas or metadata. [<u>These represent hard constraints</u>](https://datacebo.com/announcements/introducing-cag/) that the platform must recognize and enforce to generate valid data. | Pre and post processing scripts |
+| Generate flexible formats | Be able to model and generate data with flexible formats. For example, if the address is split across multiple columns or if a datetime format is very unique. | Pre and post processing scripts |
 
 <Note>
-  Most generative modeling systems address these requirements using the fallback options listed in the third column. This leads to inability to scale synthetic data initiatives at an enterprise level. 
+  Most generative modeling systems address these requirements using the fallback options listed in the third column. This leads to inability to scale synthetic data initiatives at an enterprise level.
 </Note>
 
 ### Model flexibility
@@ -39,9 +39,9 @@ In some scenarios, each data point is expensive to obtain—for example, when ev
   Different use cases demand varying levels of quality, transparency, speed, and privacy, and many involve extreme data constraints. No single model can excel across all these dimensions. A robust platform must therefore address them deliberately—offering specialized modeling techniques tailored to the specific requirements of each use case.
 </Note>
 
-| Model plurality    | A platform must provide multiple modeling choices for each modality of data. Theses models must allow trade-offs between quality, speed, privacy and transparency. |
-| :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Specialized models | A platform must provide ability to train models that can train from as little data possible and also enable training models for highly segmented data.             |
+| Model plurality | A platform must provide multiple modeling choices for each modality of data. Theses models must allow trade-offs between quality, speed, privacy and transparency. |
+| :-- | :-- |
+| Specialized models | A platform must provide ability to train models that can train from as little data possible and also enable training models for highly segmented data. |
 
 ### Computational requirements
 
@@ -52,7 +52,7 @@ In some scenarios, each data point is expensive to obtain—for example, when ev
 - **ROI vs. Quality:** Evaluation should focus on ROI metrics rather than only on synthetic data quality metrics. Synthetic data quality does not always correlate linearly with ROI. In some cases, higher “quality” does not translate into greater business value for a given use case.
 - **Flexibility for Use Cases:** A powerful synthetic data platform must integrate multiple layers to support diverse use cases, each with distinct quality requirements.
 - **Performance Metrics:** When benchmarking, both the model training time and the time required to generate synthetic data should be considered critical evaluation metrics.
-- **Robust Evaluation Metrics:** Evaluation should rely only on openly validated, peer-reviewed metrics from academia and industry. We created [**<u>SDMetrics </u>**](https://docs.sdv.dev/sdmetrics)for this purpose, and it has become widely adopted across both domains.
+- **Robust Evaluation Metrics:** Evaluation should rely only on openly validated, peer-reviewed metrics from academia and industry. We created [**<u>SDMetrics</u>**](https://docs.sdv.dev/sdmetrics) for this purpose, and it has become widely adopted across both domains.
 
 ### Benchmarking
 
