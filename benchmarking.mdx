@@ -1,5 +1,6 @@
 ---
 title: "Benchmarking"
+hidden: true
 ---
 
 As synthetic data becomes critical for enterprises—enabling improved data access, availability, and more reliable AI agents—the importance of robust synthetic data generation technologies has grown in parallel.
@@ -34,7 +35,7 @@ These dimensions define a Pareto frontier. A generator lies on the frontier only
 This plot shows the results from a run. On x-axes is the log10 of the total time taken by a synthetic data generator across all datasets in the single table benchmark. Y-axes is the average quality of synthetic data achieved across datasets. 
 
 **1960s Exclusion Principle**\
- A synthesizer is considered a _winner_ for a dataset only if it satisfies two conditions. First, it must lie on the Pareto frontier—meaning no other synthesizer is both higher quality and faster. Second, it must match or exceed the quality of a reliable baseline: the Gaussian Copula synthesizer. Because Gaussian copula models are based on a well-established generative technique introduced in the 1960s, any synthesizer that fails to outperform this baseline is excluded. This ensures that winners are not only Pareto-optimal, but also meaningfully better than a proven, computationally efficient standard
+A synthesizer is considered a _winner_ for a dataset only if it satisfies two conditions. First, it must lie on the Pareto frontier—meaning no other synthesizer is both higher quality and faster. Second, it must match or exceed the quality of a reliable baseline: the Gaussian Copula synthesizer. Because Gaussian copula models are based on a well-established generative technique introduced in the 1960s, any synthesizer that fails to outperform this baseline is excluded. This ensures that winners are not only Pareto-optimal, but also meaningfully better than a proven, computationally efficient standard
 
 **Lower Bound Principle**
 

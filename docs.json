@@ -44,6 +44,7 @@
           },
           {
             "group": "Evaluation",
+            "hidden": true,
             "pages": [
               "benchmarking"
             ]
