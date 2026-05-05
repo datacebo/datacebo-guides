@@ -26,6 +26,7 @@
     "tabs": [
       {
         "tab": "SDV",
+        "hidden": true,
         "pages": [
           {
             "group": "Synthetic data",
@@ -42,9 +43,7 @@
           },
           {
             "group": "Relational",
-            "pages": [
-              "core-concepts/constraints"
-            ]
+            "pages": []
           },
           {
             "group": "Evaluation",
