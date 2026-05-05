@@ -26,13 +26,10 @@
     "tabs": [
       {
         "tab": "SDV",
-        "hidden": true,
         "pages": [
           {
             "group": "Synthetic data",
-            "pages": [
-              "core-concepts/synthetic-data"
-            ]
+            "pages": []
           },
           {
             "group": "Enterprise",
