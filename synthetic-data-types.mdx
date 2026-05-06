@@ -34,6 +34,8 @@ At the highest level there are three types of synthetic data generation mechanis
 
 ## Fake data generation
 
+> **Tools:** Faker
+
 Fake data generation will create random data for each column. The generated data is generally uniform between minimum and maximum values. Statistically this pertains to a Uniform distribution. For example, a column pertaining to age with the range between 0-100, the fake data generator will create 10% of the values in each of the 10 bins 0-10, 11-20, and so on.
 
 ### User input and effort
@@ -61,10 +63,6 @@ Consider an AI agent used by a bank to evaluate whether transactions are potenti
 Suppose you want to measure the agent’s throughput over a day’s worth of transactions. If you generate naive fake data with transaction amounts uniformly distributed across the entire range, the workload will contain an unrealistically high proportion of expensive, high-value transactions. As a result, the measured throughput (transactions processed per minute) will appear artificially lower than what would occur in production.
 
 In reality, high-value transactions are relatively rare, while most transactions are low-value and processed quickly. Accurately modeling the real-world distribution of transaction amounts is therefore essential for realistic testing, performance evaluation, and capacity planning of AI agent systems.
-
-> **Tools:** Faker
-
----
 
 ## Rule based generation
 
@@ -102,7 +100,7 @@ std_dev = 43
 
 In writing these rules users are not only specifying proportions for a certain column but also specifying the correlations between the columns.
 
-## User input and effort
+### User input and effort
 
 Users can define these rules by writing software or code directly, or increasingly by using code-generation tools such as Claude to generate code corresponding to the desired rules.
 
@@ -112,29 +110,29 @@ Similarly, for each data type, users can define generation rules and constraints
 
 > **Tools:** Products such as Tonic.ai, GenRocket, and Broadcom CA TDM explicitly support configurable data generation rules, parameterized generators, and business-rule-driven synthetic data generation.
 
-## Where can it be used?
+### Where can it be used?
 
 It would work where the users are specifying and configuring for a small number of rules and let the data generation have generic rules. It would work for testing software logic isolated to a few data columns.
 
-## Where this won't work?
+### Where this won't work?
 
 Where this approach breaks down is in configuring rules across many interconnected tables in enterprise databases. As enterprises increasingly rely on AI agents to automate complex workflows, these agents require contextual information from structured data spanning multiple tables — and sometimes multiple databases — to operate correctly.
 
 Defining precise generation rules manually across hundreds of columns, relationships, and dependencies quickly becomes impractical. Yet without realistic and consistent structured data, testing AI agents becomes extremely difficult. The agents may fail to encounter the combinations of states, edge cases, dependencies, and workflow conditions that occur in real enterprise environments, making reliable validation nearly impossible.
 
-# AI-Model based generation
+## AI-Model based generation
 
 AI-model-based generation relies on AI models to generate synthetic data. Broadly, there are two approaches.
 
-## Pretrained generative models
+### Pretrained generative models
 
 The first approach uses pretrained generative models. This may involve repurposing large language models (LLMs) or using pretrained generative models specifically designed for tabular data generation. Generating data like this may involve fine tuning the model with your own data.
 
-## Training your own model
+### Training your own model
 
 The second approach involves training a generative model on a user’s own dataset or subsample of data, and then using the trained model to generate new synthetic samples. This allows the generated data to better reflect the statistical properties, relationships, and patterns present in the original dataset.
 
-## Enterprise-scale generation
+### Enterprise-scale generation
 
 Like many AI-native transformations, this capability fundamentally changes both how data is generated and how useful that data can be. When trained in an enterprise-specific context, generative AI models can learn billions of implicit rules and relationships — including complex dependencies like the manually defined rules described earlier — and generate synthetic data that reflects those patterns in real time.
 
