@@ -1,0 +1,158 @@
+---
+title: "Synthetic "
+---
+
+## What are various ways to generate synthetic data?
+
+Synthetic data is data generated using an algorithm or software. The data ideally must have the same format, structural properties and statistical properties as the real data. These properties to match the realism are hard to achieve.
+
+In this guide we will cover the following:
+
+- High level categorization of types of synthetic data generation
+- Pros and cons for each type of data generation
+
+## Relational, tabular and structured data
+
+In our guides we focus on the tabular data generation - which data stored in tables, or files, and have implicit or explicit connections. From one estimate 80% of enterprise data is tabular data.
+
+## Types of synthetic data generation
+
+At the highest level there are three types of synthetic data generation mechanisms.
+
+<CardGroup cols={3}>
+  <Card title="Fake data generation" icon="shuffle">
+    Creates random data for each column.
+  </Card>
+
+  <Card title="Rule based generation" icon="code">
+    Uses explicit rules for data generation.
+  </Card>
+
+  <Card title="AI-Model based generation" icon="sparkles">
+    Uses AI models to generate synthetic data.
+  </Card>
+</CardGroup>
+
+## Fake data generation
+
+Fake data generation will create random data for each column. The generated data is generally uniform between minimum and maximum values. Statistically this pertains to a Uniform distribution.
+
+For example, a column pertaining to age with the range between 0-100, the fake data generator will create 10% of the values in each of the 10 bins 0-10, 11-20, and so on.
+
+### User input and effort
+
+Users would provide metadata - column names, types, and connections. They may optionally provide ranges for each column. Beyond this the effort from the user is minimal. Generally tools are able to generate the data with this minimal information and no more effort from the user.
+
+### Statistical quality
+
+The statistical quality of such data is very low. The data does not conform to any real data collected by the user - perhaps the data pertaining to age is more skewed to older people in the real data, but the fake data does not represent this situation.
+
+### What are the use cases?
+
+This type of data has very limited use. Perhaps the most common use case is in providing test data for testing software applications. Within that use case as well it is limited. It can be used to debug the code and just do rudimentary tests. It cannot be used for any test logic that pertains to any real world scenarios.
+
+#### Example: Where it can work?
+
+Suppose you are building a piece of software that extracts structured information from unstructured address text, such as the city, province/state, and country. As you develop and test the extraction logic, you may use a fake data generator to create 100 synthetic addresses from a specific region. You can then pass these addresses through your code to verify that the extraction behaves as expected.
+
+Additionally, the generated addresses can be used to create unit test cases consisting of input–output pairs, where the input is the raw address string and the expected output is the correctly extracted structured fields.
+
+#### Example: Where it won't work?
+
+Consider an AI agent used by a bank to evaluate whether transactions are potentially fraudulent and determine whether additional review is required. For high-value transactions, the agent invokes more computationally expensive workflows, including additional reasoning steps, retrieval of historical transaction patterns, and queries across multiple internal systems. Low-value transactions, however, are processed using much simpler logic.
+
+Suppose you want to measure the agent’s throughput over a day’s worth of transactions. If you generate naive fake data with transaction amounts uniformly distributed across the entire range, the workload will contain an unrealistically high proportion of expensive, high-value transactions. As a result, the measured throughput (transactions processed per minute) will appear artificially lower than what would occur in production.
+
+In reality, high-value transactions are relatively rare, while most transactions are low-value and processed quickly. Accurately modeling the real-world distribution of transaction amounts is therefore essential for realistic testing, performance evaluation, and capacity planning of AI agent systems.
+
+> **Tools:** Faker
+
+---
+
+# Rule based generation
+
+Rule based generation depends on software that explicitly has rules for data generation. The rules take various forms, they can be custom written for a specific dataset, or have generic data creation techniques for specific data types, regardless of the dataset.
+
+## Data-Type-Specific Rules
+
+These rules are specific to a particular data type. For example, if the data type is a phone number, the rule may specify the regions from which phone numbers should be generated, along with the proportion of numbers generated for each region.
+
+## Dataset-Specific Rules
+
+These rules are designed for a specific dataset and define relationships or behaviors across columns. For example, users may specify rules governing how account\_type and transaction\_amount should be generated together, including conditional distributions and dependencies between the columns.
+
+```text
+Generate `account_type` using the following distribution:
+
+premium: 30%
+basic: 50%
+executive: 20%
+
+Then generate `transaction_amount` based on `account_type`:
+
+basic:
+mean = 45
+std_dev = 12
+
+premium:
+mean = 121
+std_dev = 23
+
+executive:
+mean = 245
+std_dev = 43
+```
+
+In writing these rules users are not only specifying proportions for a certain column but also specifying the correlations between the columns.
+
+## User input and effort
+
+Users can define these rules by writing software or code directly, or increasingly by using code-generation tools such as Claude to generate code corresponding to the desired rules.
+
+For rule-based generators that are specific to a given data type, products may expose configurable parameters that users can customize. For example, when generating phone numbers, a user may specify the regions to generate data from as well as the desired frequency distribution across those regions.
+
+Similarly, for each data type, users can define generation rules and constraints tailored to their requirements.
+
+> **Tools:** Products such as Tonic.ai, GenRocket, and Broadcom CA TDM explicitly support configurable data generation rules, parameterized generators, and business-rule-driven synthetic data generation.
+
+## Where can it be used?
+
+It would work where the users are specifying and configuring for a small number of rules and let the data generation have generic rules. It would work for testing software logic isolated to a few data columns.
+
+## Where this won't work?
+
+Where this approach breaks down is in configuring rules across many interconnected tables in enterprise databases. As enterprises increasingly rely on AI agents to automate complex workflows, these agents require contextual information from structured data spanning multiple tables — and sometimes multiple databases — to operate correctly.
+
+Defining precise generation rules manually across hundreds of columns, relationships, and dependencies quickly becomes impractical. Yet without realistic and consistent structured data, testing AI agents becomes extremely difficult. The agents may fail to encounter the combinations of states, edge cases, dependencies, and workflow conditions that occur in real enterprise environments, making reliable validation nearly impossible.
+
+---
+
+# AI-Model based generation
+
+AI-model-based generation relies on AI models to generate synthetic data. Broadly, there are two approaches.
+
+## Pretrained generative models
+
+The first approach uses pretrained generative models. This may involve repurposing large language models (LLMs) or using pretrained generative models specifically designed for tabular data generation. Generating data like this may involve fine tuning the model with your own data.
+
+## Training your own model
+
+The second approach involves training a generative model on a user’s own dataset or subsample of data, and then using the trained model to generate new synthetic samples. This allows the generated data to better reflect the statistical properties, relationships, and patterns present in the original dataset.
+
+## Enterprise-scale generation
+
+Like many AI-native transformations, this capability fundamentally changes both how data is generated and how useful that data can be. When trained in an enterprise-specific context, generative AI models can learn billions of implicit rules and relationships — including complex dependencies like the manually defined rules described earlier — and generate synthetic data that reflects those patterns in real time.
+
+Training generative models for complex enterprise data, however, requires multiple layers of algorithmic sophistication and automation. Enterprise datasets often span hundreds of tables, thousands of columns, intricate relational structures, and highly domain-specific business logic.
+
+Successfully modeling these environments at scale requires systems capable of automatically learning statistical patterns, dependencies, constraints, and workflow behaviors across the data ecosystem.
+
+---
+
+# Comparison
+
+| Method | User Effort | Statistical Quality | Scalability | Best Use Case |
+| --- | --- | --- | --- | --- |
+| Fake Data | Low | Low | High | Basic software testing |
+| Rule-Based | Medium-High | Medium | Medium | Controlled workflows and business logic |
+| AI-Model Based | High | High | High | Enterprise AI systems and realistic simulation |
