@@ -1,0 +1,138 @@
+---
+title: "Constraints 101"
+hidden: true
+---
+
+Constraints are a critical feature of SDV that improves the overall quality of synthetic data. Most users who are working with enterprise-grade datasets need constraints in order to create valid synthetic data for an application.
+
+In this guide, we'll go through the definition of a constraint, how to use constraints in SDV, and several reasons why constraints are so vital to enterprise databases.
+
+# What is a constraint?
+
+The basic premise of SDV is to use AI to learn patterns from relational databases. This allows you to create a synthetic database that has similar properties as the original database. Like most AI-based systems, SDV's default algorithms create the synthetic data _probabilistically_. This means that they learn patterns such as the distributions of each column and correlations between different columns. Synthetic data creation is a probabilistic process based on these patterns.
+
+Since SDV is designed to work for multi-table databases, it also comes with built-in knowledge about major database definitions like primary keys and foreign key references. All of this results in synthetic data that is correctly structured and high quality out-of-the-box.
+
+- **Correctly structured** means that it follows the same database structure as the original database. For example, all synthetic databases have referential integrity and the same column/row structure as the original database.
+- **High quality** means that the probabilistic patterns are generally the same. The synthetic data generally has similar distributions and correlations as the original data.
+
+For enterprise-grade databases, this is a useful starting point but it's not enough. Many databases contain implicit rules or business logic that must be met in order for the data to be considered valid by whatever application uses it. For example, in a financial services database, there may be a rule that the account creation date must occur before any transactions are made. This type of **data validity** becomes vital for applications that are meant to run on the data. Software logic may implicitly assume such rules to be true in order to run.
+
+By default, SDV's algorithms are not designed to learn and adhere to these data validity rules 100% of the time, because the algorithms are probabilistic in nature. This is where constraints come in. **Constraints** are a way to tell SDV about the business logic and rules of the database. When you provide SDV with constraints, SDV treats them with highest priority. It ensures that all the synthetic data meets the constraint, 100% of the time. For an enterprise-grade dataset, constraints are the best way to ensure full data validity.
+
+# Using constraints in SDV
+
+Many types of rules follow a similar template. For example:
+
+- Within a financial services dataset, there may be a rule that an account creation date must occur before transactions are made.
+- Within a healthcare dataset, there may be a similar rule that a patient's date of birth must occur before any patient visits can occur.
+
+SDV has encapsulated common templates into **predefined classes**. To make a constraint, choose one of these classes and specify exactly where in the dataset the logic applies (table and column names). The examples above are described by the predefined, Inequality class. You can create a constraint by specifying the earlier and later columns.
+
+```python
+# financial services dataset
+financial_constraint = Inequality(
+  low_column_name='account_creation_date',
+  high_column_name='transaction_post_date')
+
+# healthcare dataset
+healthcare_constraint = Inequality(
+  low_column_name='date_of_birth',
+  high_column_name='visit_date')
+```
+
+You can then add these constraints to your SDV synthesizer (AI model). SDV uses **Constraint-Augmented Generation (CAG)** techniques to ensure that the synthetic data always meets the constraints.
+
+```python
+patients_synthesizer.add_constraints([healthcare_constraint])
+patients_synthesizer.fit_(data)
+
+valid_synthetic_data = patients_synthesizer.sample(num_rows=1000)
+```
+
+SDV's predefined classes cover a large array of logic. Simpler predefined classes are available in SDV Community. More complex classes are available in the [CAG bundle](https://docs.sdv.dev/sdv/explore/sdv-bundles/cag), an SDV Enterprise add-on. Complex classes include rules about the connections that are allowed between multiple tables.\
+The CAG bundle also includes a feature that is useful for enterprise data: **Automatically detecting constraints** in a database, which is useful when you may not know all the intrinsic rules governing a particular dataset.
+
+```python
+detected_constraints = patients_synthesizer.detect_constraints(data)
+
+# Output
+# Found 3 constraints …
+# 0. Inequality(low_column_name='date_of_birth', high_column_name='visit_date')
+# 1. FixedCombinations(...)
+# 2. ...
+```
+
+We encourage enterprise users to add on the CAG bundle for handling complex constraints and ensuring valid synthetic data.
+
+# Why do constraints exist?
+
+Constraints are an essential feature for creating valid enterprise-grade synthetic data. Our research has shown that a majority of enterprise-grade datasets carry at least one constraint that can be important when creating synthetic data. In this section, we'll go through some important reasons why constraints exist and some examples of each.
+
+## 1. Universal invariants
+
+Some constraints arise as a result of universal rules. These rules are always true of the world regardless of any particular industry or domain that the database resides in. They represent more fundamental truths of the universe.
+
+The most common example of this is the concept of time. The invariant is: _Time must always move forward._ This typically manifests as constraints between different date attributes in a database. For example:
+
+- An item must be crated before it can take any action (e.g. a person must be born before visiting a practitioner, or an account created before making a transaction)
+- An interval's start date must always occur before the end date (e.g. an insurance policy start/end dates, or a hospital patient's intake/discharge dates)
+- And so on.
+
+Universal invariants result in constraints that are derived from mathematics, physics, or identity that hold true regardless of domain, organization, or system design.
+
+## 2. Industry concepts & regulations
+
+Constraints can also arise from industry-specific definitions, which act as invariants within that specific field. As the legal and compliance framework matures within an industry, this results in constraints that look similar between databases in the same industry.
+
+Within the financial services industry, one example is the Know Your Customer (KYC) regulations which are part of a global anti-money laundering effort. This regulation includes mandates such as collecting identifying information and verifying it. As a result, a financial services database might have a constraint that anyone within an account balance of over \$10,000 must be verified.
+
+\[\[ TODO IMAGE \]\]
+
+On the other hand, the healthcare industry has different regulations such as the Health Insurance Portability and Accountability Act (HIPAA), which govern the privacy and security of a patient's healthcare information and who has access to it. As a result, a healthcare dataset might have a constraint that lab test results can only be shared if the patient has provided consent.
+
+Industry-related constraints are vitally important because violating them can have legal consequences. If the goal is to create valid synthetic data, then it needs to represent the reality of these legal and compliance frameworks.
+
+## 3. Organizational standards & workflows
+
+Even within the same industry, an organization has control over its internal processes and workflows. These can manifest as more nuanced rules within a dataset – but the overall logic still falls under one of the predefined classes.
+
+One example is a high-amount insurance claims process that triggers a manual review. When triggered, the insurance claim must follow a chain of events from being submitted, to being reviewed, to being approved or denied. Within a particular organization, it may not be possible to render an automatic decision without a review. 
+
+\[\[ TODO IMAGE \]\]
+
+Another example is a financial trading firm that internally enforces a segregation of duties to prevent fraud. This could be based on a company policy. As a result, the database of trades may have a rule stating that the creator of the trade must be a different party than the approver.
+
+\[\[ TODO IMAGE \]\]
+
+## 4. Database system design
+
+Constraints can also arise as a result of explicit decisions that are taken by the engineering team when designing the database system. Database design principles may stipulate the "proper" way to design a database schema with zero redundancy and perfect primary/foreign key connections. But system designers also factor in other organizational needs such as performance optimization, ease of maintenance, and speed of implementation. Some decisions can result in additional database context logic that the system designers define and that applications assume.
+
+For example, a financial services database may redundantly store information about each account in the transactions table, even though it's already available in the accounts table. This may be done with the explicit purpose of optimizing performance for applications that would otherwise need to frequently look up the information. However, it creates a rule that the data must be synchronized between the tables.
+
+\[\[ TODO IMAGE \]\]
+
+Another example is when there are so many different entities that the database designers purposefully decide to store them all inside a single table rather than split them out. For example, an accounts table can be the combination of many different types of accounts – individual accounts, company accounts, non-profit accounts, etc. In this case, it may not be possible to use standard foreign key references. Instead, the database designers create a separate column to look up references. 
+
+\[\[ TODO IMAGE \]\]
+
+# Takeaways
+
+The table below summarizes different different types of rules, and how you can supply constraints to SDV to adhere to those rules.
+
+| Reason for constraint | **Examples** | **Predefined SDV classes** |
+| --- | --- | --- |
+| Universal invariants | <ul><li>A person must be born before visiting a practitioner</li><li>An insurance policy must start before it ends</li></ul> | Inequality (for both) |
+| Industry concepts & regulations | <ul><li>"Know Your Customer" regulation: Anyone within an account balance of over \$10,000 must be verified</li><li>HIPAA compliance: lab test results can only be shared if the patient has provided consent</li></ul> | <ul><li>MixedScales</li><li>FixedCombinations</li></ul> |
+| Organizational standards & workflows | <ul><li>The insurance claim must follow a chain of events from being submitted, to being reviewed, to being approved or denied</li><li>The creator of the trade must be a different party than the approver</li></ul> | <ul><li>FixedNullCombinations</li><li>SelfReferentialHierarchy</li></ul> |
+| Database system design | <ul><li>The account type must be synchronized across the accounts and transactions table</li><li>Individual, company, and non-profit accounts refer to different tables</li></ul> | <ul><li>CarryoverColumns</li><li>PolymorphicRelationship</li></ul> |
+
+Whether they are due to universal invariants, industry regulations, organizational standards, or database system design, constraints are vital to creating fully valid synthetic data. Most enterprise databases benefit from having at least one constraint. We recommend this feature to anyone working on enterprise-grade data.
+
+# Resources
+
+- [List of predefined constraint classes](https://docs.sdv.dev/sdv/concepts/constraint-augmented-generation-cag/predefined-constraints)
+- [Constraint-Augmented Generation (CAG) Bundle](https://docs.sdv.dev/sdv/explore/sdv-bundles/cag)
+
+<iframe src="https://www.youtube.com/embed/jIKtziv4bZs" title="YouTube video player" frameborder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />

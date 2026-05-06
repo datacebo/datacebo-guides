@@ -40,7 +40,10 @@
           },
           {
             "group": "Relational",
-            "pages": []
+            "pages": [
+              "composite-keys",
+              "constraints-101"
+            ]
           },
           {
             "group": "Evaluation",
