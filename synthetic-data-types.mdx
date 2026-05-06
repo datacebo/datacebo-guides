@@ -14,7 +14,7 @@ In this guide we will cover the following:
 
 In our guides we focus on the tabular data generation - which data stored in tables, or files, and have implicit or explicit connections. From one estimate 80% of enterprise data is tabular data.
 
-## Types of synthetic data generation
+# Types of synthetic data generation
 
 At the highest level there are three types of synthetic data generation mechanisms.
 
@@ -34,9 +34,7 @@ At the highest level there are three types of synthetic data generation mechanis
 
 ## Fake data generation
 
-Fake data generation will create random data for each column. The generated data is generally uniform between minimum and maximum values. Statistically this pertains to a Uniform distribution.
-
-For example, a column pertaining to age with the range between 0-100, the fake data generator will create 10% of the values in each of the 10 bins 0-10, 11-20, and so on.
+Fake data generation will create random data for each column. The generated data is generally uniform between minimum and maximum values. Statistically this pertains to a Uniform distribution. For example, a column pertaining to age with the range between 0-100, the fake data generator will create 10% of the values in each of the 10 bins 0-10, 11-20, and so on.
 
 ### User input and effort
 
@@ -68,15 +66,15 @@ In reality, high-value transactions are relatively rare, while most transactions
 
 ---
 
-# Rule based generation
+## Rule based generation
 
 Rule based generation depends on software that explicitly has rules for data generation. The rules take various forms, they can be custom written for a specific dataset, or have generic data creation techniques for specific data types, regardless of the dataset.
 
-## Data-Type-Specific Rules
+### Data-Type-Specific Rules
 
 These rules are specific to a particular data type. For example, if the data type is a phone number, the rule may specify the regions from which phone numbers should be generated, along with the proportion of numbers generated for each region.
 
-## Dataset-Specific Rules
+#### Dataset-Specific Rules
 
 These rules are designed for a specific dataset and define relationships or behaviors across columns. For example, users may specify rules governing how account\_type and transaction\_amount should be generated together, including conditional distributions and dependencies between the columns.
 
@@ -124,8 +122,6 @@ Where this approach breaks down is in configuring rules across many interconnect
 
 Defining precise generation rules manually across hundreds of columns, relationships, and dependencies quickly becomes impractical. Yet without realistic and consistent structured data, testing AI agents becomes extremely difficult. The agents may fail to encounter the combinations of states, edge cases, dependencies, and workflow conditions that occur in real enterprise environments, making reliable validation nearly impossible.
 
----
-
 # AI-Model based generation
 
 AI-model-based generation relies on AI models to generate synthetic data. Broadly, there are two approaches.
@@ -146,12 +142,43 @@ Training generative models for complex enterprise data, however, requires multip
 
 Successfully modeling these environments at scale requires systems capable of automatically learning statistical patterns, dependencies, constraints, and workflow behaviors across the data ecosystem.
 
----
+<CardGroup cols={3}>
+  <Card title="Fake Data Generation" icon="shuffle">
+    **How it works**\
+    Randomly generates values for each column.
 
-# Comparison
+    **Best for**
 
-| Method | User Effort | Statistical Quality | Scalability | Best Use Case |
-| --- | --- | --- | --- | --- |
-| Fake Data | Low | Low | High | Basic software testing |
-| Rule-Based | Medium-High | Medium | Medium | Controlled workflows and business logic |
-| AI-Model Based | High | High | High | Enterprise AI systems and realistic simulation |
+    - Basic software testing
+    - Mock data
+    - Unit tests
+
+    **Limitation** Does not preserve realistic relationships or distributions.
+  </Card>
+
+  <Card title="Rule-Based Generation" icon="code">
+    **How it works**\
+    Uses explicit rules and constraints.
+
+    **Best for**
+
+    - Controlled workflows
+    - Business logic testing
+    - Dataset-specific scenarios
+
+    **Limitation** Hard to scale across large enterprise schemas.
+  </Card>
+
+  <Card title="AI-Model Based Generation" icon="sparkles">
+    **How it works**\
+    Learns patterns and dependencies from real data.
+
+    **Best for**
+
+    - Enterprise AI systems
+    - Realistic simulations
+    - Large-scale synthetic data
+
+    **Limitation** Requires training infrastructure and sophisticated modeling.
+  </Card>
+</CardGroup>
