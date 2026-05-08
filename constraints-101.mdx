@@ -1,6 +1,5 @@
 ---
 title: "Constraints 101"
-hidden: true
 ---
 
 Constraints are a critical feature of SDV that improves the overall quality of synthetic data. Most users who are working with enterprise-grade datasets need constraints in order to create valid synthetic data for an application.
@@ -87,9 +86,15 @@ Constraints can also arise from industry-specific definitions, which act as inva
 
 Within the financial services industry, one example is the Know Your Customer (KYC) regulations which are part of a global anti-money laundering effort. This regulation includes mandates such as collecting identifying information and verifying it. As a result, a financial services database might have a constraint that anyone within an account balance of over \$10,000 must be verified.
 
-\[\[ TODO IMAGE \]\]
+<Frame caption='As a result of the "Know Your Customer" regulations, any account with a balance over $10,000 must be verified. Accounts with lower balances may or may not be verified. In SDV, this can be achieved using the MixedScales constraint class.'>
+  ![Account Summary](/images/Account-Summary.png)
+</Frame>
 
 On the other hand, the healthcare industry has different regulations such as the Health Insurance Portability and Accountability Act (HIPAA), which govern the privacy and security of a patient's healthcare information and who has access to it. As a result, a healthcare dataset might have a constraint that lab test results can only be shared if the patient has provided consent.
+
+<Frame caption="HIPPA regulation states that medical results can only be shared with other parties if the patient has consented. So the ResultsShared can only be true if PatientConsent is also true. In SDV, this can be achieved using the predefined FixedCombinations constraint class.">
+  ![Lab Test Export](/images/Lab-Test-Export.png)
+</Frame>
 
 Industry-related constraints are vitally important because violating them can have legal consequences. If the goal is to create valid synthetic data, then it needs to represent the reality of these legal and compliance frameworks.
 
@@ -97,13 +102,17 @@ Industry-related constraints are vitally important because violating them can ha
 
 Even within the same industry, an organization has control over its internal processes and workflows. These can manifest as more nuanced rules within a dataset – but the overall logic still falls under one of the predefined classes.
 
-One example is a high-amount insurance claims process that triggers a manual review. When triggered, the insurance claim must follow a chain of events from being submitted, to being reviewed, to being approved or denied. Within a particular organization, it may not be possible to render an automatic decision without a review. 
+One example is a high-amount insurance claims process that triggers a manual review. When triggered, the insurance claim must follow a chain of events from being submitted, to being reviewed, to being approved or denied. Within a particular organization, it may not be possible to render an automatic decision without a review.
 
-\[\[ TODO IMAGE \]\]
+<Frame caption="Due to organizational policies, high claim amounts trigger manual reviews. The review date being null means that the status is Pending. Once the review is done, the date appears and the status is changed to either Approved or Denied. This can be achieved using the predefined FixedNullCombinations constraint class.">
+  ![Claim Review Summary](/images/Claim-Review-Summary.png)
+</Frame>
 
 Another example is a financial trading firm that internally enforces a segregation of duties to prevent fraud. This could be based on a company policy. As a result, the database of trades may have a rule stating that the creator of the trade must be a different party than the approver.
 
-\[\[ TODO IMAGE \]\]
+<Frame caption="By company policy, teams must have their trades approved by other teams. In this case, there is a hierarchical chain of approvals. For example team t-00982 (highlighted) is an approver of some teams (like t-14902 and t-12984). But if that team initiates any trades itself, it must get them approved by a different team (t-022124). In SDV, this can be achieved using the SelfReferentialHierarchy constraint.">
+  ![Trade Approvers](/images/Trade-Approvers.png)
+</Frame>
 
 ## 4. Database system design
 
@@ -111,11 +120,15 @@ Constraints can also arise as a result of explicit decisions that are taken by t
 
 For example, a financial services database may redundantly store information about each account in the transactions table, even though it's already available in the accounts table. This may be done with the explicit purpose of optimizing performance for applications that would otherwise need to frequently look up the information. However, it creates a rule that the data must be synchronized between the tables.
 
-\[\[ TODO IMAGE \]\]
+<Frame caption="An account can make many transactions. For performance, the database includes an account_type column that stores the same information in the transactions table and the accounts table. The constraint is that this value must be synchronized between the tables. In SDV, this can be achieved using the CarryoverColumns constraint class.">
+  ![Database System Design](/images/Database-system-design.png)
+</Frame>
 
-Another example is when there are so many different entities that the database designers purposefully decide to store them all inside a single table rather than split them out. For example, an accounts table can be the combination of many different types of accounts – individual accounts, company accounts, non-profit accounts, etc. In this case, it may not be possible to use standard foreign key references. Instead, the database designers create a separate column to look up references. 
+Another example is when there are so many different entities that the database designers purposefully decide to store them all inside a single table rather than split them out. For example, an accounts table can be the combination of many different types of accounts – individual accounts, company accounts, non-profit accounts, etc. In this case, it may not be possible to use standard foreign key references. Instead, the database designers create a separate column to look up references.
 
-\[\[ TODO IMAGE \]\]
+<Frame caption="To make the database more straightforward, all accounts are recorded in the Accounts table. But based on the type of account (Personal or Business), the account_info can refer to different tables. The Personal Info table contains names and social security numbers of individuals; the Business Info table contains the organization name and employer identification numbers. In SDV, this setup can be achieved using the predefined PolymorphicRelationship constraint class.">
+  ![Database System Design 2](/images/Database-system-design-2.png)
+</Frame>
 
 # Takeaways
 
