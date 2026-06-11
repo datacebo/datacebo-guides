@@ -56,7 +56,6 @@
       },
       {
         "tab": "Pricing",
-        "hidden": true,
         "pages": [
           "pay-as-you-go"
         ]
