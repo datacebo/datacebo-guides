@@ -55,7 +55,10 @@
         ]
       },
       {
-        "tab": "Pricing"
+        "tab": "Pricing",
+        "pages": [
+          "pay-as-you-go"
+        ]
       }
     ]
   },
