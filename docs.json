@@ -51,14 +51,18 @@
             "pages": [
               "benchmarking"
             ]
+          },
+          {
+            "group": "Pricing",
+            "pages": [
+              "pay-as-you-go"
+            ]
           }
         ]
       },
       {
-        "tab": "Pricing",
-        "pages": [
-          "pay-as-you-go"
-        ]
+        "tab": "Pricing-1",
+        "hidden": true
       }
     ]
   },
