@@ -1,4 +1,105 @@
 ---
 title: "Pay as you go"
 hidden: true
+mode: "default"
+keywords: ["pricing", "pay as you go"]
 ---
+
+_This guide provides details about our pay as you go pricing_
+
+SDV Enterprise combines a monthly subscription with flexible pay-as-you-go usage. This guide explains how our pricing works and answers common questions about subscriptions, bundles, spending caps, and billing. Our pricing model is designed to be transparent and predictable, allowing you to align costs with actual usage while maintaining full control through configurable spending caps.
+
+### **Benefits of Pay-As-You-Go Pricing**
+
+- No annual subscription commitments.
+- No large upfront purchases.
+- Pay only for the synthetic data you generate.
+- Scale usage and spending as your needs evolve.
+
+# Subscription costs 
+
+Subscriptions are charged on a recurring monthly basis. 
+
+<Info>
+  _Your total monthly cost includes the s**oftware subscription cost** as well as usage costs which are charged on a pay-as-you-go basis._
+</Info>
+
+<Frame>
+  ![1 Subscription Type Description](/images/1.-Subscription-type-description.png)
+</Frame>
+
+# Usage based pricing and costs 
+
+Your subscription provides access to the SDV Enterprise software and allows you to build and train generative models. Product usage is measured when you generate synthetic data from those trained models for downstream applications.
+
+The unit of usage is a **sampled data cell**. A sampled data cell represents a single generated data value within a table. 
+
+<Frame>
+  ![2 Sampled Cell](/images/2.Sampled-cell.png)
+</Frame>
+
+For a single table, the total number of sampled data cells is calculated as: **Number of rows generated × Number of columns in the table.** For example, generating a table with 100,000 rows and 20 columns results in 2,000,000 sampled cells. 
+
+Our current pricing is **\$1 per million sampled data cells**. In the table we provided estimated costs for various numbers of sampled cells.
+
+<Frame>
+  ![3 Usage Based Pricing And Costs](/images/3.Usage-based-pricing-and-costs.png)
+</Frame>
+
+## Estimating sampled cells for multi-table
+
+For multi-table datasets, the total number of sampled data cells is the sum of the sampled data cells generated across all tables in the dataset. To estimate usage for a multi-table model, you can use the **scale** parameter provided by SDV. The scale parameter controls the overall size of the synthetic dataset relative to the original data used to train the model.
+
+- **scale = 1.0** generates approximately the same amount of data as the original dataset.
+- **scale = 0.5** generates approximately half as much data.
+- **scale = 2.0** generates approximately twice as much data.
+
+When sampling from a multi-table model, you do not specify the number of rows for each table individually. Instead, SDV automatically generates data across all tables while preserving the learned parent-child relationships and cardinality distributions. As a result, the number of rows produced in each table is determined by the model.
+
+Because the generated data volume is approximately proportional to the scale factor, a simple way to estimate usage is:
+
+**Estimated Sampled Cells ≈ Scale × Total Data Cells in the Original Training Dataset**
+
+where the total number of data cells in the original dataset is the sum of: **Rows × Columns** across all tables used to train the model. For example, if your original multi-table dataset contains 500 million data cells and you sample with **scale = 2.0**, you can expect to generate approximately 1 billion sampled cells.
+
+<Info>
+  These figures are estimates. Because synthetic data generation involves probabilistic sampling, the actual amount of data generated may be slightly higher or lower than the estimated amount.
+</Info>
+
+# Purchasing journey
+
+The DataCebo Portal is your central hub for managing your SDV Enterprise account. Through the portal, you can purchase subscriptions, manage bundles, monitor usage, access license keys, and cancel subscriptions. All purchases are completed through the portal. If you have not already logged in, get started today by visiting the link below.
+
+<Frame>
+  ![4 Purchasing Journey](/images/4.Purchasing-journey.png)
+</Frame>
+
+1. **Subscribe to SDV Enterprise Base.** Once you have logged into the DataCebo Portal, you can subscribe to SDV Enterprise Base by navigating to the Subscriptions page and adding the subscription to your account. 
+2. **Optionally subscribe to any additional bundles you would like to use.** Once SDV Enterprise Base has been added, you can select and subscribe to any bundles that meet your needs.  
+
+<Info>
+  An active SDV Enterprise Base subscription is required before any additional bundles can be purchased. 
+</Info>
+
+<Frame>
+  ![5 How It Works](/images/5.-How-it-works.png)
+</Frame>
+
+_You can add SDV Enterprise Base and any bundle you desire and purchase. Once purchase is completed the subscription will be shown as active. Your license key will allow you to download the package, install and start building._
+
+3. **Set a monthly spending cap for usage-based synthetic data generation**. Usage-based charges are controlled through a monthly spending cap that you specify in USD.
+
+- Generate synthetic data until the spending cap is reached.
+- Once the cap is reached, additional sampling is paused.
+- Your credit usage automatically resets at the start of the next billing cycle.
+- You can increase or decrease your spending cap at any time.
+
+This approach gives you predictable costs while retaining the flexibility to scale usage up or down as your needs change.
+
+# Billing 
+
+<Frame>
+  ![6 Billing](/images/6.-Billing.png)
+</Frame>
+
+Subscriptions are month-to-month and can be canceled at any time. All invoices are sent to the billing email address associated with your account.
