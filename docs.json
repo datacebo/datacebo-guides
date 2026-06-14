@@ -48,9 +48,7 @@
           {
             "group": "Evaluation",
             "hidden": true,
-            "pages": [
-              "benchmarking"
-            ]
+            "pages": []
           },
           {
             "group": "Pricing",
