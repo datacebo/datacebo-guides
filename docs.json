@@ -28,10 +28,6 @@
         "tab": "SDV",
         "pages": [
           {
-            "group": "Synthetic data",
-            "pages": []
-          },
-          {
             "group": "Enterprise",
             "pages": [
               "enterprise/enterprise-data",
@@ -44,11 +40,6 @@
               "composite-keys",
               "constraints-101"
             ]
-          },
-          {
-            "group": "Evaluation",
-            "hidden": true,
-            "pages": []
           },
           {
             "group": "Pricing",
