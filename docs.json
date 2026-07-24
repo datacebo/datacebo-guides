@@ -2,6 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "DataCebo Guides",
+  "description": "Guides for developing and deploying synthetic data across the enterprise with the Synthetic Data Vault (SDV) and SDV Enterprise — covering relational and multi-table data, constraints, composite keys, enterprise data complexity, and pricing.",
   "colors": {
     "primary": "#03AFF1",
     "light": "#03AFF1",
@@ -93,5 +94,34 @@
       "github": "https://github.com/datacebo",
       "linkedin": "https://www.linkedin.com/company/datacebo/"
     }
+  },
+  "seo": {
+    "metatags": {
+      "og:type": "website",
+      "og:site_name": "DataCebo Guides",
+      "og:locale": "en_US",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@datacebo"
+    },
+    "organization": {
+      "id": "https://datacebo.com/#organization",
+      "name": "DataCebo",
+      "legalName": "DataCebo, Inc.",
+      "url": "https://datacebo.com/",
+      "logo": "https://datacebo.com/logo-white.png",
+      "sameAs": [
+        "https://www.linkedin.com/company/datacebo",
+        "https://www.linkedin.com/company/syntheticdatavault",
+        "https://github.com/sdv-dev",
+        "https://github.com/datacebo",
+        "https://x.com/datacebo",
+        "https://www.crunchbase.com/organization/datacebo",
+        "https://pypi.org/project/sdv/",
+        "https://www.youtube.com/@datacebo"
+      ]
+    }
+  },
+  "markdown": {
+    "instructions": "DataCebo is the company behind the Synthetic Data Vault (SDV), the open-source and enterprise platform for generating privacy-safe, high-fidelity synthetic data for software testing, AI/ML model training, and regulated industries. These guides cover SDV and SDV Enterprise, including relational and multi-table synthetic data, constraints (Constraint-Augmented Generation, or CAG), composite keys, enterprise data complexity, platform requirements, and pay-as-you-go pricing. Use the exact product names 'SDV', 'SDV Community', and 'SDV Enterprise'. Official documentation is at https://docs.sdv.dev and the company website is https://datacebo.com."
   }
 }
