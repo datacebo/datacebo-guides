@@ -1,0 +1,220 @@
+---
+title: "Methods of synthetic data generation"
+description: "Compare fake, rule-based, and AI model-based methods for generating synthetic tabular data."
+sidebarTitle: "Generation methods"
+icon: "layer-group"
+---
+
+Synthetic data is data generated using an algorithm or software. In our guides, we focus on generating tabular data: data that is stored in tables or files, and where different values are implicitly or explicitly connected. An estimated 80% of enterprise data is tabular data (sometimes called "relational" or "structured" data).
+
+Synthetic data generation methods can be sorted into three main groups:
+
+## Methods at a glance
+
+<Columns cols={2}>
+  <Card title="Fake data generation" color="#03AFF1" icon="shuffle">
+    **User effort:** Minimal
+
+    **Statistical quality:** Very low
+
+    **Best suited for:** Debugging and rudimentary tests
+  </Card>
+
+  <Card title="Rule-based generation" color="#0690D1" icon="sliders">
+    **User effort:** High
+
+    **Statistical quality:** Depends on the number and quality of rules
+
+    **Best suited for:** Isolated logic involving a small number of rules or columns
+  </Card>
+
+  <Card title="Pretrained generative models" color="#1376B1" icon="sparkles">
+    **User effort:** Limited for simple databases; much higher for complex databases
+
+    **Statistical quality:** Low without extensive rules and prompt engineering
+
+    **Best suited for:** Debugging simple software during development
+  </Card>
+
+  <Card title="Training your own foundation model" color="#008583" icon="database">
+    **User effort:** Minimal with a mature platform
+
+    **Statistical quality:** Highest possible
+
+    **Best suited for:** Software testing, realistic analytics, and analytics dashboards
+  </Card>
+</Columns>
+
+To be effective, synthetic data must have the same format, structural properties and statistical properties as the real data it's meant to stand in for. It must also preserve referential integrity. Although achieving this realism is a challenge, there are numerous techniques for creating synthetic tabular data.
+
+In this guide, we'll answer the following questions:
+
+- What are the most widely used synthetic data generation methods?
+- What properties of real data does synthetic data mimic?
+- How much manual effort is required to use each of these methods?
+- What use cases are each of these methods best suited for ?
+
+## Tools referenced in this guide
+
+The following tools are referenced across the synthetic data generation methods described in this guide.
+
+| Method | Tools referenced |
+| --- | --- |
+| <Icon icon="shuffle" color="#03AFF1" size={17} /> **Fake data generation** | <Badge color="blue" size="sm" stroke>Faker</Badge> |
+| <Icon icon="align-left" color="#0690D1" size={17} /> **Rule-based generation** | <Badge color="blue" size="sm" stroke>Claude</Badge> <Badge color="blue" size="sm" stroke>Tonic.ai</Badge> <Badge color="blue" size="sm" stroke>GenRocket</Badge> <Badge color="blue" size="sm" stroke>Broadcom CA TDM</Badge> |
+| <Icon icon="sparkles" color="#1376B1" size={17} /> **Pretrained generative models** | _No specific tool is named in this guide_ |
+| <Icon icon="database" color="#008583" size={17} /> **Training your own foundation model** | _No specific tool is named in this guide_ |
+
+## Fake data generation
+
+Fake data generation methods copy the tabular structure of the real data and then create random data for each column. The generated data generally follows a uniform distribution between minimum and maximum values. For example, if we're generating values for the column "age," and give the fake data generator a range of 0-100, it will create data such that 10% of the fake values fall into each of 10 possible bins: 0-10, 11-20, and so on.
+
+**User input and effort**
+
+Fake data generation doesn't require much user input. Users provide metadata, including column names, types, and connections, and may optionally provide ranges for each column.  Most tools are able to generate fake data with this minimal information.
+
+**Statistical quality**
+
+The statistical quality of fake data is very low. Because it is randomly generated, the data does not match any real data it may be meant to stand in for. For instance, if a real dataset involving age skews to older people, fake data will not represent this situation.
+
+**Ability to mimic real data**
+
+Fake data can only mimic the structural properties of the real data. Depending on the maturity of the tool and its ability to handle complex databases, it may have referential integrity. Because it can't match the statistical properties of real data, its use is limited. You can read more about the level of information contained in different synthetic data types here.
+
+**Where can I use fake data generation methods?**
+
+Fake data has a very limited set of uses. Perhaps the most common use case is in providing debugging data for software development: Fake data can be used to debug code and for rudimentary tests. Even in these situations, it cannot be used for any test logic that pertains to real-world scenarios.
+
+<Card title="Example" color="#03AFF1" icon="flask">
+  Example: Suppose you are building a piece of software that extracts structured information from unstructured address text, such as the city, province/state, and country. As you develop and test the extraction logic, you can use a fake data generator to create 100 synthetic addresses from a specific region. You can then pass these addresses through your code to verify that it's  working and check for edge cases. Additionally, the generated addresses can be used to create unit test cases consisting of input–output pairs, where the input is the raw address string and the expected output is the correctly extracted structured fields.
+</Card>
+
+**Where should I not use fake data generation methods?**
+
+If your data needs to resemble real data in anything more than a superficial way, you shouldn't use fake data.  Consider a banking AI agent that evaluates transactions for potential fraud and flags them for additional review. For high-value transactions, the agent invokes more computationally expensive workflows, including additional reasoning steps, retrieval of historical transaction patterns, and queries across multiple internal systems. Low-value transactions, however, are processed using much simpler logic.
+
+Suppose you want to measure the agent’s throughput over a day’s worth of transactions. If you generate naive fake data with transaction amounts uniformly distributed across the entire range, the workload will contain an unrealistically high proportion of expensive, high-value transactions. As a result, the measured throughput (transactions processed per minute) will appear artificially lower than what would occur in production.
+
+In reality, high-value transactions are relatively rare, while most transactions are low-value and processed quickly. Accurately modeling the real-world distribution of transaction amounts is therefore essential for realistic testing, performance evaluation, and capacity planning of AI agent systems. Many real-world situations are like this example—the real data distributions are not flat, and thus fake data is not an appropriate stand-in.
+
+## Rule-based generation
+
+With rule-based data generation, software creates data that adheres to certain rules.  These rules can apply to all data of a certain type, or they can be custom-written for a specific dataset.
+
+<Tabs>
+  <Tab title="Data type-specific rules">
+    Data type-specific rules apply only to a certain data type. For example, in a particular project, a data type-specific rule for phone numbers may specify the regions from which the phone numbers should be generated, and the proportion of numbers that should be generated for each of these regions. The software tools that carry out these rules are sometimes called  "transformers." Users must specify the statistical properties they desire for each data type.
+  </Tab>
+  <Tab title="Dataset-specific rules">
+    Dataset-specific rules are designed for a specific dataset and define relationships or behaviors across columns. For example, users may specify rules governing how account\_type and transaction\_amount should be generated together, including conditional distributions and dependencies between the columns:
+
+    Generate `account_type` using the following distribution:
+
+    ```text
+    premium: 30%
+    basic: 50%
+    executive: 20%
+    ```
+
+    Then generate `transaction_amount` based on `account_type`:
+
+    ```text
+    basic:
+    mean = 45
+    std_dev = 12
+    
+    premium:
+    mean = 121
+    std_dev = 23
+    
+    executive:
+    mean = 245
+    std_dev = 43
+    ```
+
+    With these rules, users can specify not only the proportions for a certain column, but also any correlations between columns.
+  </Tab>
+</Tabs>
+
+**User input and effort**
+
+Rule-based data generation requires users to figure out and generate the rules that shape the data. Users can define rules by writing software or code directly, or by using code-generation tools such as Claude.
+
+There are a number of products that offer rule-based data generation. Products with generators that are specific to a given data type may expose configurable parameters that users can customize. For example, when generating phone numbers, a user may specify relevant regions, as well as the desired frequency distribution across those regions. Across a whole project, users can define generation rules and constraints for each data type, tailored to their requirements.
+
+Achieving statistically relevant data through rule-based generation typically requires a lot of user effort.
+
+**Statistical quality**
+
+The statistical quality of rule-based generated data depends on the number and quality of the rules used to create the data. This in turn depends on the quality of the tool and the parameters it exposes, the level of user knowledge, and the amount of user effort. Generally, achieving high-quality rule-based generated data requires a deep understanding of the data at hand, as well as mastery of complex statistical concepts.
+
+**Ability to mimic real data**
+
+Rule-based data can only mimic the structural properties of the real data. Depending on the maturity of the tool used and its ability to handle complex databases, it may also have referential integrity. It does not have any of the statistical properties of the real data, which makes its use limited. You can read more about the level of information contained in different synthetic data types here.
+
+**When can I use rule-based synthetic data generation?**
+
+Using rule-based synthetic data generation is appropriate in situations where users are specifying and configuring for a small number of rules, or are comfortable with using generic rules. For example, it can work for testing software logic isolated to a few data columns.
+
+**When should I not use rule-based synthetic data generation?**
+
+Rule-based synthetic data generation falls short in situations that require configuring rules across many interconnected tables, such as when working with enterprise databases.
+
+Defining precise generation rules manually across hundreds of columns, relationships, and dependencies quickly becomes impractical.
+
+For instance, enterprises increasingly rely on AI agents to automate complex workflows. These agents require contextual information from structured data spanning multiple tables — and sometimes multiple databases — to operate correctly. Rule-based synthetic data generation is generally not able to produce data that is realistic and consistent enough to test these agents. The agents may fail to encounter the combinations of states, edge cases, dependencies, and workflow conditions that occur in real enterprise environments, making reliable validation nearly impossible.
+
+## AI model-based generation
+
+AI model-based generation relies on AI models to generate synthetic data. Broadly, there are two approaches.
+
+<Tabs>
+  <Tab title="Pretrained generative models">
+    The first approach uses pretrained generative models. This may involve repurposing large language models (LLMs) or using pretrained generative models that are specifically designed for tabular data generation. Generating data in this way may involve fine-tuning the model with your own data, prompting additional rules, and/or creating custom software around the existing model. Due to the token usage required to generate entire relational databases, this method can be prohibitively expensive. This video covers the challenges involved in using a pretrained generative model to produce synthetic data.
+
+    **User input and effort**
+
+    Generating synthetic data with a simple database structure involving one or two tables requires limited user effort. Generating complex databases with a large number of tables, intact referential integrity, and/or the properties of real data takes much more effort, as users must carefully create rules and engineer prompts.
+
+    **Statistical quality**
+
+    On its own, LLM-generated data has low statistical quality and resembles fake data. Users can bring up the level of statistical quality by inserting rules as prompts.
+
+    **Ability to mimic real data**
+
+    LLM-generated data can replicate the structure of simple databases and maintain referential integrity. It cannot mimic the statistical properties of real data.
+
+    **When can I use LLMs to generate synthetic data?**
+
+    LLM-generated data can be used in ways similar to fake data. Developers can use LLMs to quickly generate data to debug software during development. Creating data that can be used for more complex tests would require extensive engineering, as discussed above.
+
+    **When should I not use LLMs to generate synthetic data?**
+
+    LLM-generated data cannot capture the statistical properties of complex relational databases without huge effort. Thus, it cannot be used for end-to-end testing, regression testing, or functional testing.
+  </Tab>
+  <Tab title="Training your own foundation model">
+    The second approach involves training a generative model on the user’s own dataset or subsample of data, and then using the trained model to generate new synthetic samples. This allows the generated data to better reflect the statistical properties, relationships, and patterns present in the original dataset.
+
+    Like many AI-native transformations, this capability fundamentally changes both how data is generated and how useful that data can be. When trained in an enterprise-specific context, generative AI models can learn billions of implicit rules and relationships, including complex dependencies like the manually defined rules described earlier. They can then generate synthetic data that reflects those patterns in real time.
+
+    Training generative models for complex enterprise data, however, requires multiple layers of algorithmic sophistication and automation. Enterprise datasets often span hundreds of tables and thousands of columns, and involve intricate relational structures and highly domain-specific business logic.
+
+    Successfully modeling these environments at scale requires systems that can automatically learn statistical patterns, dependencies, constraints, and workflow behaviors across the data ecosystem.
+
+    **User input and effort**
+
+    A well-developed and mature platform for training your foundation model will require minimal effort from the user. It should be able to automatically learn relationships in your database (primary key, foreign key), detect lineage and implicit relationships (constraints), and model statistical dependencies. This guide covers the ten core requirements for a well-trained foundation model: the markers a platform must meet in order to effectively learn a foundation model from a relational database.
+
+    **Statistical quality**
+
+    Data generated from a well-trained foundation model will have the highest possible statistical quality and the highest possible level of information content.
+
+    **Ability to mimic real data**
+
+    Data generated from a well-trained foundation model will preserve both the cardinality and referential integrity of the original dataset, and will also capture trends and correlations buried deep in the database and across tables.
+
+    **Where can I use a self-trained foundation model?**
+
+    Because data from a well-trained foundation model captures so much important information about the real data (including data structure, intertable trends, and correlations), it can be used for the entire spectrum of software testing:  regression, integration testing, edge case testing and functional testing. It can also be used to create realistic analytics and to test analytics dashboards.
+  </Tab>
+</Tabs>
