@@ -300,3 +300,7 @@ html.dark .dc-generation-learned strong {
     color: #8295aa;
   }
 }
+.dc-generation-title {
+  font-weight: 650;
+  color: #102a43;
+}
