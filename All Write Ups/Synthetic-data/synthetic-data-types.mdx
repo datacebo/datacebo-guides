@@ -18,157 +18,183 @@ In our guides we focus on the tabular data generation - which data stored in tab
 
 At the highest level, synthetic data generation falls into three groups. AI model-based generation includes two distinct approaches: using a pretrained model or training a model on enterprise data.
 
-<div className="dc-generation-methods" aria-label="Comparison of synthetic data generation methods">
-  <div className="dc-generation-header">
-    <div>Information source</div>
-    <div>Generation mechanism</div>
-    <div>Generated data can preserve</div>
+At the highest level, synthetic data generation falls into three groups. AI model-based generation includes two distinct approaches: using a pretrained model or training a model on enterprise data.
+
+<div className="my-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-950" aria-label="Comparison of synthetic data generation methods">
+  <div className="hidden md:grid md:grid-cols-12 gap-2 px-3 pb-3 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+    <div className="md:col-span-3">Information source</div>
+
+    <div className="md:col-start-5 md:col-span-4">
+      Generation mechanism
+    </div>
+
+    <div className="md:col-start-10 md:col-span-3">
+      Generated data can preserve
+    </div>
   </div>
 
-  <div className="dc-generation-row">
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">Schema and ranges</div>
+  <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch border-t border-slate-200 py-4 dark:border-slate-700">
+    <div className="md:col-span-3 rounded-xl bg-slate-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
+        Schema and ranges
+      </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         Column names, data types and permitted values
       </div>
     </div>
 
-    <div className="dc-generation-arrow" aria-hidden="true">
-      <span>→</span>
+    <div className="md:col-span-1 flex items-center justify-center text-xl text-sky-600 rotate-90 md:rotate-0" aria-hidden="true">
+      →
     </div>
 
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">Fake data generation</div>
+    <div className="md:col-span-4 rounded-xl bg-sky-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
+        Fake data generation
+      </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         Random values are generated independently for each column
       </div>
     </div>
 
-    <div className="dc-generation-arrow" aria-hidden="true">
-      <span>→</span>
+    <div className="md:col-span-1 flex items-center justify-center text-xl text-sky-600 rotate-90 md:rotate-0" aria-hidden="true">
+      →
     </div>
 
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">Format and basic structure</div>
+    <div className="md:col-span-3 rounded-xl bg-slate-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
+        Format and basic structure
+      </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         Values do not reflect the statistical behavior of the real data
       </div>
     </div>
   </div>
 
-  <div className="dc-generation-row">
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">Human-written rules</div>
+  <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch border-t border-slate-200 py-4 dark:border-slate-700">
+    <div className="md:col-span-3 rounded-xl bg-slate-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
+        Human-written rules
+      </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         Explicit constraints, conditions and relationships
       </div>
     </div>
 
-    <div className="dc-generation-arrow" aria-hidden="true">
-      <span>→</span>
+    <div className="md:col-span-1 flex items-center justify-center text-xl text-sky-600 rotate-90 md:rotate-0" aria-hidden="true">
+      →
     </div>
 
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">Rule-based generation</div>
+    <div className="md:col-span-4 rounded-xl bg-sky-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
+        Rule-based generation
+      </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         A configured rule engine applies the specified behavior
       </div>
     </div>
 
-    <div className="dc-generation-arrow" aria-hidden="true">
-      <span>→</span>
+    <div className="md:col-span-1 flex items-center justify-center text-xl text-sky-600 rotate-90 md:rotate-0" aria-hidden="true">
+      →
     </div>
 
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">Specified patterns</div>
+    <div className="md:col-span-3 rounded-xl bg-slate-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
+        Specified patterns
+      </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         Realism is limited by the rules users identify and encode
       </div>
     </div>
   </div>
 
-  <div className="dc-generation-row">
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">
+  <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch border-t border-slate-200 py-4 dark:border-slate-700">
+    <div className="md:col-span-3 rounded-xl bg-slate-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
         General pretraining and prompts
       </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         Knowledge learned from external data and user instructions
       </div>
     </div>
 
-    <div className="dc-generation-arrow" aria-hidden="true">
-      <span>→</span>
+    <div className="md:col-span-1 flex items-center justify-center text-xl text-sky-600 rotate-90 md:rotate-0" aria-hidden="true">
+      →
     </div>
 
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">
+    <div className="md:col-span-4 rounded-xl bg-sky-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
         AI model-based generation
       </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         A pretrained generative model produces requested data
       </div>
     </div>
 
-    <div className="dc-generation-arrow" aria-hidden="true">
-      <span>→</span>
+    <div className="md:col-span-1 flex items-center justify-center text-xl text-sky-600 rotate-90 md:rotate-0" aria-hidden="true">
+      →
     </div>
 
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">Generic or prompted patterns</div>
+    <div className="md:col-span-3 rounded-xl bg-slate-50 p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
+        Generic or prompted patterns
+      </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         The model may not capture behavior specific to the enterprise
       </div>
     </div>
   </div>
 
-  <div className="dc-generation-row dc-generation-learned">
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">Enterprise database</div>
+  <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch rounded-xl border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-800 dark:bg-emerald-950">
+    <div className="md:col-span-3 rounded-xl bg-white p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
+        Enterprise database
+      </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         The structure, values and relationships in the real data
       </div>
     </div>
 
-    <div className="dc-generation-arrow" aria-hidden="true">
-      <span>→</span>
+    <div className="md:col-span-1 flex items-center justify-center text-xl text-emerald-700 rotate-90 md:rotate-0" aria-hidden="true">
+      →
     </div>
 
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">
+    <div className="md:col-span-4 rounded-xl bg-white p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
         AI model-based generation
       </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         A generative model is trained directly on enterprise data
       </div>
     </div>
 
-    <div className="dc-generation-arrow" aria-hidden="true">
-      <span>→</span>
+    <div className="md:col-span-1 flex items-center justify-center text-xl text-emerald-700 rotate-90 md:rotate-0" aria-hidden="true">
+      →
     </div>
 
-    <div className="dc-generation-cell">
-      <div className="dc-generation-title">
+    <div className="md:col-span-3 rounded-xl bg-white p-4 dark:bg-slate-900">
+      <div className="font-semibold text-slate-900 dark:text-white">
         Learned properties of the data
       </div>
 
-      <div className="dc-generation-detail">
+      <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         Structure, distributions, dependencies and cross-table relationships
       </div>
     </div>
   </div>
 </div>
+
+The key distinction between these methods is where the knowledge used to generate the data comes from. Fake data generators use basic metadata, rule-based approaches depend on users to encode the desired behavior, and AI model-based approaches either rely on generic pretrained knowledge or learn directly from enterprise data.
 
 The key distinction between these methods is where the knowledge used to generate the data comes from. Fake data generators use basic metadata, rule-based approaches depend on users to encode the desired behavior, and AI model-based approaches either rely on generic pretrained knowledge or learn directly from enterprise data.
 

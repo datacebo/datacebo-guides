@@ -33,7 +33,8 @@
             "pages": [
               "enterprise/enterprise-data",
               "enterprise/platform-needs"
-            ]
+            ],
+            "hidden": true
           },
           {
             "group": "Relational",
