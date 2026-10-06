@@ -30,8 +30,7 @@
         "pages": [
           "composite-keys",
           "constraints-101"
-        ],
-        "root": "relational"
+        ]
       },
       {
         "group": "Pricing",
