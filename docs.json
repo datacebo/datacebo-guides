@@ -24,31 +24,26 @@
         }
       ]
     },
-    "tabs": [
+    "groups": [
       {
-        "tab": "SDV",
+        "group": "Relational",
         "pages": [
-          {
-            "group": "Enterprise",
-            "pages": [
-              "enterprise/enterprise-data",
-              "enterprise/platform-needs"
-            ],
-            "hidden": true
-          },
-          {
-            "group": "Relational",
-            "pages": [
-              "composite-keys",
-              "constraints-101"
-            ]
-          },
-          {
-            "group": "Pricing",
-            "pages": [
-              "pay-as-you-go"
-            ]
-          }
+          "composite-keys",
+          "constraints-101"
+        ]
+      },
+      {
+        "group": "Pricing",
+        "pages": [
+          "pay-as-you-go"
+        ]
+      },
+      {
+        "group": "Enterprise",
+        "hidden": true,
+        "pages": [
+          "enterprise/enterprise-data",
+          "enterprise/platform-needs"
         ]
       }
     ]
