@@ -45,6 +45,12 @@
           "enterprise/enterprise-data",
           "enterprise/platform-needs"
         ]
+      },
+      {
+        "group": "Quality",
+        "pages": [
+          "how-do-i-improve-synthetic-data-fidelity"
+        ]
       }
     ]
   },

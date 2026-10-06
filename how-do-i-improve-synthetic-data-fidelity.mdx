@@ -1,0 +1,239 @@
+---
+title: "How do I improve synthetic data fidelity?"
+description: "A troubleshooting guide for SDV Enterprise"
+---
+
+You've started using [SDV Enterprise](https://datacebo.com/sdv-enterprise/) to create synthetic databases for complex, multi-table schemas. You're able to create synthetic data quickly with SDV Enterprise, but maybe something about the synthetic data looks unexpected. Now, you're wondering whether there's anything you can do to improve the fidelity.
+
+If you're in this situation, this guide is meant for you. The good news is that while SDV Enterprise allows you to create synthetic data easily as a turnkey solution, it offers transparency and settings that allow you to optimize. This guide walks you through some steps for troubleshooting problems and improving synthetic data quality. We recommend following this guide in order to help you best identify the problem areas and tackle solutions for them.
+
+## Does it meet the SDV Guarantee?
+
+Synthetic data that is generated from any SDV Synthesizer comes with an "SDV Guarantee" that covers several important structural elements like adhering to the correct ranges, following known business rules, and containing referential integrity between primary/foreign keys. These checks are fully encapsulated in the [Diagnostic Report](https://docs.sdv.dev/sdv/evaluation/diagnostic) which is available through SDV.
+
+As the first step to troubleshooting, we recommend running the Diagnostic Report to evaluate whether your synthetic data meets this SDV Guarantee. To run the report, pass in the real data that you've used for training your synthesizer, the synthetic data that the synthesizer produced, the metadata, and any known business rules in the form of constraints.
+
+```python
+from sdv.evaluation import run_diagnostic
+
+diagnostic_report = run_diagnostic(
+    real_data=real_data,
+    synthetic_data=synthetic_data,
+    metadata=metadata,
+    constraints=constraints_list
+)
+```
+
+The SDV Guarantee is for the score to be 100%. This is important information to know, as it tells you whether the SDV platform itself recognizes the synthetic data as being valid.
+
+### When the guarantee is not met
+
+If the guarantee is not met, meaning that the score is less than 100%, something may be going wrong in your synthetic data generation or you may have uncovered a bug in SDV. We recommend the following troubleshooting steps:
+
+**Check your own pre- and post-processing scripts**. Are you maintaining your own pre- and post-processing script outside the context of SDV? The SDV Guarantee is meant to cover the data that is directly passed into SDV's synthesizer and the synthetic data that the synthesizer directly outputs. Running the diagnostic report again on the direct input/output to SDV yields more accurate results and may help you pinpoint whether there may be a bug in your pre or post-processing script.
+
+**How are you loading in the data?** SDV Synthesizers are designed to work best with data that is loaded via SDV's importing functions. For example, the [CSVHandler](https://docs.sdv.dev/sdv/integration/local) for importing CSV data or an [AI Connector](https://docs.sdv.dev/sdv/integration/db) for importing from a database. You can also use the default pandas [read functionalities](https://docs.sdv.dev/sdv/integration/local/additional-file-formats) to read in your data. But please do not apply any special data type conversions beyond what the features provide to you! This may mess up the formats that SDV expects to learn.
+
+**Use the Diagnostic Report to pinpoint the problem areas.** The Diagnostic Report provides a composite score that includes several sub-components for Data Structure, Data Validity, Constraint Validity, and Relationship Validity. Use the [Diagnostic Report API](https://docs.sdv.dev/sdmetrics/data-metrics/diagnostic/diagnostic-report-api#get_details-property_name) to get a detailed breakdown into the exact properties, columns, and tables that are causing problems.
+
+```python
+report.get_details(
+    property_name='Data Validity',
+    table_name='users'
+)
+```
+
+```text
+Table        Column        Metric                 Score
+users        user_id       KeyUniqueness          1.0
+users        age           BoundaryAdherence      1.0
+users        height        BoundaryAdherence      1.0
+users        card_type     CategoryAdherence      1.0
+...
+```
+
+In some rare cases an imperfect score can result from explicit instructions to SDV, such as purposefully creating synthetic data beyond the original boundaries or biasing the distributions in some way. An imperfect score can also be the result of conflicting business rules.
+
+An imperfect score may also be due to a bug in SDV Enterprise. When in doubt, please leave us a note on the [Forum](https://forum.datacebo.com/) explaining that your Diagnostic Report is not 100% and the relevant breakdowns. We prioritize any fixes that violate the SDV Guarantee.
+
+### When the score is 100%
+
+If the Diagnostic Report's score is 100%, the SDV Guarantee is met. This means that from SDV's perspective, the synthetic data is valid. So the next question for troubleshooting is: Does SDV have the correct information to determine validity? We recommend taking the following steps:
+
+**Inspect the metadata for accuracy.** SDV treats the [metadata](https://docs.sdv.dev/sdv/integration/metadata) that you pass in as the ground truth to determine what counts as valid synthetic data. It's worth inspecting this metadata if any of the data columns or relationships don't make sense. If you're noticing incorrect formatting, invalid values, or unexpected values in any of the columns, pay attention to the [sdtypes](https://docs.sdv.dev/sdv/integration/metadata/sdtypes) that are associated with each of the columns. Marking a discrete column as "numerical" or an unrelated concept as the wrong sdtype can cause issues in both synthetic data creation and evaluation.
+
+```python
+metadata.visualize()
+print(metadata)
+```
+
+**Are you having problems with higher-level concepts?** Your data may also contain ["real world" sdtypes](https://docs.sdv.dev/sdv/integration/metadata/sdtypes#additional-sdtypes-domain-specific-concepts-and-pii) that are meant to address high-level domain concepts such as phone numbers, emails, addresses, and more. Synthetic data for these sdtypes might extend beyond what your training data contains. If this results in unexpected values, there are a few options available:
+
+- Setting pii as False in the metadata will allow SDV to re-use the same values it sees in the training data, making the data more realistic. Use this only if the original data does not represent personal identifiable information.
+- For PII data, you can also [adjust the pre-processing](https://docs.sdv.dev/sdv/modeling/configuration/preprocessing) applied to these columns to yield better results. There are a number of [transformers](https://docs.sdv.dev/rdt/transformers-glossary/deep-data-understanding) that you can choose from to adjust the realism of the data.
+
+If you need help with this, or if the exact concept you need isn't yet covered, please reach out to us via the [Forum](https://forum.datacebo.com/).
+
+**Are you missing business rules?** By default, SDV synthesizers are probabilistic, meaning that the individual data points they create carry some amount of variability or noise. If you are expecting a rule that needs to be followed 100% of the time without any exceptions, then SDV needs to know about this for both modeling and evaluation.
+
+[Constraints](https://docs.sdv.dev/sdv/modeling/constraint-augmented-generation-cag) are the way to tell your synthesizers about such business rules. If your synthesizer is missing this information, we recommend browsing through the [available constraints](https://docs.sdv.dev/sdv/modeling/constraint-augmented-generation-cag/predefined-constraints) and adding it to your synthesizer. Then for the rule to take effect, you would need to re-fit your synthesizer and re-sample the synthetic data from it.
+
+_If you cannot find a constraint that matches your business logic, then please leave us a request on the [Forum](https://forum.datacebo.com/). We prioritize constraints requests from SDV Enterprise customers who have purchased the add-on for Constraint-Augmented Generation._
+
+```python
+from sdv.cag import DenormalizedTable
+
+my_constraint = DenormalizedTable(
+    table_name='Transactions-Users',
+    denormalized_primary_key='User ID',
+    denormalized_column_names=['User Birthdate', 'User Age']
+)
+
+synthesizer.add_constraints([my_constraint])
+synthesizer.fit(data)
+```
+
+**Is your issue related to statistical quality?** If everything so far has checked out ok – for e.g. the Diagnostic Report is 100% and all the business logic is covered – then your issue would likely be resolved by improving the statistical quality of your synthetic data. The rest of this guide focuses on statistical quality.
+
+## Improving the statistical quality
+
+The statistical quality of the synthetic data refers to the aggregate pattern that all the data points exhibit, such as the overall distributions and correlations. To begin your investigations, we recommend running the [Quality Report](https://docs.sdv.dev/sdv/evaluation/data-quality). This report compares the real and synthetic data across a variety of statistical measures including marginal distributions, pairwise correlations, cross-table correlations, and cardinality. Even if you expect more complex patterns in your dataset, we often find that starting with marginal distributions and pairwise correlations is insightful and can be indicative of other quality issues in your data.
+
+To run the report, pass in the real data used for training your synthesizer, synthetic data created from the synthesizer, and metadata.
+
+```python
+from sdv.evaluation import evaluate_quality
+
+quality_report = evaluate_quality(
+    real_data=real_data,
+    synthetic_data=synthetic_data,
+    metadata=metadata
+)
+```
+
+This report will return a score from 0 to 100% representing the statistical similarity between the real and synthetic data. But unlike the Diagnostic Report, do not expect the score to be 100%. Achieving perfect statistical quality isn't a feasible goal, after all that would mean each and every synthetic data point must contribute in the perfect way to create the exact distribution or correlation. However, it is possible to optimize the quality beyond what you can achieve out-of-the-box.
+
+The Quality Report provides sub-scores for the individual components such as the marginal distributions, pairwise correlations, cross-table correlations, and relationships. Use the [Quality Report API](https://docs.sdv.dev/sdmetrics/data-metrics/quality/quality-report-api#getting-and-explaining-the-results) to drill down into the different properties and understand which particular patterns are weak. All scores and sub-scores vary from a range of 0 (worst) to 1 (best).
+
+```python
+report.get_details(
+    property_name='Column Shapes',
+    table_name='users'
+)
+```
+
+```text
+Table        Column         Metric         Score
+users        purchase_amt   KSComplement   0.880
+users        card_type      TVComplement   0.690
+users        start_date     KSComplement   0.790
+...
+```
+
+Once you’ve identified the weak areas, we recommend using SDV’s visualization functions to plot the real vs synthetic data for great insight.
+
+![Real Vs Synthetic High Perc](/images/real-vs-synthetic-high-perc.png "Real Vs Synthetic High Perc")
+
+### The optimization framework
+
+Based on the results, there may be several areas that you’d like to further optimize. A natural question to ask at this stage is: What quality shore should I aim to achieve? 90%? 95%? The answer is that it depends on what you're trying to achieve.
+
+Optimizing the synthetic data quality can end up becoming a vague and long-standing task if the objectives are not clearly defined. We recommend [adopting an optimization framework](https://datacebo.com/blog/how-to-evaluate-synthetic-data/) that is based on the intended downstream usage of the synthetic data. For example, if your goal is to use the synthetic data downstream for performance [testing](https://datacebo.com/blog/capabilities-of-synthetic-test-data/), your objectives would be for (a) the synthetic data to run successfully in the downstream pipeline, and (b) the results achieving some degree of similarity with respect to real data. This is a more tangible outcome that allows you to set your expectations. The exact statistical quality score (whether it's 80% or 99%) is, at best, a proxy for the [ultimate ROI](https://datacebo.com/case-studies/how-ing-belgium-uses-datacebo-sdv-enterprise-to-create-synthetic-data-for-100x-test-coverage/) you expect to achieve with synthetic data. Our recommendation: **Always run the synthetic data for the downstream task, and optimize until the downstream task is successful.**
+
+In the rest of this section, we'll go through some areas for improving the statistical quality in order of what we've observed to make the most to least impact. Following each suggestion, please remember to re-fit your synthesizer and re-sample synthetic data in order for the changes to take effect.
+
+### Improving individual marginal distributions
+
+The [marginal distribution](https://en.wikipedia.org/wiki/Marginal_distribution), aka the shape of individual data columns, often has the most impact on downstream usage. Luckily, SDV offers a number of features that make this easy to adjust.
+
+The most common failure mode for marginal distributions is when the synthetic data appears smoother and rounder than the real training data. This happens because most synthesizers (and in general most AI/ML models) are built with an assumption of having normal data, aka a smooth bell curve. When used out-of-the-box this can have the effect of smoothing out any skews, spikes, modes, or non-standard characteristics of the data. There are a few options for improving the realism in this case, assuming that you are using the HSA Synthesizer:
+
+- Add a preset for individual column distributions. In the default HSA configuration, each individual table is ultimately modeled using a GaussianCopula, which allows you to set individual column shapes for numerical variables. For more information, see [HSA's settings](https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer#set_table_parameters), and the underlying [settings for GaussianCopula](https://docs.sdv.dev/sdv/modeling/single-table-synthesizers/gaussiancopulasynthesizer#creating-a-synthesizer).
+
+```python
+hsa_synthesizer.set_table_parameters(
+    table_name='users',
+    table_synthesizer='GaussianCopulaSynthesizer',
+    table_parameters={
+        'enforce_min_max_values': True,
+        'numerical_distributions': {
+            'checkin_date': 'uniform',
+            'amenities_fee': 'beta' }})
+```
+
+- Set the XGCSynthesizer for particularly challenging tables. The [XGCSynthesizer](https://docs.sdv.dev/sdv/modeling/single-table-synthesizers/xgcsynthesizer) offers vastly more choices in marginal distributions.
+
+```python
+hsa_synthesizer.set_table_parameters(
+    table_name='users',
+    table_synthesizer='XGCSynthesizer',
+    table_parameters={
+        'enforce_min_max_values': True,
+        'numerical_distributions': {
+            'checkin_date': 'scipy.stats.weibull',
+            'amenities_fee': 'scipy.stats.lognorm' }})
+```
+
+- Update the pre-processing of individual columns. Your marginal distributions may also improve if you update the column-level pre-processing that SDV applies by default. For more information, see [the docs for updating transformers](https://docs.sdv.dev/sdv/modeling/configuration/preprocessing) as well as the [glossary of transformers](https://docs.sdv.dev/rdt/transformers-glossary/numerical) based on the sdtype. We especially recommend experimenting with the [LogScaler](https://docs.sdv.dev/rdt/transformers-glossary/numerical/logscaler) (for data exhibiting logarithmic properties) and the [ECDFNormalizer](https://docs.sdv.dev/rdt/transformers-glossary/numerical/ecdfnormalizer) (which can brute-force non-standard, empirical distributions).
+
+```python
+hsa_synthesizer.update_transformers(
+  table_name='users',
+  column_name_to_transformer={
+    'amenities_fee': ECDFNormalizer()
+  })
+```
+
+Another failure mode might be that there are simply too few data points for the synthesizer to be able to accurately ascertain the distribution shape. Even though we designed HSA to require less data than your average neural network or GAN-based algorithm, we do recommend at least 20-25 non-null values per column. In this case, the best option is to expand the size of your training data. If this is not possible, then another option is to use the Bootstrap method for the tables that suffer from this. For more information, see [HSA's settings](https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer#set_table_parameters) and the doc for the [BootstrapSynthesizer](https://docs.sdv.dev/sdv/modeling/single-table-synthesizers/bootstrapsynthesizer).
+
+```python
+hsa_synthesizer.set_table_parameters(
+    table_name='users',
+    table_synthesizer='BootstrapSynthesizer',
+    table_parameters={
+        'num_rows_bootstrap': 500,
+        'bootstrap_noise_amount': 1.5})
+```
+
+### Improving column correlations
+
+In some cases, your marginal distributions might look ok but the issue might be in the correlations between different columns in a table. By default, we've observed that HSA can capture linear and monotonic correlations between two continuous variables right out-of-the-box. But there are two key failure modes that it may be susceptible to:
+
+- Correlations between discrete variables might not be captured well. This applies to associations between two discrete columns, as well as patterns between a discrete column and categorical column.
+- Non-linear and non-monotic correlations might not be captured well between continuous variables, for example if a column X and column Y form a "U" or "O" shape. (While you may encounter such patterns appearing in academic datasets, we find this case to be relatively rare in real enterprise datasets.)
+
+You can address both failure modes by adjusting the synthesizer algorithm used for the underlying table. By default, HSA applies GaussianCopula to each table, which is a fast algorithm based on classical statistics. You may find that moving to a neural network-based algorithm such as [TVAE](https://docs.sdv.dev/sdv/modeling/single-table-synthesizers/tvaesynthesizer) can be especially useful for capturing complex correlations. These algorithms also allow you to fine-tune the training epochs and neutral network architecture.
+
+```python
+hsa_synthesizer.set_table_parameters(
+    table_name='users',
+    table_synthesizer='TVAESynthesizer',
+    table_parameters={
+        'epochs': 500,
+        'verbose': True})
+```
+
+Keep in mind that adding neural network-based synthesizers will increase the time it takes to train your synthesizer and sample synthetic data, so we only recommend using it for any of the particularly problematic or important tables in your dataset.
+
+### Improving cross-table correlations
+
+The final mode of quality improvement is to better capture the correlations that occur in columns between different tables. For example, a column in the users table with another column in the associated transactions table.
+
+This optimization is worth pursuing only if your original data contains strong cross-table correlations to begin with. We recommend checking your quality report to see if this is the case. The quality report measures correlations in the "Intertable Trends" property and only the strong ones are marked as passing the threshold.
+
+```python
+quality.get_details('Intertable Trends')
+```
+
+In practice, we have found it relatively rare that an enterprise dataset contains significant cross-table correlations that are not actually business rules (constraints). Moreover, we have [evidence](https://datacebo.com/blog/multi-table-synthesizers/) that HSA is able to pick on significant correlations between a parent and child table. Improving this further is an active area of research for our team and we'd love to hear from you if your dataset exhibits strong cross-table correlations. We may request you to experiment with the [default_num_clusters parameter](https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer#creating-a-synthesizer) in HSA, but we recommend [contacting us](https://forum.datacebo.com/) so we can better understand your dataset and needs. We may be able to provide some tailored suggestions based on your situation.
+
+```python
+synthesizer = HSASynthesizer(metadata,
+  default_num_clusters=5)
+```
+
+## Next Steps
+
+Following the troubleshooting steps in this guide allows you to identify whether there are any potential bugs in SDV, unmet business rules, or statistical quality improvements. If you're optimizing for the statistical quality, you can follow the details in this guide to experiment with the SDV Enterprise settings.
+
+If you have any feedback or open questions after reading the guide, please reach out to us on the [Forum](https://forum.datacebo.com/) or any previously-established communication channels you have with the DataCebo team. We look forward to hearing from you and helping you achieve your goals with synthetic data.
