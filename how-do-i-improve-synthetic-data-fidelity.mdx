@@ -94,7 +94,7 @@ synthesizer.add_constraints([my_constraint])
 synthesizer.fit(data)
 ```
 
-**Are there a lot of business rules that are needed for different sub-types of data?** If you find that almost every column is involved in some kind of business rule, this may be an issue with the data source. You may have a dataset that combines multiple types of data together into a single table, which inherently results in a lot of rules. For example, different classes of users, transactions, or financial instruments might all appear in a single table with rules that govern what kind of data is allowed based on a class or sub-type
+**Are there a lot of business rules that are needed for different sub-types of data?** If you find that almost every column is involved in some kind of business rule, this may be an issue with the data source. You may have a dataset that combines multiple types of data together into a single table, which inherently results in a lot of rules. For example, different classes of users, transactions, or financial instruments might all appear in a single table with rules that govern what kind of data is allowed based on a class or sub-type.
 
 A large, combined dataset is typically formed merging together multiple original tables. In this case, we strongly recommend updating to an upstream data source. SDV Enterprise works the best if you learn on the original, normalized tables.
 
