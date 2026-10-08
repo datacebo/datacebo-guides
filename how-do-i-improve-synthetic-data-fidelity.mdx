@@ -94,6 +94,12 @@ synthesizer.add_constraints([my_constraint])
 synthesizer.fit(data)
 ```
 
+**Are there a lot of business rules that are needed for different sub-types of data?** If you find that almost every column is involved in some kind of business rule, this may be an issue with the data source. You may have a dataset that combines multiple types of data together into a single table, which inherently results in a lot of rules. For example, different classes of users, transactions, or financial instruments might all appear in a single table with rules that govern what kind of data is allowed based on a class or sub-type
+
+A large, combined dataset is typically formed merging together multiple original tables. In this case, we strongly recommend updating to an upstream data source. SDV Enterprise works the best if you learn on the original, normalized tables.
+
+If that's not possible, you may have success with the [<u>SegmentSynthesizer</u>](https://docs.sdv.dev/sdv/modeling/single-table-synthesizers/segmentsynthesizer) which is able to segment your data and learn patterns for each segment. This is available as part of the [<u>XSynthesizers</u>](https://docs.sdv.dev/sdv/explore/sdv-bundles/xsynthesizers) bundle. Applying this synthesizer effectively aims to reverse the logic that your data pipeline might be making to create the table.
+
 **Is your issue related to statistical quality?** If everything so far has checked out ok – for e.g. the Diagnostic Report is 100% and all the business logic is covered – then your issue would likely be resolved by improving the statistical quality of your synthetic data. The rest of this guide focuses on statistical quality.
 
 ## Improving the statistical quality
