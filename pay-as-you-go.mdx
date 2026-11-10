@@ -1,13 +1,19 @@
 ---
-title: "Pay as you go"
+title: "Developer Plan"
 mode: "default"
-description: "How SDV Enterprise pricing works: a monthly subscription plus usage-based pay-as-you-go billing at $1 per million sampled cells, with configurable spending caps. Learn to estimate costs for single- and multi-table synthetic data."
-keywords: ["SDV Enterprise pricing", "synthetic data pricing", "pay as you go", "sampled cells", "subscription", "usage-based billing"]
+description: "How SDV Enterprise pricing works for the Developer Plan: a monthly subscription plus usage-based pay-as-you-go billing at $1 per million sampled cells, with configurable spending caps. Learn to estimate costs for single- and multi-table synthetic data."
+keywords:
+  - "SDV Enterprise pricing"
+  - "synthetic data pricing"
+  - "pay as you go"
+  - "sampled cells"
+  - "subscription"
+  - "usage-based billing"
 ---
 
-_This guide provides details about our pricing_
+_This guide provides details about the pricing for the Developer Plan (Pay-as-you-go)_
 
-SDV Enterprise's payment structure combines a subscription fee with flexible, usage-based pricing, both paid on a monthly basis. Our pricing model is designed to be transparent and predictable, so you can pay based on your actual usage and maintain full control through configurable spending caps. This guide explains how it all works and answers common questions about subscriptions, bundles, spending caps, and billing.
+For the Developer Plan, SDV Enterprise's payment structure combines a subscription fee with flexible, usage-based pricing, both paid on a monthly basis. This pricing model is designed to be transparent and predictable, so you can pay based on your actual usage and maintain full control through configurable spending caps. This guide explains how it all works and answers common questions about subscriptions, bundles, spending caps, and billing.
 
 ### **Benefits of Pay-As-You-Go Pricing**
 
@@ -16,7 +22,7 @@ SDV Enterprise's payment structure combines a subscription fee with flexible, us
 - Pay only for the synthetic data you generate.
 - Cost scales with your usage needs.
 
-## Subscription costs
+# Subscription costs
 
 Subscriptions are charged on a recurring monthly basis. To calculate your flat monthly subscription cost, combine the cost of SDV Enterprise Base with the cost of any additional bundles you need.
 
@@ -28,7 +34,7 @@ Subscriptions are charged on a recurring monthly basis. To calculate your flat m
 
 # Usage-based pricing and costs
 
-Your subscription provides access to SDV Enterprise Base, so that you can build and train generative models. Product usage is measured when you generate synthetic data from those trained models.
+Your subscription provides access to SDV Enterprise Base (and any bundles you've chosen), so that you can build and train generative models. Product usage is measured when you generate synthetic data from those trained models.
 
 The unit of usage is a **sampled cell**. A sampled cell represents a single generated data value within a table. For a single table, the total number of sampled cells is calculated as: **Number of rows generated × Number of columns in the table.** For example, if you generate a table with 100,000 rows and 20 columns, that's a total of 2,000,000 sampled cells.
 
@@ -66,7 +72,7 @@ You'll manage your SDV Enterprise account through the [DataCebo Portal](http://p
 
 ![The three steps to get started with SDV Enterprise.](/images/pay-as-you-go-images/purchase-steps.png)
 
-To start building with SDV Enterprise, you'll follow these three steps.
+To start building with SDV Enterprise on the Developer Plan, you'll follow these three steps.
 
 ### 1. Subscribe to SDV Enterprise Base.
 
@@ -88,7 +94,7 @@ This approach gives you predictable costs along with the flexibility to scale us
 
 ![Billing schedule for SDV Enterprise Base, additional bundles, and usage-based charges.](/images/pay-as-you-go-images/billing-schedule-table.png)
 
-Subscriptions are month-to-month and can be canceled at any time. All invoices are sent to the billing email address associated with your account.
+Developer Plan subscriptions are month-to-month and can be canceled at any time. All invoices are sent to the billing email address associated with your account.
 
 # What information is shared with DataCebo?
 
@@ -96,6 +102,6 @@ Subscriptions are month-to-month and can be canceled at any time. All invoices a
 
 SDV Enterprise is deployed entirely within your environment. After you purchase a subscription, you'll download the software package from DataCebo and install it using your license key. All data processing, model training, and synthetic data generation occur within your infrastructure. Your data is never transmitted to DataCebo servers.
 
-To support usage-based billing, SDV Enterprise communicates with DataCebo during sampling. Before synthetic data is generated, the software estimates the number of sampled cells that will be created and sends a usage request to DataCebo. If sufficient credits remain within your configured monthly spending cap, the request is approved and sampling proceeds.
+To support usage-based billing for the Developer Plan, SDV Enterprise communicates with DataCebo during sampling. Before synthetic data is generated, the software estimates the number of sampled cells that will be created and sends a usage request to DataCebo. If sufficient credits remain within your configured monthly spending cap, the request is approved and sampling proceeds.
 
 After sampling completes, SDV Enterprise sends a usage confirmation containing the number of sampled cells generated. This information is used solely to update your remaining credit balance for the current billing cycle.
