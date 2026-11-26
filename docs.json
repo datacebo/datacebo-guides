@@ -51,6 +51,12 @@
         "pages": [
           "how-do-i-improve-synthetic-data-fidelity"
         ]
+      },
+      {
+        "group": "Comparisons",
+        "pages": [
+          "datacebo-vs-tonic"
+        ]
       }
     ]
   },
