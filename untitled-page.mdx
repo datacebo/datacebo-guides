@@ -1,6 +1,11 @@
+---
+title: "Tonic Structural vs. DataCebo’s SDV Enterprise"
+description: "Copying and transforming production data vs. learning a generative relational model and sampling from it"
+---
+
 Tonic and DataCebo both have products aimed at users who want to generate realistic production-like data while preserving business logic and referential integrity. Tonic's product is [Tonic Structural](https://www.tonic.ai/products/tonic-structural), and DataCebo's commercial product is [SDV Enterprise](https://datacebo.com/sdv-enterprise/). While these two products share a similar use case, they work very differently. Tonic Structural is a classical test data management approach and uses a transformation-based approach, while SDV Enterprise uses an AI-native approach by training a generative relational model (GRM). These two approaches have many implications for users: They determine how often a production database needs to be accessed, how repeated generation works, the volume of data that can be generated, and how generation works for specific scenarios. In this article we describe both approaches and their pros and cons, and present frequently asked questions.
 
-### Tonic Structural uses a transformation-based approach
+## Tonic Structural uses a transformation-based approach
 
 With Tonic Structural, users create realistic relational test data by copying and masking production data and applying statistical generators. This is a _transformation-based_ approach because it transforms the production data by masking, anonymizing or generating data, learning simple data profiles for a subset of columns in the production data. Tonic Structural provides two distinct functionalities. Users can use one or both.
 
@@ -12,9 +17,15 @@ Tonic Structural can transform an entire database using a familiar copy-mask ext
 
 Tonic Structural offers a way to use statistical generators. [Users configure which generators transform each column](https://docs.tonic.ai/app/generation/generators-assign-config), and which columns should be linked to preserve their dependencies. For example, Tonic Structural has a continuous generator that can capture multivariate distributions, but its workflow requires the user to assign the generator to the relevant columns and explicitly link them.\[^1\] Tonic has introduced a Claude-based agent to help users set these configurations.\[^2\]
 
+| **Approach** | **Pros** | **Cons** |
+| --- | --- | --- |
+| Copy and mask an entire database. | Because this database already incorporates important business rules and statistical correlations, the transformed data will retain production characteristics when configured properly. | Depending on the size of the database, this can be a computationally expensive workflow that may take time to set up and/or may occasionally break when processing and need to resume. Users may have to set up environments, run the job in batches, and monitor the process. |
+| Copy and mask to create a subset. | Because this approach copies data directly from production, it is grounded in realism. | Subsetting can omit records that might alter the statistical distribution, or miss records that fully capture business rules. To make sure the data properly captures business rules and relationships, the user must configure the subsetting and masking steps and iterate multiple times to get a coherent subset. |
+| Transformations | If set properly, transformations can capture the statistical properties of certain columns or linked columns. | Transforming related columns independently can produce invalid combinations; for instance, [Tonic’s documentation shows city and state values becoming mismatched when the columns are not linked](https://docs.tonic.ai/app/generation/generators/generator-characteristics/linking-generators).\[^3\]<br /><br />Users must configure appropriate links, either directly or with AI assistance, to preserve those dependencies. Across an enterprise database with thousands of columns and many related tables, identifying, configuring, and validating these dependencies can become a substantial engineering task.\[^4\] |
+
 Users can choose to work with an entire database or a subset. Both of these approaches result in an ETL workflow that requires specific user involvement. Users may occasionally update this workflow to refresh the data or to add additional rules for subsetting or masking. To reiterate, this is a transformation-based approach—data is created through transformations, while AI is used to help set workflow configurations.
 
-### DataCebo’s SDV Enterprise uses an AI-native approach
+## DataCebo’s SDV Enterprise uses an AI-native approach
 
 With DataCebo’s SDV Enterprise, users train a generative relational model (GRM)\[^5\] on a subset of production data. Users can then sample from the trained GRM an unlimited amount of data. This is an _AI-native_ approach, because the user trains an AI model on their specific data and then uses that model to create brand new data. Using SDV Enterprise involves two steps:
 
@@ -38,6 +49,10 @@ The trained generative relational model takes the form of a single contained fil
 
 With SDV Enterprise, users must train new GRMs after schema changes. Many also do so at a set frequency. But because the GRM has captured patterns within the original database, it does not need to be retrained to account for new or additional production data. An existing GRM can generate new data beyond the training data it has specifically seen, including at boundaries and edges. To reiterate, this is an AI-native approach because an AI model (the GRM) is natively trained on the production database and uses what it learned to produce new synthetic data, rather than just assisting in programming an existing workflow.
 
+| **Method** | **Pros** | **Cons** |
+| --- | --- | --- |
+| AI-native GRM approach | The model captures the patterns in the data and is portable.<br /><br />This method creates private synthetic data. Users can generate as much data as they want. | Training requires representative data, and changes in data schema may require retraining.<br /><br />Users should review detected metadata and evaluate whether the generated data meets their needs.<br /><br />Users may need to supply rules that aren't evident in the data and aren't covered by automatic detection.<br /><br />Sampling requires computing resources. Targeted scenarios require users to provide relevant conditions. |
+
 The table below summarizes the differences between the two approaches.
 
 |  | **Tonic Structural: Transformation-based approach** | **DataCebo's SDV Enterprise: AI-native approach** |
@@ -49,72 +64,70 @@ The table below summarizes the differences between the two approaches.
 | **How statistical dependencies are captured** | The copy-mask technique produces a copy of the production data, and thus carries the statistical relationships. If data is subset, some of these may be lost. Transformations can capture relationships through configuration of generators and column links. | Statistical dependencies are learned during model training, and through metadata and explicit constraints. |
 | **Privacy** | Masked data copies are not private and are susceptible to leakage. | Synthetic data generated from a model has no connection to the real data. Additionally, data can be trained with differential privacy mechanisms that make the data more secure. |
 
-<a href="https://datacebo.com/pricing/" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;border:1px solid rgba(127,127,127,0.25);border-radius:12px;text-decoration:none;color:inherit;margin:2em 0;">
-  <span style="font-weight:600;font-size:1.05em;">Evaluate SDV Enterprise</span>
-  <span aria-hidden="true" style="font-size:1.3em;">→</span>
-</a>
+<Card title="Evaluate SDV Enterprise" icon="arrow-right" href="https://datacebo.com/pricing/">
+</Card>
 
-### Frequently asked questions about test data generation
+## Frequently asked questions about test data generation
 
-**1. Do I need to access the production database every time I generate test data?**
+### 1. Do I need to access the production database every time I generate test data?
 
 With Tonic Structural, users must provide access to the source database each time they want to create a new subset or refresh the data. The entire workflow must also be catalogued and maintained.
 
 With Datacebo's SDV Enterprise, a model is trained once. Users can then sample from it repeatedly to test various scenarios, including scenarios that have not yet been seen in the production data. Each new sample will contain different data, but all samples will preserve business rules, structural relationships, and referential integrity. Access to the production data must be provided for model retraining, which is necessary if the source database changes (such as when columns or tables are added or business logic is updated).
 
-**2. How does each approach preserve business rules, and what is required for configuration?**
+### 2. How does each approach preserve business rules, and what is required for configuration?
 
 With Tonic Structural, business rules are preserved because the transformed data retains production characteristics. However, when certain columns are transformed using column-specific generators or linked column generators, business rules can break, which may necessitate correction by the user. If an entire database is being copied and masked, there are usually fewer database-specific configuration settings. If the database is first being subset, configuration settings are required to choose and transform the subset, because it's necessary to specify which columns should be transformed together.
 
 With SDV Enterprise, business rules are learned by the GRM and are preserved regardless of how much data is created. [Users can review detected business rules and relationships](https://docs.sdv.dev/sdv/modeling/constraint-augmented-generation-cag) and supply additional ones for the model to learn from.
 
-**3. How can I generate specific scenarios, including rare cases and scenarios that are not present in the production data?**
+### 3. How can I generate specific scenarios, including rare cases and scenarios that are not present in the production data?
 
 For a user to generate a specific scenario with Tonic Structural, they must configure multiple settings to make sure the relevant data is extracted from the production data, transformed, and provided in the test data. If the scenario is not available in the production database, users must configure transformer settings and manually create linked generators so that the scenario is created while generated data still respects the business rules. This must also be done for boundary cases and negative test cases.
 
 With SDV Enterprise, the trained model can produce scenarios at the boundary, amplify rare cases, and even provide negative test cases using out-of-distribution-based sampling.
 
-**4. Can I generate more test data than exists in my production database?**
+### 4. Can I generate more test data than exists in my production database?
 
 Because Tonic Structural uses a de-identify, copy-mask workflow, the number of output records is directly tied to the number of source records being copied and transformed. For example, if you have 1000 customers in your table, you will copy and mask data for 1000 customers. You can apply transformers to the salary column and phone number column, and generate novel data based on the statistics in the original data, but the overall volume will remain the same. Often, users may repeat data to achieve greater volume, but this will not increase the inherent variety of the data (as is often necessary for critical testing).
 
 With SDV Enterprise, [users can sample as much data as they want](https://docs.sdv.dev/sdv/sampling/sample-realistic-data#sample_scale) from their trained generative relational model. This can provide the high-volume and high-variety data that many users need in order to test the performance of their workflows and make sure they meet service level agreements (SLAs).
 
-**5. Can multiple teams reuse the same workflow or model for different testing needs?**
+### 5. Can multiple teams reuse the same workflow or model for different testing needs?
 
 Tonic Structural supports parent and child workspaces. Teams can inherit shared configurations while changing specific settings, such as which subset of data or which generators are used.
 
 With DataCebo’s SDV Enterprise, the trained GRM is a reusable asset available to multiple teams. [The model is one file and is portable](https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer#saving-your-synthesizer) to a compatible environment with SDV Enterprise installed. Teams can version the model and create a model registry.
 
-**6. What happens when there are changes to production data or its schema?**
+### 6. What happens when there are changes to production data or its schema?
 
 Tonic Structural detects schema changes and alerts users. Depending on the workspace settings, it can either block generation or automatically apply generators to new or changed columns. The user updates various settings to account for the schema changes and then runs the workflow again. They might also need to update the subset definition.
 
 With SDV enterprise, the GRM must be retrained whenever there is a schema change, or when new tables or additional columns have been added. Because the model learns the patterns in the data and has extrapolation capabilities, it does not need to be retrained to account for new or additional production data. The model can generate data in the neighborhood of data it has seen, and can account for any novel data cases or specific edge cases that interest the user.
 
-**7. What infrastructure and batch processing does each approach require?**
+### 7. What infrastructure and batch processing does each approach require?
 
 Depending on the size of the subset, and the way transformation is set up (whether in-flight or on a copy), transformation-based approaches like the one used by Tonic Structural often require a large amount of computational infrastructure. The process can also break midway, necessitating a restart and sometimes eventually requiring the creation of a batch processing mechanism, where multiple subsets are created and then merged.
 
 SDV Enterprise's training algorithms are designed to be very efficient and high-performing. For example, it takes about an hour to train an HSASynthesizer from SDV Enterprise on a 60-table, ~3000-column database on a standard CPU or GPU machine.
 
-**8. Does Tonic’s AI agent change how data is generated, or help configure the transformation workflow?**
+### 8. Does Tonic’s AI agent change how data is generated, or help configure the transformation workflow?
 
 In Tonic Structural, the AI agent does not change how data is generated. Instead, it works as an assistant to configure the workflow, and provides different settings for subsetting and various transformers for columns and linked columns.
 
-**9. Can I recreate the same synthetic dataset using DataCebo’s SDV Enterprise to reproduce a test failure?**
+### 9. Can I recreate the same synthetic dataset using DataCebo’s SDV Enterprise to reproduce a test failure?
 
 Yes, you can recreate a synthetic dataset with SDV Enterprise. To do so, you would choose the same model, software version, sampling settings, and random-state/reset procedure as were used to make the dataset you want to recreate.
 
-**10. Does synthetic data automatically guarantee privacy?**
+### 10. Does synthetic data automatically guarantee privacy?
 
 Because synthetic data is generated from learned patterns, it is more private than data that's produced by copying and masking source records. On its own, though, synthetic data does not necessarily meet the requirements that guarantee differential privacy. However, DataCebo’s SDV Enterprise [provides a way to train differentially private GRMs](https://docs.sdv.dev/sdv/explore/sdv-bundles/differential-privacy) using its specific synthesizers. Data generated from these models is differentially private.
 
-**11. Does SDV Enterprise send my production data to an LLM?**
+### 11. Does SDV Enterprise send my production data to an LLM?
 
 No, SDV Enterprise does not send any of your production data to an LLM. The platform learns a generative model natively in your own environment using algorithms designed by DataCebo’s AI team. These algorithms have been built from scratch to work with structured, relational enterprise data.
 
-**12. When would I use Tonic Fabricate instead of Tonic Structural?**
+### 12. When would I use Tonic Fabricate instead of Tonic Structural?
 
 You can use Tonic Fabricate if you want to generate data from scratch using only schema information. Tonic Fabricate allows you to generate random data (equivalent to what you would get from Faker). You can also update this data by specifying rules to Tonic’s data agent—for instance, "_make 80% of my data be of account_type= savings and 20% of my data be account_type = checking._"You can also enhance data generation by providing data profiles extracted from your database. Overall, this software is a replacement for rule-based data generation.
 
