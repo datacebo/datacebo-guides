@@ -1,7 +1,6 @@
 ---
 title: "Tonic Structural vs. DataCebo’s SDV Enterprise"
 description: "Copying and transforming production data vs. learning a generative relational model and sampling from it"
-sidebarTitle: "DataCebo vs. Tonic"
 ---
 
 Tonic and DataCebo both have products aimed at users who want to generate realistic production-like data while preserving business logic and referential integrity. Tonic's product is [Tonic Structural](https://www.tonic.ai/products/tonic-structural), and DataCebo's commercial product is [SDV Enterprise](https://datacebo.com/sdv-enterprise/). While these two products share a similar use case, they work very differently. Tonic Structural is a classical test data management approach and uses a transformation-based approach, while SDV Enterprise uses an AI-native approach by training a generative relational model (GRM). These two approaches have many implications for users: They determine how often a production database needs to be accessed, how repeated generation works, the volume of data that can be generated, and how generation works for specific scenarios. In this article we describe both approaches and their pros and cons, and present frequently asked questions.
@@ -16,19 +15,19 @@ Tonic Structural can transform an entire database using a familiar copy-mask ext
 
 ### Apply generators to transform each column or a set of linked columns
 
-Tonic Structural offers a way to use statistical generators. [Users configure which generators transform each column](https://docs.tonic.ai/app/generation/generators-assign-config), and which columns should be linked to preserve their dependencies. For example, Tonic Structural has a continuous generator that can capture multivariate distributions, but its workflow requires the user to assign the generator to the relevant columns and explicitly link them.<sup>1</sup> Tonic has introduced a Claude-based agent to help users set these configurations.<sup>2</sup>
+Tonic Structural offers a way to use statistical generators. [Users configure which generators transform each column](https://docs.tonic.ai/app/generation/generators-assign-config), and which columns should be linked to preserve their dependencies. For example, Tonic Structural has a continuous generator that can capture multivariate distributions, but its workflow requires the user to assign the generator to the relevant columns and explicitly link them.[¹](#footnotes) Tonic has introduced a Claude-based agent to help users set these configurations.[²](#footnotes)
 
 | **Approach** | **Pros** | **Cons** |
 | --- | --- | --- |
 | Copy and mask an entire database. | Because this database already incorporates important business rules and statistical correlations, the transformed data will retain production characteristics when configured properly. | Depending on the size of the database, this can be a computationally expensive workflow that may take time to set up and/or may occasionally break when processing and need to resume. Users may have to set up environments, run the job in batches, and monitor the process. |
 | Copy and mask to create a subset. | Because this approach copies data directly from production, it is grounded in realism. | Subsetting can omit records that might alter the statistical distribution, or miss records that fully capture business rules. To make sure the data properly captures business rules and relationships, the user must configure the subsetting and masking steps and iterate multiple times to get a coherent subset. |
-| Transformations | If set properly, transformations can capture the statistical properties of certain columns or linked columns. | Transforming related columns independently can produce invalid combinations; for instance, [Tonic’s documentation shows city and state values becoming mismatched when the columns are not linked](https://docs.tonic.ai/app/generation/generators/generator-characteristics/linking-generators).<sup>3</sup><br /><br />Users must configure appropriate links, either directly or with AI assistance, to preserve those dependencies. Across an enterprise database with thousands of columns and many related tables, identifying, configuring, and validating these dependencies can become a substantial engineering task.<sup>4</sup> |
+| Transformations | If set properly, transformations can capture the statistical properties of certain columns or linked columns. | Transforming related columns independently can produce invalid combinations; for instance, [Tonic’s documentation shows city and state values becoming mismatched when the columns are not linked](https://docs.tonic.ai/app/generation/generators/generator-characteristics/linking-generators).[³](#footnotes)<br /><br />Users must configure appropriate links, either directly or with AI assistance, to preserve those dependencies. Across an enterprise database with thousands of columns and many related tables, identifying, configuring, and validating these dependencies can become a substantial engineering task.[⁴](#footnotes) |
 
 Users can choose to work with an entire database or a subset. Both of these approaches result in an ETL workflow that requires specific user involvement. Users may occasionally update this workflow to refresh the data or to add additional rules for subsetting or masking. To reiterate, this is a transformation-based approach—data is created through transformations, while AI is used to help set workflow configurations.
 
 ## DataCebo’s SDV Enterprise uses an AI-native approach
 
-With DataCebo’s SDV Enterprise, users train a generative relational model (GRM)<sup>5</sup> on a subset of production data. Users can then sample from the trained GRM an unlimited amount of data. This is an _AI-native_ approach, because the user trains an AI model on their specific data and then uses that model to create brand new data. Using SDV Enterprise involves two steps:
+With DataCebo’s SDV Enterprise, users train a generative relational model (GRM)[⁵](#footnotes) on a subset of production data. Users can then sample from the trained GRM an unlimited amount of data. This is an _AI-native_ approach, because the user trains an AI model on their specific data and then uses that model to create brand new data. Using SDV Enterprise involves two steps:
 
 ### Train a generative relational model on a subset of the production data
 
@@ -37,16 +36,16 @@ During the training process, the GRM does the following:
 - Learns the database schema and relationships;
 - Fills in and learns additional relationships that are not specified but are evident in the data (for example, missing foreign key relationships);
 - [Detects supported business rules](https://docs.sdv.dev/sdv/modeling/constraint-augmented-generation-cag/auto-detect-constraints) that are evident in the data;
-- Learns the data's statistical correlations between columns within the table and across tables<sup>6</sup>;
+- Learns the data's statistical correlations between columns within the table and across tables[⁶](#footnotes);
 - Produces a model artifact containing all the learned parameters. Optionally, users can request to train a differentially-private model.
 
 ### Create synthetic test data using the trained model
 
 The trained generative relational model takes the form of a single contained file, which is usually much smaller than the data it was trained on. Users can then do the following:
 
-- Safely export the model file into a compatible lower environment (with SDV Enterprise installed) where they want to create synthetic test data.<sup>7</sup>
+- Safely export the model file into a compatible lower environment (with SDV Enterprise installed) where they want to create synthetic test data.[⁷](#footnotes)
 - Sample synthetic test data from the model. This synthetic test data [conforms to everything the model has detected in the original data, including database relationships (e.g. primary keys, foreign keys, composite keys, and polymorphic relationships) and business rules, 100% of the time](https://docs.sdv.dev/sdv/explore/sdv-bundles/cag). Users can review the detected relationships and rules and supply any that were not found.
-- Sample as much data as they want from the model, as many times as they want. Users can also sample data for specific scenarios without needing to go back to the production database.<sup>8</sup>
+- Sample as much data as they want from the model, as many times as they want. Users can also sample data for specific scenarios without needing to go back to the production database.[⁸](#footnotes)
 
 With SDV Enterprise, users must train new GRMs after schema changes. Many also do so at a set frequency. But because the GRM has captured patterns within the original database, it does not need to be retrained to account for new or additional production data. An existing GRM can generate new data beyond the training data it has specifically seen, including at boundaries and edges. To reiterate, this is an AI-native approach because an AI model (the GRM) is natively trained on the production database and uses what it learned to produce new synthetic data, rather than just assisting in programming an existing workflow.
 
@@ -134,13 +133,13 @@ You can use Tonic Fabricate if you want to generate data from scratch using only
 
 You can use Tonic Structural if you want to generate realistic data that captures your production data's statistical patterns and business rules. If you extract a subset of the data, you can inspect the subset and fix any inconsistencies.
 
----
+## Footnotes
 
-1. <a id="fn-1"></a>[https://docs.tonic.ai/app/generation/generators/generator-reference/continuous](https://docs.tonic.ai/app/generation/generators/generator-reference/continuous) [↩](#fnref-1)
-2. <a id="fn-2"></a>Customers who host the Tonic Structural platform can use a privately installed LLM, while customers who used Tonic's hosted platform can use a Claude-powered agent. [↩](#fnref-2)
-3. <a id="fn-3"></a>Tonic.ai. “Linking generators.” _Tonic Structural documentation_. Accessed October 4, 2026. [Documentation](https://docs.tonic.ai/app/generation/generators/generator-characteristics/linking-generators). [↩](#fnref-3)
-4. <a id="fn-4"></a>Culligan, Casey. “The agentification of Test Data Management is here. Meet the Structural Agent.” _Tonic.ai_, April 2, 2026. [Read the announcement](https://www.tonic.ai/blog/agentification-of-test-data-management-meet-structural-agent). [↩](#fnref-4)
-5. <a id="fn-5"></a>Generative relational models are a separate category of AI from LLMs and do not use or require LLM inference. [↩](#fnref-5)
-6. <a id="fn-6"></a>[https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer](https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer) [↩](#fnref-6)
-7. <a id="fn-7"></a>[https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer#saving-your-synthesizer](https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer#saving-your-synthesizer) [↩](#fnref-7)
-8. <a id="fn-8"></a>[https://docs.sdv.dev/sdv/sampling/sample-realistic-data](https://docs.sdv.dev/sdv/sampling/sample-realistic-data) [↩](#fnref-8)
+1. [https://docs.tonic.ai/app/generation/generators/generator-reference/continuous](https://docs.tonic.ai/app/generation/generators/generator-reference/continuous)
+2. Customers who host the Tonic Structural platform can use a privately installed LLM, while customers who used Tonic's hosted platform can use a Claude-powered agent.
+3. Tonic.ai. “Linking generators.” _Tonic Structural documentation_. Accessed October 4, 2026. [Documentation](https://docs.tonic.ai/app/generation/generators/generator-characteristics/linking-generators).
+4. Culligan, Casey. “The agentification of Test Data Management is here. Meet the Structural Agent.” _Tonic.ai_, April 2, 2026. [Read the announcement](https://www.tonic.ai/blog/agentification-of-test-data-management-meet-structural-agent).
+5. Generative relational models are a separate category of AI from LLMs and do not use or require LLM inference.
+6. [https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer](https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer)
+7. [https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer#saving-your-synthesizer](https://docs.sdv.dev/sdv/modeling/multi-table-synthesizers/hsasynthesizer#saving-your-synthesizer)
+8. [https://docs.sdv.dev/sdv/sampling/sample-realistic-data](https://docs.sdv.dev/sdv/sampling/sample-realistic-data)
